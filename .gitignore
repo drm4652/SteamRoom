@@ -1,17 +1,6 @@
-<<<<<<< HEAD
 .idea
 coverage
 node_modules/
 bower_components/
 *.iml
 calendar.min.js
-=======
-logs/*
-!.gitkeep
-node_modules/
-tmp
-.idea
-.DS_Store
-angular-phonecat-snapshots
-bower_components/
->>>>>>> e451776a238fce25e35aa45daf50f4e8993eed8a
