@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ui-calendar directive [![Build Status](https://travis-ci.org/angular-ui/ui-calendar.svg?branch=master)](https://travis-ci.org/angular-ui/ui-calendar)
 
 [![Join the chat at https://gitter.im/angular-ui/ui-calendar](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/angular-ui/ui-calendar?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -153,3 +154,8 @@ We use karma and grunt to ensure the quality of the code.
     npm install
     bower install
     grunt
+=======
+Steam Room
+
+Team Room Reservation App
+>>>>>>> e451776a238fce25e35aa45daf50f4e8993eed8a

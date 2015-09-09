@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "angular-ui-calendar",
   "version": "1.0.1",
   "description": "A complete AngularJS directive for the Arshaw FullCalendar.",
@@ -29,5 +30,18 @@
   "resolutions": {
     "jquery": "~2.1.4",
     "angular": "1.4.1"
+=======
+  "name": "angular-phonecat",
+  "description": "A starter project for AngularJS",
+  "version": "0.0.0",
+  "homepage": "https://github.com/angular/angular-phonecat",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "1.4.x",
+    "angular-mocks": "1.4.x",
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.1.1"
+>>>>>>> e451776a238fce25e35aa45daf50f4e8993eed8a
   }
 }
