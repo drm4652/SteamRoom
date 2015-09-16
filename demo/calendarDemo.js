@@ -9,6 +9,7 @@ calendarDemoApp.controller('CalendarCtrl',
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
+	var dateSaver = '';
 
     $scope.changeTo = 'Hungarian';
     /* event source that pulls from google.com */
@@ -32,14 +33,16 @@ calendarDemoApp.controller('CalendarCtrl',
     };
 
     
+
 	/*alert on DateClick */
-	$scope.alertOnDateClick = function( start, end, timezone, callback){
-		var yearClick = new Date(start).getFullYear();
-		var dateClick = new Date(start).getDate() + 1;
-		var monthClick = new Date(start).getMonth() + 1;
-		$scope.alertMessage = (yearClick + '-' +monthClick + '-' + dateClick + ' was clicked');
+	$scope.alertOnDateClick = function(date, jsEvent, view){
+		dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
+		$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
+	    $('#myCalendar1').fullCalendar( 'gotoDate', date.format());
 		
-	}
+	};
+	
+	
 	
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
@@ -112,7 +115,8 @@ calendarDemoApp.controller('CalendarCtrl',
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
         eventRender: $scope.eventRender,
-		dayClick: $scope.alertOnDateClick
+		dayClick: $scope.alertOnDateClick,
+		timeClick: $scope.alertTest
       }
     };
 
@@ -120,6 +124,6 @@ calendarDemoApp.controller('CalendarCtrl',
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
     $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-	$scope.eventSources3 = [$scope.alertOnDateClick];
+	$scope.eventSources3 = [$scope.alertOnDateClick, $scope.alertTest];
 });
 /* EOF */
