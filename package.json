@@ -30,6 +30,8 @@
 	"shelljs": "^0.2.6"
   },
   "scripts": {
+	"postinstall": "bower install",
+	"prestart": "npm install",
 	"test": "grunt",
 
     "start": "http-server -a 0.0.0.0 -p 8000",

@@ -54,7 +54,7 @@ module.exports = function (grunt) {
             debug: true,
             keepalive: true,
             hostname: '*',
-            base: ['demo', '.']
+            base: ['app', '.']
           }
         }
     }
