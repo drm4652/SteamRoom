@@ -35,11 +35,25 @@ calendarDemoApp.controller('CalendarCtrl',
     
 
 	/*alert on DateClick */
-	$scope.alertOnDateClick = function(date, jsEvent, view){
-		dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
-		$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
-	    $('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+	$scope.alertOnDateClick = function(date, jsEvent, view, start, end, allDay){
+		//dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
+		dateSaver = date.format();
+		var today = moment();
+		var todayCheck = moment(today).format('YYYY-MM-DD');
+		var selectionStart = date.format();
+		selectionStart = Date.parse(selectionStart);
+		today = Date.parse(today);
 		
+		//alert(dateSaver);
+        $scope.alertMessage = dateSaver;
+
+        if(dateSaver == todayCheck || selectionStart > today){
+			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
+			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+		
+		}
+		else{
+			}
 	};
 	
 	
