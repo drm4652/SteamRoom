@@ -46,16 +46,16 @@ calendarDemoApp.controller('CalendarCtrl',
 		
 		//alert(dateSaver);
         $scope.alertMessage = dateSaver;
-
         if(dateSaver == todayCheck || selectionStart > today){
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
 		
 		}
 		else{
+			alert("You have clicked a previous date");
 			}
 	};
-	
+
 	
 	
     /* alert on eventClick */
@@ -120,6 +120,7 @@ calendarDemoApp.controller('CalendarCtrl',
       calendar:{
         height: 450,
         editable: true,
+		selectable: true,
         header:{
           left: 'title',
           center: '',
