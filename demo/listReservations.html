@@ -1,0 +1,51 @@
+<!doctype html>
+<html ng-app="myReservations">
+
+<head>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-animate.js"></script>
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.4.js"></script>
+  <script src="ngCtrlGetReservations.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <div ng-controller="accordionCtrl">
+    <script type="text/ng-template" id="group-template.html">
+      <div class="panel {{panelClass || 'panel-default'}}">
+        <div class="panel-heading">
+          <h4 class="panel-title" style="color:#fa39c3">
+          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" accordion-transclude="heading"><span
+            ng-class="{'text-muted': isDisabled}">{{heading}}</span></a>
+        </h4>
+        </div>
+        <div class="panel-collapse collapse" collapse="!isOpen">
+          <div class="panel-body" style="text-align: right" ng-transclude></div>
+        </div>
+      </div>
+    </script>
+
+    <form ng-submit="getReservations()">
+      Username:
+      <input type="text" ng-model="username" name="username" />
+      <input type="submit" id="submit" value="Get" />
+    </form>
+
+    <accordion close-others="oneAtATime">
+      <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+        {{group.content}}
+        <br>
+        <button type="button" class="btn btn-default btn-sm" ng-click="check()">Check In/Out</button>
+        <br>
+        <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">Cancel</button>
+        <br>
+        <button type="button" class="btn btn-default btn-sm" ng-click="alert()">Alert</button>
+      </accordion-group>
+      <accordion-group heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+        This content is straight in the template.
+      </accordion-group>
+    </accordion>
+  </div>
+</body>
+
+</html>
