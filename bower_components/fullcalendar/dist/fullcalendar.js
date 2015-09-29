@@ -10859,10 +10859,10 @@ fcViews.agenda = {
 	'class': AgendaView,
 	defaults: {
 		allDaySlot: false,
-		allDayText: 'all-day',
-		slotDuration: '01:00:00',
-		minTime: '00:00:00',
-		maxTime: '24:00:00',
+		//allDayText: 'all-day',
+		slotDuration: '00:30:00',
+		minTime: '07:00:00',
+		maxTime: '23:00:00',
 		slotEventOverlap: false // a bad name. confused with overlap/constraint system
 	}
 };
