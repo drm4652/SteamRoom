@@ -6,16 +6,29 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="css/login.css">
   <script src="bower_components/angular/angular.js"></script>
+  
+  <script>
+  function isAdmin(){
+	  var x = document.forms["login"]["username"].value;
+	  
+	  if(x == "admin"){
+		window.location = "AdminHTML/index.html";
+	  }
+	  else{
+		window.location = "landing.html";	
+	  }
+  }
+  </script>
 </head>
 	<body>
 		<div class="center">
 			<form name="login" action="index_submit" method="get" accept-charset="utf-8">
 			        Team Room Reservation<br><br>
-					<label for="usermail">RIT Username</label><br>
-					<input name="usermail" placeholder=""><br><br>
+					<label for="username">RIT Username</label><br>
+					<input name="username" placeholder=""><br><br>
 					<label for="password">Password</label><br>
 					<input type="password" name="password" placeholder=""><br>
-					<input type="button" onclick="location.href='landing.html';" value="Submit" /></li>
+					<input type="button" onclick="isAdmin()" value="Submit" /></li>
 			</form>
 		</div>
 	</body>
