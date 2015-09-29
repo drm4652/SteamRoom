@@ -1,0 +1,338 @@
+<html>
+<head>
+  <script src="jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="tabs.css">
+  <script src="../js/Reservation.js"></script>
+  
+  <script>
+function logout(){
+	window.location = "../index.html";
+}
+function goToReservations(){
+	window.location = "../landing.html";
+}
+
+  var res1 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "10");
+  var res2 = new Reservation("qwe1111","Active","Individual","2015-11-11 11:00:00", "2", "12");
+  var res3 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "14");
+  
+  var resArray = [res1, res2, res3];
+  var currentSize = resArray.length;
+  var reset = false;
+
+
+function resFilterStatus(){
+  var userNameCheck = document.getElementById("userNameCheck").checked;
+  var resStatusCheck = document.getElementById("resStatusCheck").checked;
+  var roomNumCheck = document.getElementById("roomNumCheck").checked;
+  var dateCheck = document.getElementById("dateCheck").checked;	
+  
+  var filters = [userNameCheck, resStatusCheck, roomNumCheck, dateCheck];
+  return filters;
+}
+
+function resFilterValues(){
+  var userNameValue = document.getElementById("username").value;
+  var resStatusDropDown = document.getElementById("resStatus");
+  var resStatusValue = document.getElementById("resStatus").value;
+  var roomNumValue = document.getElementById("roomNum").value;
+  var dateValue = document.getElementById("date").value;
+  
+  var values = [userNameValue, resStatusDropDown, resStatusValue, roomNumValue, dateValue];
+  return values;
+}
+
+function createMockData(){
+  for(i = 0; i < resArray.length;i++){
+	addRowFromRes(resArray[i], i);
+  }
+}
+
+function createTableFromArray(reservations){
+  if(reservations !== 'undefined'){
+	  for(i = 0; i < reservations.length; i++){
+		addRowFromRes(reservations[i], i);
+	  }
+  }
+}
+
+function filterUsername(reservations){
+	var newReservations;
+
+	return newReservations;
+}
+
+function filterStatus(reservations){
+	var newReservations;
+
+	return newReservations;
+}
+
+function filterRoom(reservations){
+	var newReservations;
+
+	return newReservations;
+}
+
+function filterDate(reservations){
+	var newReservations;
+
+	return newReservations;
+}
+
+function filterReservations(){
+  var finalReservations;
+  var filters = resFilterStatus();
+  var filterValues = resFilterValues();
+  
+  finalReservations = resArray;
+
+  resetTable(currentSize);
+  
+  
+  if(filters[0]){
+	var res;
+	res = [];
+	for(i = 0; i < resArray.length; i++){
+	  if(resArray[i].user === filterValues[0]){
+		console.log('name filter found a match');
+	    res.push(resArray[i]);
+	  }
+	}
+	console.log('Size: ' +res.length);
+	finalReservations = res;
+  }
+  
+  console.log('Size: ' +finalReservations.length);
+
+  createTableFromArray(finalReservations);
+}
+
+function addRow(){
+
+}
+
+function addRowFromRes(res, i){
+    var table = document.getElementById("resTable");
+    var row = table.insertRow(i+1);
+	
+	var checkboxCell = row.insertCell(0)
+    var userCell = row.insertCell(1);
+    var statusCell = row.insertCell(2);
+    var typeCell = row.insertCell(3);
+    var dateCell = row.insertCell(4);
+    var durationCell = row.insertCell(5);
+    var roomNumCell = row.insertCell(6);
+	var operationCell = row.insertCell(7)
+	
+	checkboxCell.innerHTML = "<input type='checkbox' id='generatedCheckBox'>";
+	document.getElementById("generatedCheckBox").id = i;
+	
+    userCell.innerHTML = res.user;
+    statusCell.innerHTML = res.status;
+    typeCell.innerHTML = res.type;
+    dateCell.innerHTML = res.date;
+    durationCell.innerHTML = res.duration;
+    roomNumCell.innerHTML = res.roomNum;
+	operationCell.innerHTML = "<a href='editReservation.html'>Edit</a>"
+}
+
+function resetTable(numRows){
+
+	var rows = numRows;
+    var table = document.getElementById("resTable");
+	if(reset === false){
+		for(i = rows; i >= 1; i--){
+			document.getElementById("resTable").deleteRow(i);
+		}
+		reset = true;
+	}
+
+}
+
+function subRow(){
+	var checkedRows;
+	checkedRows = [];
+
+	for(i = 0; i < resArray.length;i++){
+		if(document.getElementById(i).checked){
+			checkedRows.push(i);
+			document.getElementById("demo").innerHTML = i;
+		}
+	}
+	
+	for(i = 0; i < checkedRows.length; i++){
+		document.getElementById("resTable").deleteRow(checkedRows[i]+1);
+	}
+}
+
+function checkID(i){
+	document.getElementById("demo").innerHTML = i;
+}
+
+</script>
+  
+</head>
+<body onload="createMockData()">
+<script>
+jQuery(document).ready(function() {
+    jQuery('.tabs .tab-links a').on('click', function(e)  {
+        var currentAttrValue = jQuery(this).attr('href');
+ 
+        // Show/Hide Tabs
+        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+ 
+        // Change/remove current tab to active
+        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+ 
+        e.preventDefault();
+    });
+});
+</script>
+
+<input type="button" onclick="logout()" value="<-- Logout">
+<input type="button" onclick="goToReservations()" value="Reservations">
+
+<div class="tabs">
+    <ul class="tab-links">
+        <li class="active"><a href="#tab1">Reservations</a></li>
+        <li><a href="#tab2">Permissions</a></li>
+        <li><a href="#tab3">Reports</a></li>
+    </ul>
+ 
+    <div class="tab-content">
+        <div id="tab1" class="tab active">
+		<style>
+		.center {
+			margin: auto;
+			width: 75%;
+			}
+		.dropdown {
+			margin: auto;
+			width: 75%;
+			display: inline;
+			padding-left: 20px;
+			}
+		</style>
+			
+			<div class="center">
+			Show only items where:<br><br>
+			<input type="checkbox" id="userNameCheck">
+			<input type="text" id="username" placeholder="Exact Username"><br>
+			<input type="checkbox" id="resStatusCheck">Reservation status
+			<div class="dropdown">	
+				<select id="resStatus">
+					<option value="Active">Active</option>
+					<option value="Past">Past</option>
+					<option value="Future">Future</option>
+				</select>
+			</div><br>
+			
+			<input type="checkbox" id="roomNumCheck">Room Number
+			<div class="dropdown">	
+				<select id="roomNum">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+				</select>
+			</div><br>
+			
+			<input type="checkbox" id="dateCheck">Date
+			<div class="dropdown">	
+				<select id="date">
+					<option value="Newest">Newest</option>
+					<option value="Oldest">Oldest</option>
+				</select>
+			</div><br>
+			<input type="button" value="Filter" onclick="filterReservations()">
+			<br><br><br>
+			</div>
+				<table border="1" style="width:75%" align="center" id="resTable">
+					<tr align="center">
+						<td width="3%"></td>
+						<td>User</td>
+						<td>Type</td>
+						<td>Status</td>
+						<td width="20%">Reservation Time</td>
+						<td> Time(hours)</td>
+						<td>Room</td>
+						<td>Operation</td>
+					</tr>
+				</table>
+				
+				<div class="center">
+					<input type="button" value="Sub Row" onclick="subRow()">
+				</div>
+			<br>
+			<br>
+			<div class="center">
+				<input type="button" value="Edit Selected Items">
+			</div>
+        </div>
+ 
+        <div id="tab2" class="tab">
+
+			<table border="1" style="width:75%" align="center">
+				<tr align="center">
+					<td width="3%"></td>
+					<td>Name</td>
+					<td>Reserve</td>
+					<td>Cancel Own</td>
+					<td>Cancel Other</td>
+					<td>Check-In/Out</td>
+					<td>Create/Edit</td>
+					<td>Preemption</td>
+					<td>Edit</td>
+				</tr>
+				<tr align="center">
+					<td><input type="checkbox"></td>
+					<td>Student</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>3</td>
+					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
+				</tr>
+				<tr align="center">
+					<td><input type="checkbox"></td>
+					<td>Student</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>3</td>
+					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
+				</tr>
+				<tr align="center">
+					<td><input type="checkbox"></td>
+					<td>Student</td>
+					<td>yes</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>yes</td>
+					<td>no</td>
+					<td>3</td>
+					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
+				</tr>
+			</table>
+			<br><br>
+			<div class="center">
+				<input type="button" value="Add">
+				<input type="button" value="Edit Selected Items">
+			</div><br>
+        </div>
+ 
+        <div id="tab3" class="tab">
+		Reports
+		</div>
+    </div>
+</div>
+
+<p id="demo"></p>
+</body>
+
+
+</html>
