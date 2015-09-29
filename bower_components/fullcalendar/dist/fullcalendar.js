@@ -2858,13 +2858,13 @@ var Grid = fc.Grid = RowRenderer.extend({
 	// Determines whether events should have their end times displayed, if not explicitly defined by 'displayEventTime'.
 	// Only applies to non-all-day events.
 	computeDisplayEventTime: function() {
-		return true;
+		return false;
 	},
 
 
 	// Determines whether events should have their end times displayed, if not explicitly defined by 'displayEventEnd'
 	computeDisplayEventEnd: function() {
-		return true;
+		return false;
 	},
 
 

@@ -32,8 +32,6 @@ calendarDemoApp.controller('CalendarCtrl',
       callback(events);
     };
 
-    
-
 	/*alert on DateClick */
 	$scope.alertOnDateClick = function(date, jsEvent, view, start, end, allDay){
 		//dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
@@ -46,10 +44,22 @@ calendarDemoApp.controller('CalendarCtrl',
 		
 		//alert(dateSaver);
         $scope.alertMessage = dateSaver;
+		
+		dayClicked = dateSaver.substring(8,11);
+		dayClicked = parseInt(dayClicked);
+		monthClicked = dateSaver.substring(5,7);
+		monthClicked = parseInt(monthClicked) - 1;
+		yearClicked = dateSaver.substring(0,4);
+		yearClicked = parseInt(yearClicked);
         if(dateSaver == todayCheck || selectionStart > today){
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
-		
+			for(timeIncrement = 0; timeIncrement < 24; timeIncrement++){
+				$scope.events.push({
+					title: 'Rooms Available [' + 11 + ']',
+					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement)
+				});
+			}
 		}
 		else{
 			alert("You have clicked a previous date");
@@ -124,7 +134,7 @@ calendarDemoApp.controller('CalendarCtrl',
         header:{
           left: 'title',
           center: '',
-          right: 'today prev,next'
+          right: 'month today prev,next'
         },
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,
