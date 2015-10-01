@@ -1,0 +1,8 @@
+html
+  head
+    title Your Reservations
+  body
+    #container
+      - each reservation in reservations
+        p=reservation.date
+        p=reservation.roomNumber

@@ -1,28 +1,38 @@
 var app = angular.module('myReservations', ['ngAnimate', 'ui.bootstrap']);
 
-app.controller('accordionCtrl', accordionCtrl);
+app.controller('accordionCtrl', function ($scope, $http) {
+  //var parent = angular.element('#myResAccordion');
 
-function accordionCtrl() {
-  this.oneAtATime = true;
-  this.groups = [];
-  this.username = '';
-}
+  $scope.oneAtATime = true;
+  $scope.groups = [];
+  $scope.username = '';
+  $scope.cords = [{head: "I'm here", val: "me too"}];
+  $scope.num = 1;
 
-accordionCtrl.prototype.getReservations = function() {
-  if (this.username) {
-    var reservations = Reservations.listReservations.myReservations('naw7961');
-    for (var reservation in reservations) {
-      var res = {
-        title: reservation.date,
-        content: reservation.roomNumber
-      };
-      $scope.groups.push(res);
-    }
-  }
-};
 
-accordionCtrl.prototype.check = function() {};
+  $scope.getReservations = function() {
+    
+      var reservations = Reservations.listReservations('naw7961');
+      for (var reservation in reservations) {
+        var res = {
+          title: reservation.date,
+          content: reservation.roomNumber
+        };
+        $scope.groups.push(res);
+      }
+    
+    return $scope.groups;
+  }();
 
-accordionCtrl.prototype.cancel = function() {};
+  $scope.addAccordion = function() {
+    $scope.cords.push({head: $scope.num, val: "hi"});
+    $scope.num++;
+  };
 
-accordionCtrl.prototype.alert = function() {};
+  $scope.check = function() {};
+
+  $scope.cancel = function() {};
+
+  $scope.alert = function() {};
+
+});
