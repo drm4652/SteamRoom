@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en" ng-app="steamRoomApp">
+<head>
+  <meta charset="utf-8">
+  <title>Team Room Reservation App</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/Room.js"></script>
+  <script src="js/Reservation.js"></script>
+  <script src="js/User.js"></script>
+</head>
+<body>
+
+    <input type="text" placeholder="search">
+	<img src="img/notifications.jpg" height="40" width="40">
+	<img src="img/optionsIcon.png" height="40" width="40">
+	<br><br>
+	
+
+	Reservations as:<div id="user"></div><br><br>
+	
+	<div id="reservations"></div>
+	
+	<script>
+	var user1 = new User("Dan", "Moody", "drm4652");
+	document.getElementById("user").innerHTML = user1.username;
+	var room1 = new Room(1, false, false);
+	var res1 = new Reservation(user1, room1, "October 10", "8am-10am");
+	var res2 = new Reservation(user1, room1, "October 11", "3pm-4pm");
+	var reservations = [res1, res2];
+	var output = "";
+	
+	for(i = 0; i < reservations.length;i++){
+	    
+		output += "<input type = 'button' value='Delete'>" + "Date:" + reservations[i].date + " | Time slot: " + reservations[i].timeslot + " | Room: " + reservations[i].room.roomNumber + '<br>';
+	}
+	document.getElementById("reservations").innerHTML = output;
+	</script>
+   	
+	
+	<input type="button" onclick="location.href='landing.html';" value="Home">
+
+</body>
+</html>
