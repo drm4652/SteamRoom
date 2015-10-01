@@ -12,33 +12,37 @@ function goToReservations(){
 	window.location = "../landing.html";
 }
 
-  var res1 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "10");
-  var res2 = new Reservation("qwe1111","Active","Individual","2015-11-11 11:00:00", "2", "12");
-  var res3 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "14");
+  var res1 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "1561");
+  var res2 = new Reservation("qwe1111","Past","Team","2015-11-11 11:00:00", "2", "1563");
+  var res3 = new Reservation("drm4652","Active","Individual","2015-11-11 11:00:00", "2", "1565");
+  var res4 = new Reservation("req4444","Active","Team","2015-11-11 11:00:00", "2", "1660");
+  var res5 = new Reservation("qwe1111","Active","Individual","2015-11-11 11:00:00", "2", "1660");
+  var res6 = new Reservation("drm4652","Past","Individual","2015-11-11 11:00:00", "2", "1661");
   
-  var resArray = [res1, res2, res3];
+  var resArray = [res1, res2, res3, res4, res5, res6];
+  var backupRes = resArray;
   var currentSize = resArray.length;
-  var reset = false;
 
 
 function resFilterStatus(){
   var userNameCheck = document.getElementById("userNameCheck").checked;
   var resStatusCheck = document.getElementById("resStatusCheck").checked;
+  var resTypeCheck = document.getElementById("typeCheck").checked;
   var roomNumCheck = document.getElementById("roomNumCheck").checked;
   var dateCheck = document.getElementById("dateCheck").checked;	
   
-  var filters = [userNameCheck, resStatusCheck, roomNumCheck, dateCheck];
+  var filters = [userNameCheck, resStatusCheck, resTypeCheck, roomNumCheck, dateCheck];
   return filters;
 }
 
 function resFilterValues(){
   var userNameValue = document.getElementById("username").value;
-  var resStatusDropDown = document.getElementById("resStatus");
-  var resStatusValue = document.getElementById("resStatus").value;
+  var resStatusDropDown = document.getElementById("resStatus").value;
+  var resTypeDropDown = document.getElementById("resType").value;
   var roomNumValue = document.getElementById("roomNum").value;
   var dateValue = document.getElementById("date").value;
   
-  var values = [userNameValue, resStatusDropDown, resStatusValue, roomNumValue, dateValue];
+  var values = [userNameValue, resStatusDropDown, resTypeDropDown, roomNumValue, dateValue];
   return values;
 }
 
@@ -49,6 +53,9 @@ function createMockData(){
 }
 
 function createTableFromArray(reservations){
+
+  resetTable();
+
   if(reservations !== 'undefined'){
 	  for(i = 0; i < reservations.length; i++){
 		addRowFromRes(reservations[i], i);
@@ -89,22 +96,72 @@ function filterReservations(){
 
   resetTable(currentSize);
   
+  var res1;
+  res1 = [];
+  var res2;
+  res2 = [];
+  var res3;
+  res3 = [];
+  var res4;
+  res4 = [];
+  var res5;
+  res5 = [];
   
   if(filters[0]){
-	var res;
-	res = [];
-	for(i = 0; i < resArray.length; i++){
-	  if(resArray[i].user === filterValues[0]){
-		console.log('name filter found a match');
-	    res.push(resArray[i]);
-	  }
+	if(filterValues[0] != ''){
+		for(i = 0; i < resArray.length; i++){
+		  if(resArray[i].user == filterValues[0]){
+			res1.push(resArray[i]);
+		  }
+		}
+	    finalReservations = res1;
 	}
-	console.log('Size: ' +res.length);
-	finalReservations = res;
+  }
+  if(filters[1]){
+
+	if(res1.length == 0){
+	  res1 = finalReservations;
+	}
+		for(i = 0; i < res1.length; i++){
+		console.log(filterValues[1]);
+			if(res1[i].status == filterValues[1]){
+				res2.push(res1[i]);
+			}
+		}
+	finalReservations = res2;
   }
   
-  console.log('Size: ' +finalReservations.length);
+  if(filters[2]){
+  
+	if(res2.length == 0){
+	  res2 = finalReservations;
+	}
+		for(i = 0; i < res2.length; i++){
+		console.log(filterValues[2]);
+			if(res2[i].type == filterValues[2]){
+				res3.push(res2[i]);
+			}
+		}
+	finalReservations = res3;
+  }
+  if(filters[3]){
 
+	if(res3.length == 0){
+	  res3 = finalReservations;
+	}
+		for(i = 0; i < res3.length; i++){
+		console.log(filterValues[3]);
+			if(res3[i].roomNum == filterValues[3]){
+				res4.push(res3[i]);
+			}
+		}
+	finalReservations = res4;
+  }
+  if(filters[4]){
+
+  
+  }
+ 
   createTableFromArray(finalReservations);
 }
 
@@ -134,20 +191,19 @@ function addRowFromRes(res, i){
     dateCell.innerHTML = res.date;
     durationCell.innerHTML = res.duration;
     roomNumCell.innerHTML = res.roomNum;
-	operationCell.innerHTML = "<a href='editReservation.html'>Edit</a>"
+	operationCell.innerHTML = "<input type='button' id='generatedEdit' value='Edit' onclick='editRow("+i+")'>";
+	document.getElementById("generatedEdit").id = "edit" + i;
 }
 
-function resetTable(numRows){
+function resetTable(){
 
-	var rows = numRows;
     var table = document.getElementById("resTable");
-	if(reset === false){
-		for(i = rows; i >= 1; i--){
+
+	var x = table.rows.length-1;
+	
+		for(i = x; i >= 1; i--){
 			document.getElementById("resTable").deleteRow(i);
 		}
-		reset = true;
-	}
-
 }
 
 function subRow(){
@@ -163,6 +219,23 @@ function subRow(){
 	
 	for(i = 0; i < checkedRows.length; i++){
 		document.getElementById("resTable").deleteRow(checkedRows[i]+1);
+	}
+}
+
+function editRow(i){
+	console.log("I'm in edit: "+i)
+	if(document.getElementById("edit"+i).value == "Edit"){
+		document.getElementById("edit"+i).value = "OK";
+		
+		var table = document.getElementById("resTable");
+		table.rows[i+1].cells[1].innerHTML = "<input type='text'>";
+		table.rows[i+1].cells[2].innerHTML = "<select id='resStatus'><option value='Active'>Active</option><option value='Past'>Past</option><option value='Future'>Future</option></select>"
+		
+	}
+	else{
+		document.getElementById("edit"+i).value = "Edit";
+		
+		
 	}
 }
 
@@ -227,13 +300,28 @@ jQuery(document).ready(function() {
 					<option value="Future">Future</option>
 				</select>
 			</div><br>
-			
+			<input type="checkbox" id="typeCheck">Reservation type
+			<div class="dropdown">	
+				<select id="resType">
+					<option value="Individual">Individual</option>
+					<option value="Team">Team</option>
+				</select>
+			</div><br>
 			<input type="checkbox" id="roomNumCheck">Room Number
 			<div class="dropdown">	
 				<select id="roomNum">
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
+					<option value="1560">1560</option>
+					<option value="1561">1561</option>
+					<option value="1562">1562</option>
+					<option value="1563">1563</option>
+					<option value="1564">1564</option>
+					<option value="1565">1565</option>
+					<option value="1660">1660</option>
+					<option value="1661">1661</option>
+					<option value="1662">1662</option>
+					<option value="1663">1663</option>
+					<option value="1664">1664</option>
+					<option value="1665">1665</option>
 				</select>
 			</div><br>
 			
@@ -251,18 +339,14 @@ jQuery(document).ready(function() {
 					<tr align="center">
 						<td width="3%"></td>
 						<td>User</td>
-						<td>Type</td>
 						<td>Status</td>
+						<td>Type</td>
 						<td width="20%">Reservation Time</td>
 						<td> Time(hours)</td>
 						<td>Room</td>
 						<td>Operation</td>
 					</tr>
 				</table>
-				
-				<div class="center">
-					<input type="button" value="Sub Row" onclick="subRow()">
-				</div>
 			<br>
 			<br>
 			<div class="center">
