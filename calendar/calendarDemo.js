@@ -4,7 +4,7 @@
 var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap']);
 
 calendarDemoApp.controller('CalendarCtrl',
-   function($scope, $compile, $timeout, uiCalendarConfig) {
+   function($scope, $compile, $timeout, uiCalendarConfig, $http) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -41,7 +41,7 @@ calendarDemoApp.controller('CalendarCtrl',
 		var selectionStart = date.format();
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
-		
+		var view = $('#myCalendar1').fullCalendar('getView');
 		//alert(dateSaver);
         $scope.alertMessage = dateSaver;
 		
@@ -54,16 +54,24 @@ calendarDemoApp.controller('CalendarCtrl',
         if(dateSaver == todayCheck || selectionStart > today){
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+			//$http.post
 			for(timeIncrement = 0; timeIncrement < 24; timeIncrement++){
 				$scope.events.push({
 					title: 'Rooms Available [' + 11 + ']',
-					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement)
+					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
+					url: 'http://localhost:8000/app/reservationOptions.html'
+					//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
 				});
 			}
 		}
 		else{
-			alert("You have clicked a previous date");
-			}
+			//if(view.name == 'month'){
+				alert("You have clicked a previous date");
+			//}
+			//else{
+			//	alert("You have clicked a previous time slot");
+			//}
+		}
 	};
 
 	
@@ -129,7 +137,7 @@ calendarDemoApp.controller('CalendarCtrl',
     $scope.uiConfig = {
       calendar:{
         height: 450,
-        editable: true,
+        editable: false,
 		selectable: true,
         header:{
           left: 'title',
