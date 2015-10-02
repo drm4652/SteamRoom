@@ -8306,6 +8306,8 @@ function Calendar_constructor(element, overrides) {
 	function prev() {
 		date = currentView.computePrevDate(date);
 		renderView();
+			alert('prev is clicked, do something');
+	
 	}
 	
 	
@@ -8451,7 +8453,7 @@ Calendar.defaults = {
 	weekNumberTitle: 'W',
 	weekNumberCalculation: 'local',
 	
-	//editable: false,
+	editable: false,
 
 	scrollTime: '06:00:00',
 	
@@ -10406,7 +10408,7 @@ var BasicView = View.extend({
 ----------------------------------------------------------------------------------------------------------------------*/
 
 var MonthView = BasicView.extend({
-
+	
 	// Produces information about what range to display
 	computeRange: function(date) {
 		var range = BasicView.prototype.computeRange.call(this, date); // get value from super-method
@@ -10417,7 +10419,7 @@ var MonthView = BasicView.extend({
 			rowCnt = Math.ceil(range.end.diff(range.start, 'weeks', true)); // could be partial weeks due to hiddenDays
 			range.end.add(6 - rowCnt, 'weeks');
 		}
-
+	
 		return range;
 	},
 
