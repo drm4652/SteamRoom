@@ -8306,8 +8306,6 @@ function Calendar_constructor(element, overrides) {
 	function prev() {
 		date = currentView.computePrevDate(date);
 		renderView();
-			alert('prev is clicked, do something');
-	
 	}
 	
 	
@@ -8327,7 +8325,6 @@ function Calendar_constructor(element, overrides) {
 		date.add(1, 'years');
 		renderView();
 	}
-	
 	
 	function today() {
 		date = t.getNow();
@@ -10408,7 +10405,7 @@ var BasicView = View.extend({
 ----------------------------------------------------------------------------------------------------------------------*/
 
 var MonthView = BasicView.extend({
-	
+
 	// Produces information about what range to display
 	computeRange: function(date) {
 		var range = BasicView.prototype.computeRange.call(this, date); // get value from super-method
@@ -10446,7 +10443,6 @@ var MonthView = BasicView.extend({
 
 		return this.opt('fixedWeekCount');
 	}
-
 });
 
 ;;
