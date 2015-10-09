@@ -35,6 +35,7 @@ calendarDemoApp.controller('CalendarCtrl',
 	/*alert on DateClick */
 	$scope.alertOnDateClick = function(date, jsEvent, view, start, end, allDay){
 		//dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
+
 		dateSaver = date.format();
 		var today = moment();
 		var todayCheck = moment(today).format('YYYY-MM-DD');
@@ -55,7 +56,30 @@ calendarDemoApp.controller('CalendarCtrl',
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
 			//$http.post
-			for(timeIncrement = 0; timeIncrement < 24; timeIncrement++){
+			
+			$(".fc-next-button").click(function() {
+				for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
+					$scope.events.push({
+						title: 'Rooms Available [' + 11 + ']',
+						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
+						url: 'http://localhost:8000/app/reservationOptions.html'
+						//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
+					});
+				}			
+			});
+			
+			$(".fc-prev-button").click(function() {
+				for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
+					$scope.events.push({
+						title: 'Rooms Available [' + 11 + ']',
+						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
+						url: 'http://localhost:8000/app/reservationOptions.html'
+						//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
+					});
+				}			
+			});
+			
+			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
 				$scope.events.push({
 					title: 'Rooms Available [' + 11 + ']',
 					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
@@ -73,6 +97,9 @@ calendarDemoApp.controller('CalendarCtrl',
 			//}
 		}
 	};
+	
+	
+	
 
 	
 	
@@ -144,12 +171,16 @@ calendarDemoApp.controller('CalendarCtrl',
           center: '',
           right: 'month today prev,next'
         },
+		viewRender: function(view){
+			$('#myCalendar1').fullCalendar('removeEvents');
+		},
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
         eventRender: $scope.eventRender,
 		dayClick: $scope.alertOnDateClick,
-		timeClick: $scope.alertTest
+		timeClick: $scope.alertTest,
+		eventWipe: $scope.eventWipe
       }
     };
 
@@ -157,6 +188,6 @@ calendarDemoApp.controller('CalendarCtrl',
     /* event sources array*/
     $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
     $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-	$scope.eventSources3 = [$scope.alertOnDateClick, $scope.alertTest];
+	$scope.eventSources3 = [$scope.alertOnDateClick, $scope.alertTest, $scope.eventWipe];
 });
 /* EOF */
