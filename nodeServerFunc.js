@@ -1,5 +1,6 @@
 // set up =========================================
 var express = require('express');
+var session = require('express-session');
 var app = express();  //create app with express
 var mongoose = require('mongoose'); // mongoose for mongodb
 var morgan = require('morgan');
@@ -11,6 +12,7 @@ mongoose.connect('mongodb://localhost:27017/localSteam'); //connect to local mon
 
 
 app.set('port', 3000); //setting port to 8000
+app.use(session({secret: 'secretsecrets'}));
 //app.set('views', path.join(__dirname, 'views')); //this will have the views in the view folder
 app.use(morgan('dev')); // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'})); 
@@ -19,6 +21,7 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 //app.set('view engine', 'jade'); //set jade as the templating engine
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override head in the request
 app.use(express.static(path.join(__dirname, 'views'))); // set the public directory as our asset holder
+app.engine('html', require('ejs').renderfile);
 
 // routes =========================================
 require('./app/js/routes.js')(app);
