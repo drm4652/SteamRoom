@@ -12,7 +12,10 @@ function getReservations(res) {
 module.exports = function(app) {
 	
 	var sesh;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 7365bcb77f6924f2f3e87847465405ec1d7a4de2
 	//get all reservations
 	app.get('api/reservations', function(req, res) {
 		//use mongoose to get all reservations in database
