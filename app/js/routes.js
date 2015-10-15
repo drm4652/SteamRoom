@@ -10,12 +10,37 @@ function getReservations(res) {
 };
 
 module.exports = function(app) {
-	
+	//declare session variable to store session data
 	var sesh;
-<<<<<<< HEAD
 	
-=======
->>>>>>> 7365bcb77f6924f2f3e87847465405ec1d7a4de2
+	//will render login page when no username is in session
+	app.get('/', function(req, res) {
+		sesh = req.session;
+		if(sesh.username) {
+			res.redirect('/landing');
+		}
+		else {
+			res.render('index.html');
+		}
+	});
+	
+	//assigns the usename to sesh.username in order to log in
+	//the username is obtained from the 
+	app.post('/login', function(req, res) {
+		sesh = req.session;
+		sesh.username=req.body.username;
+		res.end('done');
+	});
+	
+	app.get('/landing', function(req, res) {
+		sesh = req.session;
+		if(sesh.username) {
+			res.render('landing.html');
+		}
+		else {
+			res.redirect('/');
+		}
+	});
 	//get all reservations
 	app.get('api/reservations', function(req, res) {
 		//use mongoose to get all reservations in database
