@@ -5,49 +5,65 @@
 
 <head>
   <!-- SCROLLS -->
-  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
   <!-- SPELLS -->
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-  <script src="script.js"></script>
+  <script type="text/javascript" src="script.js"></script>
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
+  <script src="../bower_components/angular/angular.js"></script>
+  <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+  <script src="../bower_components/moment/moment.js"></script>
+  <script type="text/javascript" src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>
+  <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
+  <script type="text/javascript" src="../src/calendar.js"></script>
+  <script type="text/javascript" src="../calendar/calendarDemo.js"></script>
+  
 </head>
 
 <!-- define angular controller -->
 <body ng-controller="mainController">
 
   <nav class="navbar navbar-default">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">Home</a>
-      </div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<form id="form_search" name="form_search" method="get" action="" class="form-inline navbar-brand">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Keywords.." ng-model="keywords">
 
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+				</span>
+			</div>
+		</div>
+		</form>
+    </div>
+    <div>
       <ul class="nav navbar-nav navbar-right">
+	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
+        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
+        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+		
       </ul>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <div id="main">
-	    <label>
-	    <input type="radio" ng-model="radio.name" value="Phone Line">
-		Phone Line
-		</label><br/>
-		<label>
-		<input type="radio" ng-model="radio.name" value="Webcam">
-		Webcam
-		</label><br/>
-        <label>
-		<input type="radio" ng-model="radio.name" value="None" ng-checked="true">
-		None
-		</label><br/>
+
+  <div id="main" style="text-align:center">
+  
+    <div ng-view></div>
+
+  </div>
     <!-- angular templating -->
 		<!-- this is where content will be injected -->
-    <div ng-view></div>
     
-  </div>
   
- 
+  
   
 </body>
 

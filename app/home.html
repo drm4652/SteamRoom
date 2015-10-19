@@ -1,0 +1,46 @@
+<html lang="en" ng-app="calendarDemoApp" id="top">
+
+<script src="../bower_components/jquery/dist/jquery.js"></script>
+
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
+    <script src="../bower_components/moment/moment.js"></script>
+    <script type="text/javascript" src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
+    <script type="text/javascript" src="../src/calendar.js"></script>
+    <script type="text/javascript" src="../calendar/calendarDemo.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+
+
+<div class="jumbotron text-center">
+    		
+<div id="main" style="text-align:center">
+
+		<p>{{ message }}</p>
+		
+        <p>Reserving a team room as</p>
+	    <select name="team">
+		
+	<?php $sql = mysql_query("SELECT username FROM users");
+	while ($row = mysql_fetch_array($sql)){
+	echo "<option value=\"team1\">" . $row['username'] . "</option>";
+	}
+	?>
+	
+		</select>
+    </div>
+    <div style="text-align:center">
+	    <label>
+			<input type="radio" name="roomOption" ng-model="room.option" >
+		Phone Line</label><br/>
+	
+		<label>
+			<input type="radio" name="roomOption" ng-model="room.option" >
+		Webcam</label><br/>
+		
+		<label>
+			<input type="radio" name="roomOption" ng-model="room.option" checked>
+		None</label><br/>	
+    </div>
+</div>
+</html>

@@ -3,6 +3,9 @@
  */
 var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap']);
 
+	var globalDate = '';
+	var globalTime = '';
+
 calendarDemoApp.controller('CalendarCtrl',
    function($scope, $compile, $timeout, uiCalendarConfig, $http) {
     var date = new Date();
@@ -45,16 +48,10 @@ calendarDemoApp.controller('CalendarCtrl',
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
 		var view = $('#myCalendar1').fullCalendar('getView');
-		//alert(dateSaver);
         $scope.alertMessage = dateSaver;
-		/*
-		dayClicked = dateSaver.substring(8,11);
-		dayClicked = parseInt(dayClicked);
-		monthClicked = dateSaver.substring(5,7);
-		monthClicked = parseInt(monthClicked) - 1;
-		yearClicked = dateSaver.substring(0,4);
-		yearClicked = parseInt(yearClicked);
-		*/
+		globalDate = dateSaver;
+		localStorage.setItem("globalDate", globalDate);
+		
 		yearClicked = date.format('YYYY');
 		yearClicked = parseInt(yearClicked);
 		monthClicked = date.format('MM');
@@ -62,24 +59,24 @@ calendarDemoApp.controller('CalendarCtrl',
 		dayClicked = date.format('DD');
 		dayClicked = parseInt(dayClicked);
 		//alert(date);
+
 		
 		
         if(dateSaver == todayCheck || selectionStart > today){
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
 			//$http.post
-			
 
 
 			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
 				$scope.events.push({
+					id: timeIncrement,
 					title: 'Rooms Available [' + 11 + ']',
 					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
 					url: 'http://localhost:8000/app/reservationIndex.html'
 					//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
 				});
 			}	
-			
 			
 		}
 		else{
@@ -90,12 +87,15 @@ calendarDemoApp.controller('CalendarCtrl',
 			//	alert("You have clicked a previous time slot");
 			//}
 		}
-	};
+};
+	
 	
 	
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
         $scope.alertMessage = (date.title + ' was clicked ');
+		globalTime = date.id;
+		localStorage.setItem("globalTime", globalTime);
     };
     /* alert on Drop */
      $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
