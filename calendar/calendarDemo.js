@@ -3,6 +3,9 @@
  */
 var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap']);
 
+	var globalDate = '';
+	var globalTime = '';
+
 calendarDemoApp.controller('CalendarCtrl',
    function($scope, $compile, $timeout, uiCalendarConfig, $http) {
     var date = new Date();
@@ -17,10 +20,12 @@ calendarDemoApp.controller('CalendarCtrl',
             url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
             className: 'gcal-event',           // an option!
             currentTimezone: 'America/Chicago' // an option!
+			
     };
+	
     /* event source that contains custom events on the scope */
     $scope.events = [
-	//	{title: 'test dummy', start: new Date(y, m, 11)}
+      //{title: 'Click for Google',start: new Date(y, m, 28, 10),url: 'http://google.com/'}
 	];
 		
     /* event source that calls a function on every view switch */
@@ -43,50 +48,36 @@ calendarDemoApp.controller('CalendarCtrl',
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
 		var view = $('#myCalendar1').fullCalendar('getView');
-		//alert(dateSaver);
         $scope.alertMessage = dateSaver;
+		globalDate = dateSaver;
+		localStorage.setItem("globalDate", globalDate);
 		
-		dayClicked = dateSaver.substring(8,11);
-		dayClicked = parseInt(dayClicked);
-		monthClicked = dateSaver.substring(5,7);
-		monthClicked = parseInt(monthClicked) - 1;
-		yearClicked = dateSaver.substring(0,4);
+		yearClicked = date.format('YYYY');
 		yearClicked = parseInt(yearClicked);
+		monthClicked = date.format('MM');
+		monthClicked = parseInt(monthClicked) - 1;
+		dayClicked = date.format('DD');
+		dayClicked = parseInt(dayClicked);
+		//alert(date);
+
+		
+		
         if(dateSaver == todayCheck || selectionStart > today){
 			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
 			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
 			//$http.post
-			
-			$(".fc-next-button").click(function() {
-				for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
-					$scope.events.push({
-						title: 'Rooms Available [' + 11 + ']',
-						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-						url: 'http://localhost:8000/app/reservationOptions.html'
-						//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
-					});
-				}			
-			});
-			
-			$(".fc-prev-button").click(function() {
-				for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
-					$scope.events.push({
-						title: 'Rooms Available [' + 11 + ']',
-						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-						url: 'http://localhost:8000/app/reservationOptions.html'
-						//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
-					});
-				}			
-			});
-			
+
+
 			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
 				$scope.events.push({
+					id: timeIncrement,
 					title: 'Rooms Available [' + 11 + ']',
 					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-					url: 'http://localhost:8000/app/reservationOptions.html'
+					url: 'http://localhost:8000/app/reservationIndex.html'
 					//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
 				});
-			}
+			}	
+			
 		}
 		else{
 			//if(view.name == 'month'){
@@ -96,16 +87,15 @@ calendarDemoApp.controller('CalendarCtrl',
 			//	alert("You have clicked a previous time slot");
 			//}
 		}
-	};
+};
 	
-	
-	
-
 	
 	
     /* alert on eventClick */
     $scope.alertOnEventClick = function( date, jsEvent, view){
         $scope.alertMessage = (date.title + ' was clicked ');
+		globalTime = date.id;
+		localStorage.setItem("globalTime", globalTime);
     };
     /* alert on Drop */
      $scope.alertOnDrop = function(event, delta, revertFunc, jsEvent, ui, view){
@@ -132,8 +122,8 @@ calendarDemoApp.controller('CalendarCtrl',
     $scope.addEvent = function() {
       $scope.events.push({
         title: 'Open Sesame',
-        start: new Date(y, m, 28),
-        end: new Date(y, m, 29),
+        //start: new Date(yearClicked, monthClicked, dayClicked),
+        //end: new Date(yearClicked, monthClicked, dayClicked),
         className: ['openSesame']
       });
     };
@@ -163,16 +153,26 @@ calendarDemoApp.controller('CalendarCtrl',
     /* config object */
     $scope.uiConfig = {
       calendar:{
-        height: 450,
+        height: 650,
         editable: false,
 		selectable: true,
         header:{
-          left: 'title',
-          center: '',
-          right: 'month today prev,next'
+          left: 'month',
+          center: 'title',
+          right: 'today prev,next'
         },
 		viewRender: function(view){
 			$('#myCalendar1').fullCalendar('removeEvents');
+			if(view.name == 'agendaDay'){
+				$("#myCalendar1 .fc-next-button").hide();
+				$("#myCalendar1 .fc-prev-button").hide();
+				$("#myCalendar1 .fc-today-button").hide();
+			}
+			else{
+				$("#myCalendar1 .fc-next-button").show();
+				$("#myCalendar1 .fc-prev-button").show();
+				$("#myCalendar1 .fc-today-button").show();
+			}
 		},
         eventClick: $scope.alertOnEventClick,
         eventDrop: $scope.alertOnDrop,

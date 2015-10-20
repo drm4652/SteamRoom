@@ -289,55 +289,55 @@ a:focus {
 .navbar-static-top .container,
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container {
-  width: 940px;
+  width: auto;
 }
-
+/* 940/860/780/700/620/540/460/380/300/220/140/60 */
 .span12 {
-  width: 940px;
+  width: auto;
 }
 
 .span11 {
-  width: 860px;
+  width: auto;
 }
 
 .span10 {
-  width: 780px;
+  width: auto;
 }
 
 .span9 {
-  width: 700px;
+  width: auto;
 }
 
 .span8 {
-  width: 620px;
+  width: auto;
 }
 
 .span7 {
-  width: 540px;
+  width: auto;
 }
 
 .span6 {
-  width: 460px;
+  width: auto;
 }
 
 .span5 {
-  width: 380px;
+  width: auto;
 }
 
 .span4 {
-  width: 300px;
+  width: auto;
 }
 
 .span3 {
-  width: 220px;
+  width: auto;
 }
 
 .span2 {
-  width: 140px;
+  width: auto;
 }
 
 .span1 {
-  width: 60px;
+  width: auto;
 }
 
 .offset12 {
@@ -425,62 +425,73 @@ a:focus {
 }
 
 .row-fluid .span12 {
-  width: 100%;
+  width: 98%;
   *width: 99.94680851063829%;
 }
 
 .row-fluid .span11 {
-  width: 91.48936170212765%;
+  width: 98%;
+  *width: 91.48936170212765%;
   *width: 91.43617021276594%;
 }
 
 .row-fluid .span10 {
-  width: 82.97872340425532%;
+  width: 98%;
+  *width: 82.97872340425532%;
   *width: 82.92553191489361%;
 }
 
 .row-fluid .span9 {
-  width: 74.46808510638297%;
+  width: 98%;
+  *width: 74.46808510638297%;
   *width: 74.41489361702126%;
 }
 
 .row-fluid .span8 {
-  width: 65.95744680851064%;
+  width: 98%;
+  *width: 65.95744680851064%;
   *width: 65.90425531914893%;
 }
 
 .row-fluid .span7 {
-  width: 57.44680851063829%;
+  width: 98%;
+  *width: 57.44680851063829%;
   *width: 57.39361702127659%;
 }
 
 .row-fluid .span6 {
-  width: 48.93617021276595%;
+  width: 98%;
+  *width: 48.93617021276595%;
   *width: 48.88297872340425%;
 }
 
 .row-fluid .span5 {
-  width: 40.42553191489362%;
+  width: 98%;
+  *width: 40.42553191489362%;
   *width: 40.37234042553192%;
 }
 
 .row-fluid .span4 {
-  width: 31.914893617021278%;
+  width: 98%;
+  *width: 31.914893617021278%;
   *width: 31.861702127659576%;
 }
 
 .row-fluid .span3 {
-  width: 23.404255319148934%;
+  width: 98%;
+  *width: 23.404255319148934%;
   *width: 23.351063829787233%;
 }
 
 .row-fluid .span2 {
-  width: 14.893617021276595%;
+  width: 98%;
+  *width: 14.893617021276595%;
   *width: 14.840425531914894%;
 }
 
 .row-fluid .span1 {
-  width: 6.382978723404255%;
+  width: 98%;
+  *width: 6.382978723404255%;
   *width: 6.329787234042553%;
 }
 
@@ -603,7 +614,7 @@ a:focus {
   margin-left: 8.51063829787234%;
   *margin-left: 8.404255319148938%;
 }
-
+/*test*/
 [class*="span"].hide,
 .row-fluid [class*="span"].hide {
   display: none;
@@ -846,7 +857,7 @@ ol.inline > li {
   padding-left: 5px;
   *zoom: 1;
 }
-
+/*test*/
 dl {
   margin-bottom: 20px;
 }
@@ -1833,6 +1844,7 @@ input.search-query {
   -webkit-border-radius: 15px;
      -moz-border-radius: 15px;
           border-radius: 15px;
+		  /*test*/
 }
 
 /* Allow for input prepend/append in search forms */
