@@ -1,0 +1,111 @@
+<html>
+<head>
+  <script src="jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="tabs.css">
+  <link rel="stylesheet" href="multiroom.css">
+  <script src="multiroom.js"></script>
+</head>
+<body>
+<script>
+jQuery(document).ready(function() {
+    jQuery('.tabs .tab-links a').on('click', function(e)  {
+        var currentAttrValue = jQuery(this).attr('href');
+ 
+        // Show/Hide Tabs
+        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+ 
+        // Change/remove current tab to active
+        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+ 
+        e.preventDefault();
+    });
+});
+</script>
+
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<form id="form_search" name="form_search" method="get" action="" class="form-inline navbar-brand">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Keywords.." ng-model="keywords">
+
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+				</span>
+			</div>
+		</div>
+		</form>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
+        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
+        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+		
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="tabs">
+    <ul class="tab-links">
+        <li class="active"><a href="#tab1">Rooms</a></li>
+        <li><a href="#tab2">Day</a></li>
+        <li><a href="#tab3">Date</a></li>
+		<li><a href="#tab4">Time</a></li>
+    </ul>
+ 
+    <div class="tab-content">
+        <div id="tab1" class="tab active">
+		Enter the number of rooms <input type="text" id="numRooms" "size="1" value="">
+		</div>
+        <div id="tab2" class="tab">
+		Select the days of the week
+		<table id="dateTable" class="table_fields" border="1">
+			<tr class="table_fields_top">
+				<td height="100px" onclick="dateClick(0)">SUN</td>
+				<td onclick="dateClick(1)">MON</td>
+				<td onclick="dateClick(2)">TUE</td>
+				<td onclick="dateClick(3)">WED</td>
+				<td onclick="dateClick(4)">THU</td>
+				<td onclick="dateClick(5)">FRI</td>
+				<td onclick="dateClick(6)">SAT</td>
+			</tr>
+		</table>
+        </div>
+        <div id="tab3" class="tab">
+			<input type="text" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""> between <input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value="">
+		</div>
+		<div id="tab4" class="tab">
+		Select the start and end time<br>
+		<table id="timeTable" class="table_fields" border="1">
+			<tr class="table_fields_top">
+				<td height="50px" onclick="timeClick(0)">8</td>
+				<td onclick="timeClick(1)">9</td>
+				<td onclick="timeClick(2)">10</td>
+				<td onclick="timeClick(3)">11</td>
+				<td onclick="timeClick(4)">12</td>
+				<td onclick="timeClick(5)">1</td>
+				<td onclick="timeClick(6)">2</td>
+				<td onclick="timeClick(7)">3</td>
+				<td onclick="timeClick(8)">4</td>
+				<td onclick="timeClick(9)">5</td>
+				<td onclick="timeClick(10)">6</td>
+				<td onclick="timeClick(11)">7</td>
+				<td onclick="timeClick(12)">8</td>
+				<td onclick="timeClick(13)">9</td>
+				<td onclick="timeClick(14)">10</td>
+			</tr>
+		</table>
+		</div>
+    </div>
+</div>
+<input type="Button" value="Reserve" onclick="validateForm()"><br><br>
+<div id="errors"></div>
+</body>
+
+
+</html>

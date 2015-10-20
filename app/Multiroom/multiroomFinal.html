@@ -1,0 +1,23 @@
+<html>
+<head>
+
+</head>
+<body>
+
+Number of rooms: <div id="numRooms"></div>
+Days: <div id="dates"></div>
+Start Date: <div id="startDate"></div>
+End Date: <div id="endDate"></div>
+Start Time: <div id="startTime"></div>
+End Time: <div id="endTime"></div>
+
+
+<script>
+	document.getElementById("numRooms").innerHTML = sessionStorage.getItem("numRooms");
+	document.getElementById("dates").innerHTML = sessionStorage.getItem("dates");
+	document.getElementById("startDate").innerHTML = sessionStorage.getItem("startDate");
+	document.getElementById("endDate").innerHTML = sessionStorage.getItem("endDate");
+</script>
+
+</body>
+</html>
