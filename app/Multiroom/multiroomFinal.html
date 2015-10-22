@@ -1,8 +1,37 @@
-<html>
+<html ng-app="scotchApp">
 <head>
-
+   <!-- SCROLLS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
 </head>
-<body>
+<body ng-controller="mainController">
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+		<form id="form_search" name="form_search" method="get" action="" class="form-inline navbar-brand">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Keywords.." ng-model="keywords">
+
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
+				</span>
+			</div>
+		</div>
+		</form>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
+        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
+        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 Number of rooms: <div id="numRooms"></div><br>
 Days: <div id="dates"></div><br>
@@ -10,7 +39,7 @@ Start Date: <div id="startDate"></div><br>
 End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
-
+<input type="button" value="Confirm">
 
 <script>
 	document.getElementById("numRooms").innerHTML = sessionStorage.getItem("numRooms");

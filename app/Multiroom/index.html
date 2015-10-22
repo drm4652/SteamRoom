@@ -1,9 +1,18 @@
-<html>
+<!--
+BUG: Date validation bug between months and days
+Feature: Start date should not be in the past (Month and Day)
+-->
+
+<html ng-app="scotchApp">
 <head>
   <script src="jquery-2.1.4.min.js"></script>
   <link rel="stylesheet" href="tabs.css">
   <link rel="stylesheet" href="multiroom.css">
   <script src="multiroom.js"></script>
+   <!-- SCROLLS -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
 </head>
 <body>
 <script>
@@ -44,7 +53,6 @@ jQuery(document).ready(function() {
         <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
         <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
         <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
-		
       </ul>
     </div>
   </div>
@@ -60,7 +68,7 @@ jQuery(document).ready(function() {
  
     <div class="tab-content">
         <div id="tab1" class="tab active">
-		Enter the number of rooms <input type="text" id="numRooms" "size="1" value="">
+		Enter the number of rooms <input type="text" id="numRooms" size="1" value="">
 		</div>
         <div id="tab2" class="tab">
 		Select the days of the week
@@ -77,6 +85,7 @@ jQuery(document).ready(function() {
 		</table>
         </div>
         <div id="tab3" class="tab">
+			Enter a date range<br>
 			<input type="text" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""> between <input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value="">
 		</div>
 		<div id="tab4" class="tab">
