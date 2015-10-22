@@ -4,12 +4,12 @@
 </head>
 <body>
 
-Number of rooms: <div id="numRooms"></div>
-Days: <div id="dates"></div>
-Start Date: <div id="startDate"></div>
-End Date: <div id="endDate"></div>
-Start Time: <div id="startTime"></div>
-End Time: <div id="endTime"></div>
+Number of rooms: <div id="numRooms"></div><br>
+Days: <div id="dates"></div><br>
+Start Date: <div id="startDate"></div><br>
+End Date: <div id="endDate"></div><br>
+Start Time: <div id="startTime"></div><br>
+End Time: <div id="endTime"></div><br>
 
 
 <script>
@@ -17,6 +17,8 @@ End Time: <div id="endTime"></div>
 	document.getElementById("dates").innerHTML = sessionStorage.getItem("dates");
 	document.getElementById("startDate").innerHTML = sessionStorage.getItem("startDate");
 	document.getElementById("endDate").innerHTML = sessionStorage.getItem("endDate");
+	document.getElementById("startTime").innerHTML = sessionStorage.getItem("startTime");
+	document.getElementById("endTime").innerHTML = sessionStorage.getItem("endTime");
 </script>
 
 </body>
