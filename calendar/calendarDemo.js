@@ -5,6 +5,7 @@ var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.boot
 
 	var globalDate = '';
 	var globalTime = '';
+	var dateSaver = '';
 
 calendarDemoApp.controller('CalendarCtrl',
    function($scope, $compile, $timeout, uiCalendarConfig, $http) {
@@ -38,7 +39,7 @@ calendarDemoApp.controller('CalendarCtrl',
     };
 
 	/*alert on DateClick */
-	$scope.alertOnDateClick = function(date, jsEvent, view, start, end, allDay){
+	$scope.alertOnDateClick = function(date, jsEvent, view, start, end, allDay, cell){
 		//dateSaver = $scope.alertMessage = ('Clicked on: ' + date.format());
 
 		dateSaver = date.format();
@@ -163,6 +164,10 @@ calendarDemoApp.controller('CalendarCtrl',
         },
 		viewRender: function(view){
 			$('#myCalendar1').fullCalendar('removeEvents');
+			//var fullCalendarDayContainers = $theCalendar.find( 'td[class*="fc-day"]' );
+			//foundDay = $currentContainer;
+
+			//dateSaver.addClass( 'selected-day' );
 			if(view.name == 'agendaDay'){
 				$("#myCalendar1 .fc-next-button").hide();
 				$("#myCalendar1 .fc-prev-button").hide();

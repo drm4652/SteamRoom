@@ -1,5 +1,7 @@
 	// create the module and name it scotchApp
 	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+	var globalMessage = '';
+	/*
 function SearchCtrl($scope, $http) {
 	$scope.url = 'search.php'; // The url of our search
 		
@@ -23,6 +25,8 @@ function SearchCtrl($scope, $http) {
 		
 	};
 }
+	*/
+	
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
 		$routeProvider
@@ -43,6 +47,16 @@ function SearchCtrl($scope, $http) {
 			.when('/settings', {
 				templateUrl : 'settings.html',
 				controller  : 'settingsController'
+			})
+			
+			.when('/myReservation', {
+				templateUrl : 'myReservation.html',
+				controller  : 'myReservationController'
+			})
+			
+			.when('/confirm',{
+				templateUrl : 'confirm.html',
+				controller  : 'confirmController'
 			});
 	});
 
@@ -65,16 +79,29 @@ function SearchCtrl($scope, $http) {
 		else{
 			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'am';
 		}
-		
-		$scope.message = globalDate + ' @ ' + globalTime;
+		globalMessage = globalDate + ' @ ' + globalTime
+		$scope.message = globalMessage;
 
+		$scope.doTheBack = function($scope){
+			window.history.back();
+			$('#test').fullCalendar( 'changeView', 'agendaDay' );
+			$('#test').fullCalendar( 'gotoDate', date.format());
+		}
 		
 	});
 
 	scotchApp.controller('aboutController', function($scope) {
-		$scope.alertMessage = 'Look! I am an about page.';
+		$scope.message = 'Look! I am an about page.';
+	});
+	
+	scotchApp.controller('myReservationController', function($scope) {
+		$scope.message = 'Look! I am an about page.';
 	});
 
+	scotchApp.controller('confirmController', function($scope) {
+		$scope.message = 'Your reservation on ' + globalMessage + ' has been accepted';
+	});
+	
 	scotchApp.controller('settingsController', function($scope) {
 		$scope.message = 'Contact us! JK. This is just a demo.';
 	});
