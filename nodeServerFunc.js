@@ -27,7 +27,7 @@ app.engine('html', require('ejs').renderfile);
 require('./app/js/routes.js')(app);
 
 // listen (start app with node nodeServerFunc.js)
-app.listen(app.get('port'));
+//app.listen(app.get('port'));
 console.log("App listening on port " + app.get('port'));
 
 //This is used in order to retrieve a list of reservations of the
@@ -50,7 +50,4 @@ app.get('/views', (function(req, res) {
   });
 }));
 
-app.get('/', (function(req, res) {
-  "use strict";
-   })
-);
+module.exports = app;

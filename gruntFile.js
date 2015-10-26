@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function (grunt) {
   "use strict";
 
@@ -46,18 +48,20 @@ module.exports = function (grunt) {
         dest: 'calendar.min.js'
       }
     },
-    connect: {
-      server: {
-        options: {
-          port: 8000,
-            open: true,
-            debug: true,
-            keepalive: true,
-            hostname: '*',
-            base: ['app', '.']
-          }
-        }
-    }
+	express: {
+		server: {
+			options: {
+				port: 3000,
+				hostname: 'localhost'
+			}
+		},
+		myServer: {
+			server: path.resolve(__dirname, 'nodeServerFunc.js')
+		}
+	}
   });
-
+  
+  grunt.loadNpmTasks('grunt-express');
+  
+  grunt.registerTask('default',['express']);
 };

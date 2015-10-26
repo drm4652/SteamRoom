@@ -3,19 +3,26 @@
   "private": true,
   "name": "Steamroom",
   "description": "Team room reservation app and a complete AngularJS directive for the Arshaw FullCalendar.",
-  "repository": "https://github.com/drm4652/SteamRoom",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angular-ui/ui-calendar.git"
+  },
   "authorCalendar": "https://github.com/angular-ui/ui-calendar/graphs/contributors",
   "license": "MIT",
   "homePageCalendar": "http://angular-ui.github.com",
   "homePageSteamRoom": "https://se.rit.edu/~steamroom",
   "mainCalendar": "src/calendar.js",
   "devDependencies": {
+    "bower": "^1.3.1",
     "express": "^4.13.3",
+    "express-session": "^1.11.3",
     "grunt": "^0.4.5",
     "grunt-contrib-connect": "^0.10.1",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-contrib-uglify": "^0.9.1",
+    "grunt-express": "^1.4.1",
     "grunt-karma": "^0.11.1",
+    "http-server": "^0.6.1",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.37",
     "karma-chrome-launcher": "^0.2.0",
@@ -24,33 +31,21 @@
     "karma-jasmine": "^0.3.5",
     "load-grunt-tasks": "^3.2.0",
     "matchdep": "^0.3.0",
-    "http-server": "^0.6.1",
-	"protractor": "^0.6.1",
-	"tmp": "0.0.23",
-	"bower": "^1.3.1",
-	"shelljs": "^0.2.6"
+    "protractor": "^0.6.1",
+    "shelljs": "^0.2.6",
+    "tmp": "0.0.23"
   },
   "scripts": {
-	"postinstall": "bower install",
-	"prestart": "npm install",
-	"test": "grunt",
-
-    "start": "http-server -a 0.0.0.0 -p 8000",
-
-    "pretest": "npm install",
+    "postinstall": "bower install",
+    "prestart": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
+    "start": "http-server -a 0.0.0.0 -p 8000",
+    "pretest": "npm install",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
-
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
-
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
-
     "update-index-async": "node -e \"require('shelljs/global'); sed('-i', /\\/\\/@@NG_LOADER_START@@[\\s\\S]*\\/\\/@@NG_LOADER_END@@/, '//@@NG_LOADER_START@@\\n' + cat('bower_components/angular-loader/angular-loader.min.js') + '\\n//@@NG_LOADER_END@@', 'app/index-async.html');\""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/angular-ui/ui-calendar.git"
   }
 }
