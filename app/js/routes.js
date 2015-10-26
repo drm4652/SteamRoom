@@ -1,7 +1,7 @@
 var Reservation = require('./models/reservation');
 
-function getReservations(res) {
-	Reservation.find(function(err, reservations) {
+function getReservations(req, res) {
+	Reservation.findOne({ 'username': req.session.username }, function(err, reservations) {
 		if(err) {
 			res.send(err);
 		}
@@ -20,7 +20,7 @@ module.exports = function(app) {
 			res.redirect('/landing');
 		}
 		else {
-			res.render('index.html');
+			res.render('app/index.html');
 		}
 	});
 	
@@ -32,19 +32,22 @@ module.exports = function(app) {
 		res.end('done');
 	});
 	
+	//If there is session data then the user is sent
+	//to the landing.html page
 	app.get('/landing', function(req, res) {
 		sesh = req.session;
 		if(sesh.username) {
-			res.render('landing.html');
+			res.render('app/landing.html');
 		}
 		else {
 			res.redirect('/');
 		}
 	});
+	
 	//get all reservations
-	app.get('api/reservations', function(req, res) {
-		//use mongoose to get all reservations in database
-		getReservations(res);
+	app.get('api/myReservations', function(req, res) {
+		//use mongoose to get's current user's reservations in database
+		getReservations(req, res);
 	});
 	
 	// create todo and send back all todos after creation
@@ -64,14 +67,14 @@ module.exports = function(app) {
 	});
 	
 	//delete a reservation
-	app.delete('/api/reservations/:reserver_id', function(req, res) {
+	app.delete('/api/myReservations/:reserver_id', function(req, res) {
 		Reservation.remove({
 			_id : req.params.reservation_id
 		}, function(err, todo) {
 			if(err) {
 				res.send(err);
 			}
-			getReservations(res);
+			getReservations(req, res);
 		});
 	});
 	
