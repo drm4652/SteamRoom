@@ -49,11 +49,8 @@ module.exports = function (grunt) {
       }
     },
 	express: {
-		server: {
-			options: {
-				port: 3000,
-				hostname: 'localhost'
-			}
+		options: {
+			hostname: 'localhost'
 		},
 		myServer: {
 			server: path.resolve(__dirname, 'nodeServerFunc.js')
@@ -61,7 +58,8 @@ module.exports = function (grunt) {
 	}
   });
   
+  
   grunt.loadNpmTasks('grunt-express');
   
-  grunt.registerTask('default',['express']);
+  grunt.registerTask('myServer',['express', 'express-keepalive']);
 };

@@ -15,12 +15,15 @@ module.exports = function(app) {
 	
 	//will render login page when no username is in session
 	app.get('/', function(req, res) {
+		//res.send('hello world');
 		sesh = req.session;
 		if(sesh.username) {
 			res.redirect('/landing');
 		}
 		else {
-			res.render('app/index.html');
+			res.render('app/index', function(err, html){
+				res.send(html);
+			});
 		}
 	});
 	
@@ -82,4 +85,4 @@ module.exports = function(app) {
 	app.get('*', function(req, res) {
 		res.sendfile('./views/listReservations.html'); // load the single view file
 	});
-});
+};
