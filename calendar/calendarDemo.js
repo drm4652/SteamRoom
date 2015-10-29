@@ -74,8 +74,8 @@ calendarDemoApp.controller('CalendarCtrl',
 					id: timeIncrement,
 					title: 'Rooms Available [' + 11 + ']',
 					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-					url: 'http://localhost:8000/app/reservationIndex.html'
-					//url: 'http://steamroom.se.rit.edu/app/reservationOptions.html'
+					url: 'http://localhost:3000/ReservationIndex.html'
+					//url: 'http://steamroom.se.rit.edu/reservationOptions.html'
 				});
 			}	
 			

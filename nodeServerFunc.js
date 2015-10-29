@@ -22,12 +22,17 @@ app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override head in the request
-//app.use('static', express.static(__dirname + '/app')); // set the public directory as our asset holder
-app.set('view engine', 'html');
-app.engine('html', require('ejs').renderfile);
+// set the public directory as our asset holder
+app.use(express.static(__dirname + '/app'));
+// set calendar as another static asset
+app.use('/calendar', express.static(__dirname + '/calendar'));
+// set bower_components as a static asset to load on the page
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+//app.set('view engine', 'html');
+//app.engine('html', require('ejs').renderfile);
 
 // routes =========================================
-require('./app/js/routes.js')(app);
+require('./routes/routes.js')(app);
 
 
 // listen (start app with node nodeServerFunc.js)
@@ -53,5 +58,3 @@ console.log("App listening on port " + app.get('port'));
    // }
   //});
 //}));
-
-module.exports = app;

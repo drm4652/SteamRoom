@@ -82,7 +82,7 @@ module.exports = function(app) {
 	});
 	
 	//application
-	app.get('*', function(req, res) {
-		res.sendfile('./views/listReservations.html'); // load the single view file
-	});
+	// app.get('*', function(req, res) {
+		// res.sendfile('./views/listReservations.html'); // load the single view file
+	// });
 };
