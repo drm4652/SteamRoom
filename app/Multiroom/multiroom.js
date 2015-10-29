@@ -2,8 +2,6 @@
 var dateSelected;
 dateSelected = [false,false,false,false,false,false,false];
 var numDateSelected = 0;
-timeSelected = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
-var numTimeSelected = 0;
 var numRooms = 0;
 
 function dateClick(number) {
@@ -21,22 +19,6 @@ function dateClick(number) {
 	}
 }
 
-function timeClick(number) {
-
-    var x = document.getElementById("timeTable").getElementsByTagName("td");
-	
-	if(timeSelected[number] === false && numTimeSelected < 2){
-		x[number].style.backgroundColor = "#a7cce5";
-		timeSelected[number] = true;
-		numTimeSelected++;
-	}
-	else if(timeSelected[number] == true){
-	    x[number].style.backgroundColor = "#B2B2B2";
-		timeSelected[number] = false;
-		numTimeSelected--;
-	}
-
-}
 
 function validateForm(){
 
@@ -67,11 +49,13 @@ function validateForm(){
 	if(!checkChronological(startDateValue, endDateValue)){
 		document.getElementById("errors").innerHTML += "Start Date must be before End Date<br>";
 	}
+			var startTime = "";
+		var endTime = "";
+		
+		startTime = document.getElementById("startTime").value;
+		endTime = document.getElementById("endTime").value;
+				console.log(startTime);
 	
-	if(numTimeSelected !== 2){
-		document.getElementById("errors").innerHTML += "You must select a start time and end time.";
-	}
-
 	if(document.getElementById("errors").innerHTML === ""){
 		sessionStorage.setItem("numRooms", numRooms);
 		
@@ -105,138 +89,9 @@ function validateForm(){
 		sessionStorage.setItem("startDate", startDateValue);
 		sessionStorage.setItem("endDate", endDateValue);
 		
-		var startTime = "";
-		var endTime = "";
+
 		
-		for(i = 0; i < timeSelected.length;i++){
-			if(timeSelected[i]){
-				if(i === 0){
-					if(startTime === ""){
-						startTime = "7am";
-					}
-				}
-				if(i === 1){
-					if(endTime === "" && startTime !== ""){
-						endTime = "8am";
-					}
-					if(startTime === ""){
-						startTime = "8am";
-					}
-				}
-				if(i === 2){
-					if(endTime === "" && startTime !== ""){
-						endTime = "9am";
-					}
-					if(startTime === ""){
-						startTime = "9am";
-					}
-				}
-				if(i === 3){
-					if(endTime === "" && startTime !== ""){
-						endTime = "10am";
-					}
-					if(startTime === ""){
-						startTime = "10am";
-					}
-				}
-				if(i === 4){
-					if(endTime === "" && startTime !== ""){
-						endTime = "11am";
-					}
-					if(startTime === ""){
-						startTime = "11am";
-					}
-				}
-				if(i === 5){
-					if(endTime === "" && startTime !== ""){
-						endTime = "12pm";
-					}
-					if(startTime === ""){
-						startTime = "12pm";
-					}
-				}
-				if(i === 6){
-					if(endTime === "" && startTime !== ""){
-						endTime = "1pm";
-					}
-					if(startTime === ""){
-						startTime = "1pm";
-					}
-				}
-				if(i === 7){
-					if(endTime === "" && startTime !== ""){
-						endTime = "2pm";
-					}
-					if(startTime === ""){
-						startTime = "2pm";
-					}
-				}
-				if(i === 8){
-					if(endTime === "" && startTime !== ""){
-						endTime = "3pm";
-					}
-					if(startTime === ""){
-						startTime = "3pm";
-					}
-				}
-				if(i === 9){
-					if(endTime === "" && startTime !== ""){
-						endTime = "4pm";
-					}
-					if(startTime === ""){
-						startTime = "4pm";
-					}
-				}
-				if(i === 10){
-					if(endTime === "" && startTime !== ""){
-						endTime = "5pm";
-					}
-					if(startTime === ""){
-						startTime = "5pm";
-					}
-				}
-				if(i === 11){
-					if(endTime === "" && startTime !== ""){
-						endTime = "6pm";
-					}
-					if(startTime === ""){
-						startTime = "6pm";
-					}
-				}
-				if(i === 12){
-					if(endTime === "" && startTime !== ""){
-						endTime = "7pm";
-					}
-					if(startTime === ""){
-						startTime = "7pm";
-					}
-				}
-				if(i === 13){
-					if(endTime === "" && startTime !== ""){
-						endTime = "8pm";
-					}
-					if(startTime === ""){
-						startTime = "8pm";
-					}
-				}
-				if(i === 14){
-					if(endTime === "" && startTime !== ""){
-						endTime = "9pm";
-					}
-					if(startTime === ""){
-						startTime = "9pm";
-					}
-				}
-				if(i === 15){
-					if(endTime === "" && startTime !== ""){
-						endTime = "10pm";
-					}
-					if(startTime === ""){
-						startTime = "10pm";
-					}
-				}
-			}
-		}
+
 		sessionStorage.setItem("startTime", startTime);
 		sessionStorage.setItem("endTime", endTime);
 		window.location="multiroomFinal.html";
@@ -309,11 +164,11 @@ function validateForm(){
 	  if(date1year > date2year){
 		  return false;
 	  }
-	  else if(date1year == date2year){
+	  else if(date1year === date2year){
 		  if(date1month > date2month){
 			  return false;  
 		  }
-		  else if(date1month == date2month){
+		  else if(date1month === date2month){
 			  if(date1day > date2day){
 				  return false;
 			  }
