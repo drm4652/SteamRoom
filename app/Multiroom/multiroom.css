@@ -55,6 +55,11 @@ label.field {
 	float: left;
 	font-weight: bold;
 }
+
+div.error {
+	font-weight: bold;
+color: red;
+}
 input.textbox-300 {
 	width: 300px;
 	float: left;

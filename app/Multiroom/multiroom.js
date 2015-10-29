@@ -22,41 +22,68 @@ function dateClick(number) {
 
 function validateForm(){
 
-	document.getElementById("errors").innerHTML = "";
-	
+	document.getElementById("error1").innerHTML = "";
+    document.getElementById("error2").innerHTML = "";
+	document.getElementById("error3").innerHTML = "";
+	document.getElementById("error4").innerHTML = "";
+	document.getElementById("error5").innerHTML = "";
 	
 	numRooms = parseInt(document.getElementById("numRooms").value);
 	if(numRooms === ""){
-		document.getElementById("errors").innerHTML = "The numbers of rooms can not be empty<br>";
+		document.getElementById("error1").innerHTML = "The numbers of rooms can not be empty<br>";
 	}
 	else if(numRooms >= 12 || numRooms <= 0){
-	    document.getElementById("errors").innerHTML = "The numbers of rooms must be greater than 0 but less 12<br>";
+	    document.getElementById("error1").innerHTML = "The numbers of rooms must be greater than 0 but less 12<br>";
 	}
 	else if(isNaN(numRooms)){
-		document.getElementById("errors").innerHTML = "The numbers of rooms is not a number<br>";
+		document.getElementById("error1").innerHTML = "The numbers of rooms is not a number<br>";
 	}
 	
-	if(numDateSelected === 0){
-		document.getElementById("errors").innerHTML += "Atleast one day should be selected<br>";
-	}
 	
 	var startDate = document.getElementById("startDate");
 	var startDateValue = startDate.value;
 	var endDate = document.getElementById("endDate");
 	var endDateValue = endDate.value;
-	document.getElementById("errors").innerHTML += checkDate(startDate);
-	document.getElementById("errors").innerHTML += checkDate(endDate);
+	document.getElementById("error3").innerHTML = checkDate(startDate);
+	document.getElementById("error3").innerHTML += checkDate(endDate);
 	if(!checkChronological(startDateValue, endDateValue)){
-		document.getElementById("errors").innerHTML += "Start Date must be before End Date<br>";
+		document.getElementById("error3").innerHTML = "Start Date must be before End Date<br>";
 	}
-			var startTime = "";
-		var endTime = "";
-		
-		startTime = document.getElementById("startTime").value;
-		endTime = document.getElementById("endTime").value;
-				console.log(startTime);
 	
-	if(document.getElementById("errors").innerHTML === ""){
+	var startTime = "";
+	var endTime = "";
+		
+	startTime = document.getElementById("startTime").value;
+	endTime = document.getElementById("endTime").value;
+	startHalf = startTime.substring(startTime.length-2, startTime.length);
+	startNum = startTime.substring(0, startTime.length-2);
+	endHalf = endTime.substring(endTime.length-2, endTime.length);
+	endNum = endTime.substring(0, endTime.length-2);
+	
+	startNum = parseInt(startNum);
+	endNum = parseInt(endNum);
+	if(startHalf === "pm" && startNum != 12){
+		startNum += 12;
+		console.log(startNum);
+	}
+	if(endHalf === "pm" && endNum != 12){
+		endNum += 12;
+		console.log(endNum);
+	}
+	
+	if(startNum >= endNum){
+		document.getElementById("error4").innerHTML = "Start time must be before End time<br>";
+	}
+	
+	if(numDateSelected === 0){
+		document.getElementById("error5").innerHTML = "Atleast one day should be selected<br>";
+	}
+	
+	if(document.getElementById("error1").innerHTML == "" &&
+	   document.getElementById("error2").innerHTML == "" &&
+	   document.getElementById("error3").innerHTML == "" &&
+	   document.getElementById("error4").innerHTML == "" &&
+	   document.getElementById("error5").innerHTML == ""	){
 		sessionStorage.setItem("numRooms", numRooms);
 		
 		var days = "";

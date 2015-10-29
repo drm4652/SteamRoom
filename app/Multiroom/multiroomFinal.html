@@ -38,7 +38,7 @@ Start Date: <div id="startDate"></div><br>
 End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
-<input type="button" value="Confirm">
+<input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
 
 <script>
 	document.getElementById("numRooms").innerHTML = sessionStorage.getItem("numRooms");
@@ -47,6 +47,10 @@ End Time: <div id="endTime"></div><br>
 	document.getElementById("endDate").innerHTML = sessionStorage.getItem("endDate");
 	document.getElementById("startTime").innerHTML = sessionStorage.getItem("startTime");
 	document.getElementById("endTime").innerHTML = sessionStorage.getItem("endTime");
+	
+	function goBack(){
+		window.location="singlePage.html"
+	}
 </script>
 
 </body>
