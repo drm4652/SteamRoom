@@ -1,14 +1,14 @@
 /**
  * calendarDemoApp - 0.9.0
  */
-var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap']);
+var calendarDemoApp = angular.module('calendarDemoApp', ['ui.calendar', 'ui.bootstrap' /* , 'reservationService' */]);
 
 	var globalDate = '';
 	var globalTime = '';
 	var dateSaver = '';
 
 calendarDemoApp.controller('CalendarCtrl',
-   function($scope, $compile, $timeout, uiCalendarConfig, $http) {
+   function($scope, $compile, $timeout, uiCalendarConfig, $http/* , Reservations */) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
@@ -70,6 +70,12 @@ calendarDemoApp.controller('CalendarCtrl',
 
 
 			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
+				// Reservations.get()
+					// .success(function(data) {
+						// $scope.reservations = data;
+						// $scope.loading = false;
+					// });
+				// console.log($scope.reservations.length);
 				$scope.events.push({
 					id: timeIncrement,
 					title: 'Rooms Available [' + 11 + ']',

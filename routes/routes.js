@@ -1,12 +1,24 @@
 var Reservation = require('./models/reservation');
 
+//Returns number current user's current reservations
 function getReservations(req, res) {
-	Reservation.findOne({ 'username': req.session.username }, function(err, reservations) {
+	Reservation.find({ 'username': req.session.username }, function(err, reservations) {
 		if(err) {
 			res.send(err);
 		}
 		res.json(reservations);
 	});
+};
+
+//Returns the number of rooms available at a certain time
+function getNumOfReservations(req, res) {
+	//TODO add room number checking for teleconference and phoneline
+Reservation.find( {$and : [{'createdDate':  req.dateSaver}, {'createdTime': req.timeIncrement}]}, function(err, reservations) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(reservations);
+	}).toArray();
 };
 
 module.exports = function(app) {
@@ -47,11 +59,17 @@ module.exports = function(app) {
 		}
 	});
 	
-	//get all reservations
+	//get all of the current user's reservations
 	app.get('api/myReservations', function(req, res) {
 		//use mongoose to get's current user's reservations in database
 		getReservations(req, res);
 	});
+	
+	//get number of reservations for a certain time
+	app.get('api/currentDateRes', function(req, res) {
+		//use mongoose to get the number of open rooms for each hour listed
+		getNumOfReservations(req, res);
+	})
 	
 	// create todo and send back all todos after creation
 	app.post('/api/reservations', function(req, res) {
