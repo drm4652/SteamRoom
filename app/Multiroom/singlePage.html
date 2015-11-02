@@ -1,0 +1,116 @@
+<!--
+BUG: Date validation bug between months and days
+Feature: Start date should not be in the past (Month and Day)
+Feature: Go back button populates fields with past data
+Feature: Calculate number of reservation + dates
+-->
+
+<html ng-app="scotchApp">
+<head>
+  <script src="jquery-2.1.4.min.js"></script>
+  <link rel="stylesheet" href="tabs.css">
+  <link rel="stylesheet" href="multiroom.css">
+  <script src="multiroom.js"></script>
+   <!-- SCROLLS -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
+</head>
+<body>
+<script>
+jQuery(document).ready(function() {
+    jQuery('.tabs .tab-links a').on('click', function(e)  {
+        var currentAttrValue = jQuery(this).attr('href');
+ 
+        // Show/Hide Tabs
+        jQuery('.tabs ' + currentAttrValue).show().siblings().hide();
+ 
+        // Change/remove current tab to active
+        jQuery(this).parent('li').addClass('active').siblings().removeClass('active');
+ 
+        e.preventDefault();
+    });
+});
+</script>
+
+
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    </div>
+		<div class="nav navbar-nav navbar-center">
+			Test
+		</div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
+        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
+        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
+        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="tabs">
+    <ul class="tab-links">
+        <li class="active"><a href="#tab1">Multiroom Reservation</a></li>
+    </ul>
+ 
+    <div class="tab-content">
+        <div id="tab1" class="tab active">
+		<fieldset>
+			<legend>Reservation Information</legend>
+			<p><label class="field">Number of Rooms:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
+			<div class="error" id="error1"></div>
+			<p><label class="field">Start Date:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
+			<div class="error" id="error2"></div>
+			<p><label class="field">End Date:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
+			<div class="error" id="error3"></div>
+			<p><label class="field">Start Time:</label>
+			<select id="startTime">
+				<option>7am</option><option>8am</option><option>9am</option>
+				<option>10am</option><option>11am</option><option>12pm</option>
+				<option>1pm</option><option>2pm</option><option>3pm</option>
+				<option>4pm</option><option>5pm</option><option>6pm</option>
+				<option>7pm</option><option>8pm</option><option>9pm</option>
+			</select></p>
+			<p><label class="field">End Time:</label>
+			<select id="endTime">
+			    <option>8am</option><option>9am</option>
+				<option>10am</option><option>11am</option><option>12pm</option>
+				<option>1pm</option><option>2pm</option><option>3pm</option>
+				<option>4pm</option><option>5pm</option><option>6pm</option>
+				<option>7pm</option><option>8pm</option><option>9pm</option>
+				<option>10pm</option>
+			</select></p>
+			<div class="error" id="error4"></div>
+			<p><label class="field">Reservation Days:</label>
+			<div class="error" id="error5"></div>
+		<table id="dateTable" class="table_fields" border="1">
+			<tr class="table_fields_top">
+				<td height="100px" onclick="dateClick(0)">SUN</td>
+				<td onclick="dateClick(1)">MON</td>
+				<td onclick="dateClick(2)">TUE</td>
+				<td onclick="dateClick(3)">WED</td>
+				<td onclick="dateClick(4)">THU</td>
+				<td onclick="dateClick(5)">FRI</td>
+				<td onclick="dateClick(6)">SAT</td>
+			</tr>
+		</table></p>
+	</fieldset>
+	
+			 
+			
+			<input type="Button" value="Reserve" onclick="validateForm()">
+			</div>
+		</div>
+		
+
+
+<div id="errors"></div>
+</div>
+
+</body>
+
+
+</html>
