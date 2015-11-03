@@ -1,6 +1,8 @@
 <!--
 BUG: Date validation bug between months and days
 Feature: Start date should not be in the past (Month and Day)
+Feature: Go back button populates fields with past data
+Feature: Calculate number of reservation + dates
 -->
 
 <html ng-app="scotchApp">
@@ -35,8 +37,8 @@ jQuery(document).ready(function() {
   <div class="container-fluid">
     <div class="navbar-header">
     </div>
-			<div class="nav navbar-nav navbar-center">
-			yo whut up
+		<div class="nav navbar-nav navbar-center">
+			Test
 		</div>
     <div>
       <ul class="nav navbar-nav navbar-right">
@@ -51,18 +53,39 @@ jQuery(document).ready(function() {
 
 <div class="tabs">
     <ul class="tab-links">
-        <li class="active"><a href="#tab1">Rooms</a></li>
-        <li><a href="#tab2">Day</a></li>
-        <li><a href="#tab3">Date</a></li>
-		<li><a href="#tab4">Time</a></li>
+        <li class="active"><a href="#tab1">Multiroom Reservation</a></li>
     </ul>
  
     <div class="tab-content">
         <div id="tab1" class="tab active">
-		Enter the number of rooms <input type="text" id="numRooms" size="1" value="">
-		</div>
-        <div id="tab2" class="tab">
-		Select the days of the week
+		<fieldset>
+			<legend>Reservation Information</legend>
+			<p><label class="field">Number of Rooms:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
+			<div class="error" id="error1"></div>
+			<p><label class="field">Start Date:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
+			<div class="error" id="error2"></div>
+			<p><label class="field">End Date:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
+			<div class="error" id="error3"></div>
+			<p><label class="field">Start Time:</label>
+			<select id="startTime">
+				<option>7am</option><option>8am</option><option>9am</option>
+				<option>10am</option><option>11am</option><option>12pm</option>
+				<option>1pm</option><option>2pm</option><option>3pm</option>
+				<option>4pm</option><option>5pm</option><option>6pm</option>
+				<option>7pm</option><option>8pm</option><option>9pm</option>
+			</select></p>
+			<p><label class="field">End Time:</label>
+			<select id="endTime">
+			    <option>8am</option><option>9am</option>
+				<option>10am</option><option>11am</option><option>12pm</option>
+				<option>1pm</option><option>2pm</option><option>3pm</option>
+				<option>4pm</option><option>5pm</option><option>6pm</option>
+				<option>7pm</option><option>8pm</option><option>9pm</option>
+				<option>10pm</option>
+			</select></p>
+			<div class="error" id="error4"></div>
+			<p><label class="field">Reservation Days:</label>
+			<div class="error" id="error5"></div>
 		<table id="dateTable" class="table_fields" border="1">
 			<tr class="table_fields_top">
 				<td height="100px" onclick="dateClick(0)">SUN</td>
@@ -73,38 +96,15 @@ jQuery(document).ready(function() {
 				<td onclick="dateClick(5)">FRI</td>
 				<td onclick="dateClick(6)">SAT</td>
 			</tr>
-		</table>
-        </div>
-        <div id="tab3" class="tab">
-			Enter a date range<br>
-			<input type="text" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""> between <input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value="">
-		</div>
-		<div id="tab4" class="tab">
-		Select the start and end time<br>
-		<table id="timeTable" class="table_fields" border="1">
-			<tr class="table_fields_top">
-				<td height="50px" onclick="timeClick(0)">7</td>
-				<td onclick="timeClick(1)">8</td>
-				<td onclick="timeClick(2)">9</td>
-				<td onclick="timeClick(3)">10</td>
-				<td onclick="timeClick(4)">11</td>
-				<td onclick="timeClick(5)">12</td>
-				<td onclick="timeClick(6)">1</td>
-				<td onclick="timeClick(7)">2</td>
-				<td onclick="timeClick(8)">3</td>
-				<td onclick="timeClick(9)">4</td>
-				<td onclick="timeClick(10)">5</td>
-				<td onclick="timeClick(11)">6</td>
-				<td onclick="timeClick(12)">7</td>
-				<td onclick="timeClick(13)">8</td>
-				<td onclick="timeClick(14)">9</td>
-				<td onclick="timeClick(15)">10</td>
-			</tr>
-		</table>
-		</div>
-    </div>
+		</table></p>
+	</fieldset>
 	
-<input type="Button" value="Reserve" onclick="validateForm()"><br><br>
+			 
+			
+			<input type="Button" value="Reserve" onclick="validateForm()">
+			</div>
+		</div>
+		
 <div id="errors"></div>
 </div>
 
