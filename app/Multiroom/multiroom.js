@@ -49,6 +49,9 @@ function validateForm(){
 	if(!checkChronological(startDateValue, endDateValue)){
 		document.getElementById("error3").innerHTML = "Start Date must be before End Date<br>";
 	}
+	if(startDateValue !== ""){
+		document.getElementById("error3").innerHTML += checkPast(startDateValue);
+	}
 	
 	var startTime = "";
 	var endTime = "";
@@ -113,6 +116,9 @@ function validateForm(){
 			}
 		}
 		sessionStorage.setItem("dates", days);
+		
+		jsonDates = JSON.stringify(dateSelected);
+		sessionStorage.setItem("dateSelected", jsonDates);
 		sessionStorage.setItem("startDate", startDateValue);
 		sessionStorage.setItem("endDate", endDateValue);
 		
@@ -180,12 +186,12 @@ function validateForm(){
 		  }
 	  }
 	  
-	  var date1day = parseInt(date1.substring(0,slashArray1[0]));
-	  var date1month = parseInt(date1.substring(slashArray1[0]+1,slashArray1[1]));
+	  var date1day = parseInt(date1.substring(slashArray1[0]+1, slashArray1[1]));
+	  var date1month = parseInt(date1.substring(0,slashArray1[0]));
 	  var date1year = parseInt(date1.substring(slashArray1[1]+1, slashArray1[2]));
 	  
-	  var date2day = parseInt(date2.substring(0,slashArray2[0]));
-	  var date2month = parseInt(date2.substring(slashArray2[0]+1,slashArray2[1]));
+	  var date2day = parseInt(date2.substring(slashArray2[0]+1, slashArray2[1]));
+	  var date2month = parseInt(date2.substring(0,slashArray2[0]));
 	  var date2year = parseInt(date2.substring(slashArray2[1]+1, slashArray2[2]));
 	  
 	  if(date1year > date2year){
@@ -203,6 +209,44 @@ function validateForm(){
 	  }
 	  
 	  return true;
+  }
+  
+  function checkPast(date1){ 
+	var d = new Date();
+	var day = d.getDate();
+	var month = d.getMonth()+1;
+	var year = d.getFullYear();
+		
+	var slashArray1 = [];
 	  
-	  
+	for(i = 0; i < date1.length; i++){
+		if(date1[i]=='/'){
+			slashArray1.push(i);
+		}
+	}
+
+	var date1day = parseInt(date1.substring(slashArray1[0]+1, slashArray1[1]));
+	var date1month = parseInt(date1.substring(0,slashArray1[0]));
+	var date1year = parseInt(date1.substring(slashArray1[1]+1, slashArray1[2]));
+			
+	console.log("Current Date: " + day + ", Start Date: " + date1day);
+	console.log("Current Month: " + month + ", Start Month: " + date1month);
+	console.log("Current Year: " + year + ", Start Date: " + date1year);
+		
+	
+	if(date1year < year){
+		return "Date can not be in the past(year)";
+	}
+	else if(date1year === year){
+		if(date1month < month){
+			return "Date can not be in the past(month)";
+		}
+		else if(date1month === month){
+			if(date1day < day){
+				return "Date can not be in the past(day)";
+			}
+		}
+	}
+
+	return "";
   }
