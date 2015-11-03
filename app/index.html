@@ -3,33 +3,40 @@
 <head>
   <meta charset="utf-8">
   <title>Team Room Reservation App</title>
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="/../bower_components/bootstrap-css/css/bootstrap.css">
   <link rel="stylesheet" href="css/login.css">
+  <script src="../bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   
   <script>
-  function isAdmin(){
-	  var x = document.forms["login"]["username"].value;
-	  
-	  if(x == "admin"){
-		window.location = "AdminHTML/index.html";
-	  }
-	  else{
-		window.location = "landingIndex.html";	
-	  }
-  }
+  $(document).ready(function(){
+	var username,pass;
+	$("#submit").click(function(){
+		username=$("#username").val();
+		pass=$("#password").val();
+		/*
+		* Perform some validation here.
+		*/
+		$.post("http://localhost:3000/login",{username:username,pass:pass},function(data){		
+			if(data==='done')			
+			{
+				window.location.href="/landing";
+			}
+		});
+	});
+});
   </script>
 </head>
 	<body>
 		<div class="center">
-			<form name="login" action="index_submit" method="get" accept-charset="utf-8">
+			<!-- <form name="login" action="index_submit" method="get" accept-charset="utf-8"> -->
 			        Team Room Reservation<br><br>
-					<label for="username">RIT Username</label><br>
-					<input type="text" name="username" placeholder="SE Username"><br><br>
-					<label for="password">Password</label><br>
-					<input type="password" name="password" placeholder="SE Password"><br>
-					<input type="button" onclick="isAdmin()" value="Submit" /></li>
-			</form>
+					<label for="username">RIT Username</label>
+					<input type="text" id="username" placeholder="SE Username"><br><br>
+					<label for="password">Password</label>
+					<input type="password" id="password" placeholder="SE Password"><br>
+					<input type="button" value="Submit" id="submit"/></li>
+			<!-- </form> -->
 		</div>
 	</body>
 </html>

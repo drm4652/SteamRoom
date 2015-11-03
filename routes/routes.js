@@ -1,4 +1,5 @@
-var Reservation = require('./models/reservation');
+var Reservation = require('./models/reservationModel.js');
+var path = require('path');
 
 //Returns number current user's current reservations
 function getReservations(req, res) {
@@ -33,9 +34,7 @@ module.exports = function(app) {
 			res.redirect('/landing');
 		}
 		else {
-			res.render('app/index', function(err, html){
-				res.send(html);
-			});
+			res.sendFile(path.join(__dirname + '/../app/index.html'));
 		}
 	});
 	
@@ -52,21 +51,26 @@ module.exports = function(app) {
 	app.get('/landing', function(req, res) {
 		sesh = req.session;
 		if(sesh.username) {
-			res.render('app/landing.html');
+			res.sendFile(path.join(__dirname + '/../app/landingIndex.html'));
 		}
 		else {
 			res.redirect('/');
 		}
 	});
 	
+	//load calendar page
+	app.get('/calendar', function(req, res) {
+		res.sendFile(path.join(__dirname + '/../calendar/index.html'));
+	});
+	
 	//get all of the current user's reservations
-	app.get('api/myReservations', function(req, res) {
-		//use mongoose to get's current user's reservations in database
+	app.post('/calendar', function(req, res) {
+		//use mongoose to get current user's reservations in database
 		getReservations(req, res);
 	});
 	
 	//get number of reservations for a certain time
-	app.get('api/currentDateRes', function(req, res) {
+	app.get('/api/currentDateRes', function(req, res) {
 		//use mongoose to get the number of open rooms for each hour listed
 		getNumOfReservations(req, res);
 	})

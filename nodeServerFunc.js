@@ -8,8 +8,6 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
 // config =========================================
-//mongoose.connect('mongodb://localhost:27017/localSteam'); //connect to local mongoDB
-
 
 app.set('port', 3000); //setting port to 3000
 app.use(session({
@@ -22,7 +20,7 @@ app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override head in the request
-// set the public directory as our asset holder
+// set the app directory as our asset holder
 app.use(express.static(__dirname + '/app'));
 // set calendar as another static asset
 app.use('/calendar', express.static(__dirname + '/calendar'));
@@ -35,9 +33,17 @@ app.use('/bower_components', express.static(__dirname + '/bower_components'));
 require('./routes/routes.js')(app);
 
 
-// listen (start app with node nodeServerFunc.js)
-app.listen(app.get('port'));
-console.log("App listening on port " + app.get('port'));
+// connect to mongo and listen (start app with node nodeServerFunc.js)
+mongoose.connect('mongodb://localhost:27017/localSteam', function(err) {
+	if(err){
+		console.log('unable to connect to Mongo.');
+		process.exit(1);
+	} else {
+		app.listen(app.get('port'));
+		console.log("App listening on port " + app.get('port'));
+	}
+});
+
 
 //This is used in order to retrieve a list of reservations of the
 //entered user and display them in a jquery accordion
