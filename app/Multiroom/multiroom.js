@@ -90,8 +90,10 @@ function validateForm(){
 		sessionStorage.setItem("numRooms", numRooms);
 		
 		var days = "";
+		var array = [];
 		for(i = 0; i < dateSelected.length;i++){
 			if(dateSelected[i]){
+				array.push(i);
 				if(i === 0){
 					days += "Sunday<br>";
 				}
@@ -116,14 +118,12 @@ function validateForm(){
 			}
 		}
 		sessionStorage.setItem("dates", days);
-		
-		jsonDates = JSON.stringify(dateSelected);
-		sessionStorage.setItem("dateSelected", jsonDates);
 		sessionStorage.setItem("startDate", startDateValue);
 		sessionStorage.setItem("endDate", endDateValue);
 		
 
-		
+		var stringArray = JSON.stringify(array);
+		sessionStorage.setItem("daysSelected", array);
 
 		sessionStorage.setItem("startTime", startTime);
 		sessionStorage.setItem("endTime", endTime);

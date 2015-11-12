@@ -3,8 +3,9 @@
    <!-- SCROLLS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
+    <script src="multiroomFinal.js"></script>
 </head>
-<body ng-controller="mainController">
+<body ng-controller="mainController" onload="loadConfirmation()">
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -38,66 +39,11 @@ Start Date: <div id="startDate"></div><br>
 End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
-Reservation Dates:<div id="ResDates"></div><br>
+Room Numbers: <div id="rooms"></div><br>
+Reservation Dates:<br><div id="ResDates"></div><br>
+Rejected Reservations:<br><div id="rejectedRes"></div><br>
 <input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
 
-<script>
-	document.getElementById("numRooms").innerHTML = sessionStorage.getItem("numRooms");
-	document.getElementById("dates").innerHTML = sessionStorage.getItem("dates");
-	document.getElementById("startDate").innerHTML = sessionStorage.getItem("startDate");
-	document.getElementById("endDate").innerHTML = sessionStorage.getItem("endDate");
-	document.getElementById("startTime").innerHTML = sessionStorage.getItem("startTime");
-	document.getElementById("endTime").innerHTML = sessionStorage.getItem("endTime");
-	
-	var date1 = sessionStorage.getItem("startDate");
-	var date2 = sessionStorage.getItem("endDate");
-	var datesSelected = sessionStorage.getItem("dateSelected");
-	console.log("Dates: "+datesSelected);
-	findAndDisplayRes(date1, date2, datesSelected);
-	
-	function findAndDisplayRes(date1, date2, datesSelected){
-	  var slashArray1 = [];
-	  var slashArray2 = [];
-	  
-	  for(i = 0; i < date1.length; i++){
-		  if(date1[i]=='/'){
-			  slashArray1.push(i);
-		  }
-	  }
-	  
-	 for(i = 0; i < date2.length; i++){
-		  if(date2[i]=='/'){
-			  slashArray2.push(i);
-		  }
-	  }
-	  
-	  var date1day = parseInt(date1.substring(slashArray1[0]+1, slashArray1[1]));
-	  var date1month = parseInt(date1.substring(0,slashArray1[0])-1);
-	  var date1year = parseInt(date1.substring(slashArray1[1]+1, slashArray1[2]));
-	  
-	  var date2day = parseInt(date2.substring(slashArray2[0]+1, slashArray2[1]));
-	  var date2month = parseInt(date2.substring(0,slashArray2[0])-1);
-	  var date2year = parseInt(date2.substring(slashArray2[1]+1, slashArray2[2]));
-	  
-	  
-	  var startDate = new Date();
-	  startDate.setDate(date1day);
-	  startDate.setMonth(date1month);
-	  startDate.setFullYear(date1year);
-	  var endDate = new Date();
-	  endDate.setDate(date2day);
-	  endDate.setMonth(date2month);
-	  endDate.setFullYear(date2year);
-	  
-	  console.log("Start Date: " + startDate.toString());
-	  console.log("End Date: " + endDate.toString());
-	}
-	
-	
-	function goBack(){
-		window.location="singlePage.html"
-	}
-</script>
 
 </body>
 </html>
