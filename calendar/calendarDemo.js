@@ -5,8 +5,9 @@
 angular.module('reservationService', [])
 	.factory('Reservations', ['$http', function($http){
 		return {
-			get: function(){
-				return $http.get('/api/currentDateRes');
+			post: function(data){
+				
+				return $http.post('/calendar', data);
 			}
 		}
 	}]);
@@ -54,8 +55,10 @@ calendarDemoApp.controller('CalendarCtrl',
 
 		dateSaver = date.format();
 		var today = moment();
+		var test = moment();
 		var todayCheck = moment(today).format('YYYY-MM-DD');
 		var selectionStart = date.format();
+		//alert(selectionStart);
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
 		var view = $('#myCalendar1').fullCalendar('getView');
@@ -69,7 +72,7 @@ calendarDemoApp.controller('CalendarCtrl',
 		monthClicked = parseInt(monthClicked) - 1;
 		dayClicked = date.format('DD');
 		dayClicked = parseInt(dayClicked);
-		//alert(date);
+		
 
 		
 		
@@ -80,20 +83,36 @@ calendarDemoApp.controller('CalendarCtrl',
 
 
 			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
-				/*	Reservations.get()
-					.success(function(data) {
-						$scope.reservations = data;
-						$scope.loading = false;
+				$http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
+				$http.dateCheck = moment($http.dateCheck);
+				//console.log($http.dateCheck);
+				
+				var events = function() {
+					$scope.events.push({
+						id: timeIncrement,
+						title: 'Rooms Available [' + 11 + ']',
+						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
+						url: 'http://localhost:3000/ReservationIndex.html'
+						//url: 'http://steamroom.se.rit.edu/reservationOptions.html'
 					});
-				console.log(typeof $scope.reservations); */
-				//console.log($scope.reservations.length);
-				$scope.events.push({
-					id: timeIncrement,
-					title: 'Rooms Available [' + 11 + ']',
-					start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-					url: 'http://localhost:3000/ReservationIndex.html'
-					//url: 'http://steamroom.se.rit.edu/reservationOptions.html'
+				};
+				
+				events();
+								
+				$scope.roomsUsed = Reservations.post({dateCheck: $http.dateCheck})
+					.then(function(data) {
+						$scope.reservations = data;
+						$scope.loading = true;
+						return $scope.reservations;
+					});
+					
+				
+				//console.log(roomsUsed);
+				$scope.roomsUsed.then(function(data) {
+					console.log(data.data);
+					$scope.loading = true;
 				});
+				//console.log(roomsLeft.$$state);
 			}	
 			
 		}

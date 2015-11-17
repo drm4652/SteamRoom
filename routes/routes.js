@@ -3,7 +3,7 @@ var path = require('path');
 
 //Returns number current user's current reservations
 function getReservations(req, res) {
-	Reservation.find({ 'username': req.session.username }, function(err, reservations) {
+	Reservation.find({ username: req.session.username }, function(err, reservations) {
 		if(err) {
 			res.send(err);
 		}
@@ -14,12 +14,18 @@ function getReservations(req, res) {
 //Returns the number of rooms available at a certain time
 function getNumOfReservations(req, res) {
 	//TODO add room number checking for teleconference and phoneline
-Reservation.find( {$and : [{'createdDate':  req.dateSaver}, {'createdTime': req.timeIncrement}]}, function(err, reservations) {
+	//console.log(req.body.dateCheck);
+	Reservation.find( 
+	{'date': req.body.dateCheck},
+		function(err, reservations) {
 		if(err) {
+			console.log('some kind of error');
 			res.send(err);
 		}
-		res.json(reservations);
-	}).toArray();
+		console.log(reservations.length);
+		//console.log(JSON.stringify(reservations, null, 4));
+		res.json(reservations.length);
+	});
 };
 
 module.exports = function(app) {
@@ -43,6 +49,7 @@ module.exports = function(app) {
 	app.post('/login', function(req, res) {
 		sesh = req.session;
 		sesh.username=req.body.username;
+		console.log(sesh.username);
 		res.end('done');
 	});
 	
@@ -52,6 +59,7 @@ module.exports = function(app) {
 		sesh = req.session;
 		if(sesh.username) {
 			res.sendFile(path.join(__dirname + '/../app/landingIndex.html'));
+			console.log(sesh.username);
 		}
 		else {
 			res.redirect('/');
@@ -64,13 +72,13 @@ module.exports = function(app) {
 	});
 	
 	//get all of the current user's reservations
-	app.post('/calendar', function(req, res) {
+/* 	app.post('/calendar', function(req, res) {
 		//use mongoose to get current user's reservations in database
 		getReservations(req, res);
-	});
+	}); */
 	
 	//get number of reservations for a certain time
-	app.get('/api/currentDateRes', function(req, res) {
+	app.post('/calendar', function(req, res) {
 		//use mongoose to get the number of open rooms for each hour listed
 		getNumOfReservations(req, res);
 	})
@@ -86,8 +94,6 @@ module.exports = function(app) {
 			if(err) {
 				res.send(err);
 			}
-			//get the updated list of reservations when you create new one
-			//getReservations(res);
 		});
 	});
 	
