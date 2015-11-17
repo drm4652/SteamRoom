@@ -3,7 +3,11 @@
   <script src="jquery-2.1.4.min.js"></script>
   <link rel="stylesheet" href="tabs.css">
   <script src="../js/Reservation.js"></script>
-  
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="multiroom.css">
   <script>
 function logout(){
 	window.location = "../index.html";
@@ -173,17 +177,17 @@ function addRowFromRes(res, i){
     var table = document.getElementById("resTable");
     var row = table.insertRow(i+1);
 	
-	var checkboxCell = row.insertCell(0)
-    var userCell = row.insertCell(1);
-    var statusCell = row.insertCell(2);
-    var typeCell = row.insertCell(3);
-    var dateCell = row.insertCell(4);
-    var durationCell = row.insertCell(5);
-    var roomNumCell = row.insertCell(6);
-	var operationCell = row.insertCell(7)
+	//var checkboxCell = row.insertCell(0)
+    var userCell = row.insertCell(0);
+    var statusCell = row.insertCell(1);
+    var typeCell = row.insertCell(2);
+    var dateCell = row.insertCell(3);
+    var durationCell = row.insertCell(4);
+    var roomNumCell = row.insertCell(5);
+	var operationCell = row.insertCell(6);
 	
-	checkboxCell.innerHTML = "<input type='checkbox' id='generatedCheckBox'>";
-	document.getElementById("generatedCheckBox").id = i;
+	//checkboxCell.innerHTML = "<input type='checkbox' id='generatedCheckBox'>";
+	//document.getElementById("generatedCheckBox").id = i;
 	
     userCell.innerHTML = res.user;
     statusCell.innerHTML = res.status;
@@ -265,12 +269,13 @@ jQuery(document).ready(function() {
 
 <input type="button" onclick="logout()" value="<-- Logout">
 <input type="button" onclick="goToReservations()" value="Reservations">
-
+<br>
 <div class="tabs">
     <ul class="tab-links">
         <li class="active"><a href="#tab1">Reservations</a></li>
         <li><a href="#tab2">Permissions</a></li>
         <li><a href="#tab3">Reports</a></li>
+		<li><a href="#tab4">Configuration</a><li>
     </ul>
  
     <div class="tab-content">
@@ -337,7 +342,6 @@ jQuery(document).ready(function() {
 			</div>
 				<table border="1" style="width:75%" align="center" id="resTable">
 					<tr align="center">
-						<td width="3%"></td>
 						<td>User</td>
 						<td>Status</td>
 						<td>Type</td>
@@ -347,11 +351,26 @@ jQuery(document).ready(function() {
 						<td>Operation</td>
 					</tr>
 				</table>
+			<div class="bs-example center">
+				<ul class="pagination">
+					<li><a href="#page1">1</a></li>
+					<li><a href="#">2</a></li>
+					<li><a href="#">3</a></li>
+					<li><a href="#">4</a></li>
+					<li><a href="#">5</a></li>
+				</ul>
+			</div>
+			
+			<div class="#page1">
+			 page 1 dog
+			</div>
+
 			<br>
 			<br>
 			<div class="center">
 				<input type="button" value="Edit Selected Items">
 			</div>
+			
         </div>
  
         <div id="tab2" class="tab">
@@ -411,6 +430,18 @@ jQuery(document).ready(function() {
  
         <div id="tab3" class="tab">
 		Reports
+		</div>
+		
+		<div id="tab4" class="tab">
+		<fieldset>
+			<p><label class="field">Minimum Team Size:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
+			<div class="error" id="error1"></div>
+			<p><label class="field">Maximum Team Size:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
+			<div class="error" id="error2"></div>
+			<p><label class="field">Advance Reservation Time:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
+			<div class="error" id="error3"></div>
+			<p><label class="field">Maximum Reservation Length:</label>
+		</fieldset>
 		</div>
     </div>
 </div>

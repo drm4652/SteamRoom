@@ -82,6 +82,8 @@ function validateForm(){
 		document.getElementById("error5").innerHTML = "Atleast one day should be selected<br>";
 	}
 	
+	var numRoomsWebcam = parseInt(document.getElementById("numRoomsWebcam").value);
+	var numRoomsPhoneline = parseInt(document.getElementById("numRoomsPhoneline").value);
 	if(document.getElementById("error1").innerHTML == "" &&
 	   document.getElementById("error2").innerHTML == "" &&
 	   document.getElementById("error3").innerHTML == "" &&

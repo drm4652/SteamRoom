@@ -1,5 +1,6 @@
 <!--
 Feature: Go back button populates fields with past data
+Bug: "Not a Number" does not detect a number then letters like 2a
 -->
 
 <html ng-app="scotchApp">
@@ -94,6 +95,14 @@ jQuery(document).ready(function() {
 				<td onclick="dateClick(6)">SAT</td>
 			</tr>
 		</table></p>
+		Additional Information:<br>
+		There are two rooms with webcams and two rooms with phone lines. Enter the number of rooms you'd like to request with these features.
+		<br><br>
+			<p><label class="field">Webcam Rooms:</label><input type="text" id="numRoomsWebcam" size="1" value="" placeholder="   #"></p>
+			<div class="error" id="error6"></div>
+			<p><label class="field">Phone line Rooms:</label><input type="text" id="numRoomsPhoneLine" size="1" value="" placeholder="   #"></p>
+			<div class="error" id="error7"></div>
+		<br>
 	</fieldset>
 	
 			 
