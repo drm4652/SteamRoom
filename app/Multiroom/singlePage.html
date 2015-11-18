@@ -98,9 +98,21 @@ jQuery(document).ready(function() {
 		Additional Information:<br>
 		There are two rooms with webcams and two rooms with phone lines. Enter the number of rooms you'd like to request with these features.
 		<br><br>
-			<p><label class="field">Webcam Rooms:</label><input type="text" id="numRoomsWebcam" size="1" value="" placeholder="   #"></p>
+			<p><label class="field">Webcam Rooms:</label>
+			<select id="numRoomsWebcam">
+			    <option>0</option>
+				<option>1</option>
+				<option>2</option>
+			</select>
+			</p>
 			<div class="error" id="error6"></div>
-			<p><label class="field">Phone line Rooms:</label><input type="text" id="numRoomsPhoneLine" size="1" value="" placeholder="   #"></p>
+			<p><label class="field">Phoneline Rooms:</label>
+			<select id="numRoomsPhoneline">
+			    <option>0</option>
+				<option>1</option>
+				<option>2</option>
+			</select>
+			</p>
 			<div class="error" id="error7"></div>
 		<br>
 	</fieldset>

@@ -3,7 +3,12 @@
    <!-- SCROLLS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css" />
   <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
-    <script src="multiroomFinal.js"></script>
+  <script src="multiroomFinal.js"></script>
+  <script src="../js/Reservation.js"></script>
+  <script src="../js/Room.js"></script>
+  <script src="../js/User.js"></script>
+  <script src="../js/PermissionClass.js"></script>
+  <script src="mockDBState.js"></script>
 </head>
 <body ng-controller="mainController" onload="loadConfirmation()">
 
@@ -40,8 +45,9 @@ End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
 Room Numbers: <div id="rooms"></div><br>
-Reservation Dates:<br><div id="ResDates"></div><br>
+Open Reservations:<br><div id="ResDates"></div><br>
 Rejected Reservations:<br><div id="rejectedRes"></div><br>
+Reservation Conflicts:<br><div id="resConflicts"></div><br>
 <input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
 
 

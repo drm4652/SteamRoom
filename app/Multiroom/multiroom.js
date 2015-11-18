@@ -27,6 +27,8 @@ function validateForm(){
 	document.getElementById("error3").innerHTML = "";
 	document.getElementById("error4").innerHTML = "";
 	document.getElementById("error5").innerHTML = "";
+	document.getElementById("error6").innerHTML = "";
+	document.getElementById("error7").innerHTML = "";
 	
 	numRooms = parseInt(document.getElementById("numRooms").value);
 	if(numRooms === ""){
@@ -84,11 +86,18 @@ function validateForm(){
 	
 	var numRoomsWebcam = parseInt(document.getElementById("numRoomsWebcam").value);
 	var numRoomsPhoneline = parseInt(document.getElementById("numRoomsPhoneline").value);
+	
+	if(numRoomsWebcam + numRoomsPhoneline > numRooms){
+		document.getElementById("error7").innerHTML = "Can not request more modified rooms than total rooms requested.";
+	}
+	
 	if(document.getElementById("error1").innerHTML == "" &&
 	   document.getElementById("error2").innerHTML == "" &&
 	   document.getElementById("error3").innerHTML == "" &&
 	   document.getElementById("error4").innerHTML == "" &&
-	   document.getElementById("error5").innerHTML == ""	){
+	   document.getElementById("error5").innerHTML == "" &&
+	   document.getElementById("error6").innerHTML == "" &&
+	   document.getElementById("error7").innerHTML == ""	){
 		sessionStorage.setItem("numRooms", numRooms);
 		
 		var days = "";
