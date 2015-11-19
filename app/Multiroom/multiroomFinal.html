@@ -8,6 +8,7 @@
   <script src="../js/Room.js"></script>
   <script src="../js/User.js"></script>
   <script src="../js/PermissionClass.js"></script>
+  <script src="../js/ReservationCreation.js"></script>
   <script src="mockDBState.js"></script>
 </head>
 <body ng-controller="mainController" onload="loadConfirmation()">
@@ -52,12 +53,16 @@ Start Date: <div id="startDate"></div><br>
 End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
-Room Numbers: <div id="rooms"></div><br>
-Open Reservations:<br><div id="ResDates"></div><table border=1 width=50% id="openResTable"></table><br>
-Rejected Reservations:<br><div id="rejectedRes"></div><br>
-Reservation Conflicts:<br><div id="resConflicts"></div><br>
-<input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
+Open Reservations:<br><div id="ResDates"></div><table border=1 width=75% id="openResTable"></table><br>
+Rejected Reservations:<br><div id="rejectedRes"></div><table border=1 width=75% id="rejResTable"></table><br>
+Reservation Conflicts:<br><div id="resConflicts"></div><table border=1 width=75% id="confResTable"></table><br>
 
+
+Conflict Options:<br>
+<input type="radio"> Remove all conflicted reservations<br>
+<input type="radio"> Change Individual conflicted reservations<br><br>
+
+<input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
 
 </body>
 </html>
