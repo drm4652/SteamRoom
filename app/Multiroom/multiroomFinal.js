@@ -55,35 +55,82 @@
 			}
 		}
 	  
+		var numRooms = sessionStorage.getItem("numRooms");
 		var numRoomsWebcam = sessionStorage.getItem("webcamRooms");
 		var numRoomsPhoneline = sessionStorage.getItem("numRoomsPhoneline");
+		
+		
+		var startTime = sessionStorage.getItem("startTime");
+		if(startTime.length === 3){
+			var startSuff = startTime.substring(startTime.length-2, startTime.length);
+			startTime = parseInt(startTime.substring(0,1));
+		}
+		else{
+			var startSuff = startTime.substring(startTime.length-2, startTime.length);
+			startTime = parseInt(startTime.substring(0,2));
+		}
+		
+		var endTime = sessionStorage.getItem("endTime");
+		if(endTime.length === 3){
+			var endSuff = endTime.substring(endTime.length-2, endTime.length);
+			endTime = parseInt(endTime.substring(0,1));
+		}
+		else{
+			var endSuff = endTime.substring(endTime.length-2, endTime.length);
+			endTime = parseInt(endTime.substring(0,2));
+		}
+		
+		var startNum = startTime;
+		var endNum = endTime;
+		if(startSuff == "pm"){
+			if(startTime !== 12){
+				startNum = startTime + 12;
+			}
+		}
+		if(endSuff == "pm"){
+			if(endTime !== 12){
+				endNum = endTime + 12;
+			}
+		}
+	  
+	    var duration = endNum - startNum;
 	  
 		var Reservations = [];
 		var reservationsForTable = [];
+		var conflictedReservations = [];
+		var rejectedReservations = [];
 		var currentDay = startDate;
-		console.log("Start Date: " + startDate);
+
 		var cap = 0;
 		while(cap < 500){
 			
 			if(dayArray.indexOf(currentDay.getDay()) !== -1){
 				Reservations.push(currentDay.toString().substring(0,10));
 				
-				var res = new Reservations("Current User", "Active", "Multiroom", currentDay.getTime(), "X", "X");
+				for(i = 0; i < numRooms; i++){
+					currentDay.setHours(startTime);
+					currentDay.setMinutes(0);
+					currentDay.setSeconds(0);
+					currentDay.setMilliseconds(0);
+					addReservation(reservationsForTable, conflictedReservations, rejectedReservations, 
+									currentDay.toLocaleString(), duration, 0);
+				}
 			}
 			currentDay.setDate(currentDay.getDate()+1);
-			console.log(currentDay);
-			if(currentDay.getTime() === endDate.getTime()){
+
+			if(currentDay.toLocaleDateString() === endDate.toLocaleDateString()){
 				break;
 			}
 			cap++;
 		}
-		console.log(endDate);
-
-		document.getElementById("ResDates").innerHTML = Reservations;
+		//document.getElementById("ResDates").innerHTML = Reservations;
+		displayTableFromRes(reservationsForTable, "openResTable");
+		displayTableFromRes(rejectedReservations, "rejResTable");
+		displayTableFromRes(conflictedReservations, "confResTable");
 	}
 	
-	function displayTableFromRes(Reservations){
-		var table = document.getElementById("openResTable");
+	function displayTableFromRes(resToTable, tableID){
+		var table = document.getElementById(tableID);
 		var headerRow = table.insertRow(0);
 
 		var userCell = headerRow.insertCell(0);
@@ -100,6 +147,24 @@
 		durationCell.innerHTML = "Duration";
 		roomNumCell.innerHTML = "Room Number";
 		
+		for(i = 1; i <= resToTable.length; i++){
+			var newRow = table.insertRow(i);
+			
+			var userCell = newRow.insertCell(0);
+			var statusCell = newRow.insertCell(1);
+			var typeCell = newRow.insertCell(2);
+			var dateCell = newRow.insertCell(3);
+			var durationCell = newRow.insertCell(4);
+			var roomNumCell = newRow.insertCell(5);
+		
+			userCell.innerHTML = resToTable[i-1].user;
+			statusCell.innerHTML = resToTable[i-1].status;
+			typeCell.innerHTML = resToTable[i-1].type;
+			dateCell.innerHTML = resToTable[i-1].date;
+			durationCell.innerHTML = resToTable[i-1].duration;
+			roomNumCell.innerHTML = resToTable[i-1].roomNum.roomNumber;
+			
+		}
 	}
 	
 	
