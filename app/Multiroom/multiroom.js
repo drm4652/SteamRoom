@@ -138,6 +138,10 @@ function validateForm(){
 
 		sessionStorage.setItem("startTime", startTime);
 		sessionStorage.setItem("endTime", endTime);
+		
+		sessionStorage.setItem("webcamRooms", numRoomsWebcam);
+		sessionStorage.setItem("numRoomsPhoneline", numRoomsPhoneline);
+		
 		window.location="multiroomFinal.html";
 	}
 	

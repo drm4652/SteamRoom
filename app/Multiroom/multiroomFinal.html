@@ -12,6 +12,14 @@
 </head>
 <body ng-controller="mainController" onload="loadConfirmation()">
 
+	<style>
+	td{
+	
+	text-align:center;
+	
+	}
+	</style>
+
   <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -45,7 +53,7 @@ End Date: <div id="endDate"></div><br>
 Start Time: <div id="startTime"></div><br>
 End Time: <div id="endTime"></div><br>
 Room Numbers: <div id="rooms"></div><br>
-Open Reservations:<br><div id="ResDates"></div><br>
+Open Reservations:<br><div id="ResDates"></div><table border=1 width=50% id="openResTable"></table><br>
 Rejected Reservations:<br><div id="rejectedRes"></div><br>
 Reservation Conflicts:<br><div id="resConflicts"></div><br>
 <input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
