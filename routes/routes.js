@@ -1,13 +1,28 @@
 var Reservation = require('./models/reservationModel.js');
+var User = require('./models/userModel.js');
 var path = require('path');
 
 //Returns number current user's current reservations
 function getReservations(req, res) {
-	Reservation.find({ username: req.session.username }, function(err, reservations) {
+	Reservation.find(
+	{ 'username': req.session.username },
+	function(err, reservations) {
 		if(err) {
 			res.send(err);
 		}
 		res.json(reservations);
+	});
+};
+
+//get list of permission classes for user
+function getPermissionClasses(req, res) {
+	User.find(
+	{ 'username': req.session.username},
+	function(err, user) {
+		if(err) {
+			res.send(err);
+		}
+		res.json(user.permissionClasses);
 	});
 };
 
@@ -17,7 +32,7 @@ function getNumOfReservations(req, res) {
 	//console.log(req.body.dateCheck);
 	Reservation.find( 
 	{'date': req.body.dateCheck},
-		function(err, reservations) {
+	function(err, reservations) {
 		if(err) {
 			console.log('some kind of error');
 			res.send(err);
@@ -26,6 +41,11 @@ function getNumOfReservations(req, res) {
 		//console.log(JSON.stringify(reservations, null, 4));
 		res.json(reservations.length);
 	});
+};
+
+//Returns list of currently unused rooms
+function getAvailableRooms(req, res) {
+	
 };
 
 module.exports = function(app) {
@@ -83,13 +103,23 @@ module.exports = function(app) {
 		getNumOfReservations(req, res);
 	})
 	
-	// create todo and send back all todos after creation
-	app.post('/api/reservations', function(req, res) {
+	//load reservation information page before comfirming to make a reservation
+	app.get('/reservationCheck', function(req, res) {
+		res.sendFile(path.join(__dirname + '/../app/ReservationIndex.html'));
+	});
+	
+	// create a reservation with confirm button
+	app.post('/reservationCheck', function(req, res) {
 		//create a reservation, information comes from AJAX request from Angular
+		sesh = req.session;
+		console.log(req.body.resDate);
 		Reservation.create({
-			reserver : req.body.reserver,
-			reservedAs : req.body.reservedAs,
-			date : req.body.date
+			reserver : sesh.username,
+			reservedAs : 3,
+			date : req.body.resDate,
+			checkedIn: false,
+			checkedOut: false,
+			roomNumber: 1664
 		}, function(err, reservation) {
 			if(err) {
 				res.send(err);

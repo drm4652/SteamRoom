@@ -1,5 +1,16 @@
+	//factory to assist in making a reservation on submission
+	angular.module('reservationService1', [])
+	.factory('Reservations1', ['$http', function($http){
+		return {
+			create: function(data){
+				return $http.post('/reservationCheck', data);
+			}
+		}
+	}]);
+	
+	
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+	var scotchApp = angular.module('scotchApp', ['ngRoute', 'reservationService1']);
 	var globalMessage = '';
 	/*
 function SearchCtrl($scope, $http) {
@@ -61,24 +72,38 @@ function SearchCtrl($scope, $http) {
 	});
 
 	// create the controller and inject Angular's $scope
-	scotchApp.controller('mainController', function($scope) {
+	scotchApp.controller('mainController', ['$scope', '$http', 'Reservations1',function($scope, $http, Reservations1) {
 		// create a message to display in our 
 
 		var globalDate = localStorage.getItem("globalDate");
 		var globalTime = localStorage.getItem("globalTime");
 		var globalTimePlus = globalTime * 1 + 1;
 		var globalTimeOver = 0;
+		var dateString = "";
 		if(globalTime > 12){
+			dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime - 12;
 			globalTimeOver = globalTime + 1;
 			globalTime = globalTime + 'pm' + ' - ' + globalTimeOver + 'pm';
 		}
-		else if(globalTime == 12){
-			globalTime = globalTime + 'am' + ' - ' + '1pm';
-		}
-		else{
+		else if(globalTime == 10){
+			dateString = dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'am';
 		}
+		else if(globalTime == 11){
+			dateString = dateString = globalDate + 'T' + globalTime + ':00:00';
+			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'pm';
+		}
+		else if(globalTime == 12){
+			dateString = globalDate + 'T' + globalTime + ':00:00';
+			globalTime = globalTime + 'pm' + ' - ' + '1pm';
+		}		
+		else{
+			dateString = globalDate + 'T0' + globalTime + ':00:00';
+			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'am';
+		}
+		$http.resDate = new Date(dateString);
+		console.log($http.resDate);
 		globalMessage = globalDate + ' @ ' + globalTime
 		$scope.message = globalMessage;
 
@@ -86,9 +111,18 @@ function SearchCtrl($scope, $http) {
 			window.history.back();
 			$('#test').fullCalendar( 'changeView', 'agendaDay' );
 			$('#test').fullCalendar( 'gotoDate', date.format());
-		}
+		};
 		
-	});
+		$scope.makeReservation = function(){
+			$scope.loading = true;
+			Reservations1.create({resDate: $http.resDate})
+				.then(function(data){
+					$scope.loading = false;
+					$scope.reservations = data;
+					//return $scope.reservations;
+				});
+		};
+	}]);
 
 	scotchApp.controller('aboutController', function($scope) {
 		$scope.message = 'Look! I am an about page.';

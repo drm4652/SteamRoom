@@ -26,8 +26,6 @@ app.use(express.static(__dirname + '/app'));
 app.use('/calendar', express.static(__dirname + '/calendar'));
 // set bower_components as a static asset to load on the page
 app.use('/bower_components', express.static(__dirname + '/bower_components'));
-//app.set('view engine', 'html');
-//app.engine('html', require('ejs').renderfile);
 
 // routes =========================================
 require('./routes/routes.js')(app);

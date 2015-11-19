@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 
 var resSchema = new mongoose.Schema({
 	reserver : String,
-	reservedAs : String,
+	reservedAs : Number,
 	date : Date,
 	checkedIn : Boolean,
-	checkedOut : Boolean
+	checkedOut : Boolean,
+	roomNumber: Number
 });
 
 module.exports = mongoose.model('Reservation', resSchema);

@@ -77,8 +77,7 @@ calendarDemoApp.controller('CalendarCtrl',
 		
 		
         if(dateSaver == todayCheck || selectionStart > today){
-			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
-			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+			
 			//$http.post
 
 
@@ -87,33 +86,40 @@ calendarDemoApp.controller('CalendarCtrl',
 				$http.dateCheck = moment($http.dateCheck);
 				//console.log($http.dateCheck);
 				
-				var events = function() {
+				var events = function(usedRooms) {
+					console.log(usedRooms);
+					var availableRooms= 11 - usedRooms;
 					$scope.events.push({
 						id: timeIncrement,
-						title: 'Rooms Available [' + 11 + ']',
+						title: 'Rooms Available [' + availableRooms + ']',
 						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-						url: 'http://localhost:3000/ReservationIndex.html'
-						//url: 'http://steamroom.se.rit.edu/reservationOptions.html'
+						url: 'http://localhost:3000/reservationCheck/'
 					});
 				};
 				
-				events();
-								
-				$scope.roomsUsed = Reservations.post({dateCheck: $http.dateCheck})
-					.then(function(data) {
-						$scope.reservations = data;
-						$scope.loading = true;
-						return $scope.reservations;
-					});
-					
 				
+				$scope.roomsUsed = function(){
+					Reservations.post({dateCheck: $http.dateCheck})
+					.then(function(data) {
+						$scope.reservations = data.data;
+						$scope.loading = true;
+						console.log(data.data);
+						return events($scope.roomsUsed);
+					});
+				};
+				
+				events(0);
 				//console.log(roomsUsed);
-				$scope.roomsUsed.then(function(data) {
-					console.log(data.data);
-					$scope.loading = true;
-				});
+				//$scope.roomsUsed.then(function(data) {
+					//console.log(data);
+					//$scope.loading = true;
+					//return events(data);
+				//});
 				//console.log(roomsLeft.$$state);
-			}	
+			}
+			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
+			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+			
 			
 		}
 		else{
