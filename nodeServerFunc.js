@@ -7,7 +7,7 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 
-// config =========================================
+// config test=========================================
 
 app.set('port', 3000); //setting port to 3000
 app.use(session({
