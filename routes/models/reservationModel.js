@@ -6,7 +6,7 @@ var resSchema = new mongoose.Schema({
 	date : Date,
 	checkedIn : Boolean,
 	checkedOut : Boolean,
-	roomNumber: Number
+	roomNumber : Number
 });
 
 module.exports = mongoose.model('Reservation', resSchema);
