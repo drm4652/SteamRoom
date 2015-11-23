@@ -43,7 +43,7 @@ function getNumOfReservations(req, res) {
 	});
 };
 
-//Returns list of currently unused rooms
+//Returns list of currently unused rooms based on a certain date
 function getAvailableRooms(req, res) {
 	Reservation.find(
 	{'date': req.body.resDate},
