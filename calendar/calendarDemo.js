@@ -93,7 +93,7 @@ calendarDemoApp.controller('CalendarCtrl',
 						id: timeIncrement,
 						title: 'Rooms Available [' + availableRooms + ']',
 						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-						url: 'http://localhost:3000/reservationCheck/'
+						url: 'http://localhost:3000/reservationCheck'
 					});
 				};
 				

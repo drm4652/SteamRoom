@@ -44,7 +44,7 @@ function SearchCtrl($scope, $http) {
 
 			// route for the home page
 			.when('/', {
-				templateUrl : 'home.html',
+				templateUrl : 'roomInfo.html',
 				controller  : 'mainController'
 			})
 

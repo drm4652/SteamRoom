@@ -45,7 +45,15 @@ function getNumOfReservations(req, res) {
 
 //Returns list of currently unused rooms
 function getAvailableRooms(req, res) {
-	
+	Reservation.find(
+	{'date': req.body.resDate},
+	function(err, rooms) {
+		if(err) {
+			res.send(err);
+		}
+		console.log(reservations.roomNumber);
+		res.json(reservations.roomNumber);
+	});
 };
 
 module.exports = function(app) {
@@ -111,6 +119,7 @@ module.exports = function(app) {
 	// create a reservation with confirm button
 	app.post('/reservationCheck', function(req, res) {
 		//create a reservation, information comes from AJAX request from Angular
+		//TODO use getUsedRooms to select an unused room to use
 		sesh = req.session;
 		console.log(req.body.resDate);
 		Reservation.create({
