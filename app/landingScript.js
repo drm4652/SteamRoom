@@ -42,6 +42,11 @@
 
 	// create the controller and inject Angular's $scope
 	scotchApp.controller('mainController', function($scope) {
+		
+		$scope.doTheBack = function($scope){
+			window.history.back();
+		
+		};
 		// create a message to display in our 
 		$scope.message = 'Would you like reserve a room or search your reservations?';		
 	});
@@ -59,5 +64,6 @@
 	});
 
 	scotchApp.controller('findController', function($scope) {
-		$scope.message = 'Please enter your SE username or a team name';
+		$scope.message = 'Here is your reservations.';
+		
 	});
