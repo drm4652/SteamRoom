@@ -20,6 +20,18 @@
   <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
   <script type="text/javascript" src="../calendar/src/calendar.js"></script>
   <script type="text/javascript" src="../calendar/calendarDemo.js"></script>
+  <style media="screen" type="text/css">
+	@media (max-width:550px) {
+  a {
+      font-size: 0px !important;
+  }
+
+   a i {
+      font-size: 20px !important;
+   }
+}
+  </style>
+  
   
 </head>
 
@@ -28,7 +40,8 @@
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
-  <div id='test' ng-click="doTheBack()"><a class="navbar-brand"><i class="fa fa-arrow-left"></i>Back</a></div>
+  <div id='test' ng-click="doTheBack()"><b class="navbar-brand"><i class="fa fa-arrow-left"></i>Back</b></div>
+  
     <div class="nav navbar-nav navbar-left">
 
 	
