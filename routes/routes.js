@@ -53,14 +53,37 @@ function getNumOfReservations(req, res) {
 
 //Returns list of currently unused rooms based on a certain date
 function getAvailableRooms(req, res) {
+	console.log(req.body.resDate);
 	Reservation.find(
 	{'date': req.body.resDate},
 	function(err, rooms) {
 		if(err) {
 			res.send(err);
 		}
-		console.log(reservations.roomNumber);
-		res.json(reservations.roomNumber);
+		var allRooms = [1560, 1561, 1562, 1563, 1564, 1565, 1660, 1661, 1662, 1663, 1665];
+		var usedRooms = [];
+		for(var i = 0; i < rooms.length; i++) {
+			usedRooms.push(rooms[i].roomNumber);
+		}
+		
+		var availableRooms = allRooms.filter(function(el) {
+			return usedRooms.indexOf(el) <0;
+		});
+		//console.log(availableRooms);
+		//console.log(rooms);
+		Reservation.create({
+			reserver : req.session.username,
+			reservedAs : 3,
+			date : req.body.resDate,
+			checkedIn: false,
+			checkedOut: false,
+			roomNumber: availableRooms[0]
+		}, function(err, reservation) {
+			if(err) {
+				res.send(err);
+			}
+		});
+		//res.json(availableRooms[0]);
 	});
 };
 
@@ -122,26 +145,15 @@ module.exports = function(app) {
 	//load reservation information page before comfirming to make a reservation
 	app.get('/reservationCheck', function(req, res) {
 		res.sendFile(path.join(__dirname + '/../app/ReservationIndex.html'));
+		//getAvailableRooms(req, res);
 	});
 	
 	// create a reservation with confirm button
 	app.post('/reservationCheck', function(req, res) {
 		//create a reservation, information comes from AJAX request from Angular
 		//TODO use getUsedRooms to select an unused room to use
-		sesh = req.session;
+		getAvailableRooms(req, res);
 		console.log(req.body.resDate);
-		Reservation.create({
-			reserver : sesh.username,
-			reservedAs : 3,
-			date : req.body.resDate,
-			checkedIn: false,
-			checkedOut: false,
-			roomNumber: 1664
-		}, function(err, reservation) {
-			if(err) {
-				res.send(err);
-			}
-		});
 	});
 	
 	//delete a reservation
