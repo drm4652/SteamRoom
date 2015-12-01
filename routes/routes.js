@@ -30,17 +30,25 @@ function getPermissionClasses(req, res) {
 function getNumOfReservations(req, res) {
 	//TODO add room number checking for teleconference and phoneline
 	//console.log(req.body.dateCheck);
-	Reservation.find( 
-	{'date': req.body.dateCheck},
-	function(err, reservations) {
-		if(err) {
-			console.log('some kind of error');
-			res.send(err);
-		}
-		console.log(reservations.length);
-		//console.log(JSON.stringify(reservations, null, 4));
-		res.json(reservations.length);
-	});
+	var roomsAtTime = new Array(req.body.times.length);
+	for(var i= 0; i < req.body.times.length; i++) {
+		//console.log(req.body.times.length);
+		Reservation.find( 
+		{'date': req.body.times[i]},
+		function(err, reservations) {
+			if(err) {
+				console.log('some kind of error');
+				res.send(err);
+			}
+			console.log(reservations.length);
+			//console.log(JSON.stringify(reservations, null, 4));
+			//res.json(reservations.length);
+			roomsAtTime[i] = (reservations.length);
+			console.log(roomsAtTime);
+		});
+	}
+	console.log(3);
+	//res.json(roomsAtTime);
 };
 
 //Returns list of currently unused rooms based on a certain date

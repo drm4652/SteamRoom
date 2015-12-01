@@ -77,49 +77,59 @@ calendarDemoApp.controller('CalendarCtrl',
 		
 		
         if(dateSaver == todayCheck || selectionStart > today){
-			
 			//$http.post
-
-
+			
+			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
+			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+			
+			
+			
 			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
 				$http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
 				$http.dateCheck = moment($http.dateCheck);
 				//console.log($http.dateCheck);
 				
-				var events = function(usedRooms) {
-					console.log(usedRooms);
+				var pushEvents = function(usedRooms) {
+					//console.log(usedRooms);
 					var availableRooms= 11 - usedRooms;
+					console.log(availableRooms); //prints rooms available
 					$scope.events.push({
 						id: timeIncrement,
 						title: 'Rooms Available [' + availableRooms + ']',
 						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
 						url: 'http://localhost:3000/reservationCheck'
 					});
+					console.log(timeIncrement);
+					console.log($http.dateCheck);
+					//if(timeIncrement == 23)
 				};
 				
 				
-				$scope.roomsUsed = function(){
-					Reservations.post({dateCheck: $http.dateCheck})
-					.then(function(data) {
-						$scope.reservations = data.data;
-						$scope.loading = true;
-						console.log(data.data);
-						return events($scope.roomsUsed);
-					});
-				};
+				//TODO get Async calls working correctly
+				// $scope.roomsUsed = function(){
+					// $http.times = [];
+					// for(timeIncrement = 7; timeIncrement < 23; timeIncrement++) {
+						// $http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
+						// console.log($http.dateCheck);
+						//$http.dateCheck = moment($http.dateCheck);
+						// $http.times.push($http.dateCheck);
+					// }
+					// console.log($http.times);
+					// return Reservations.post({times: $http.times})
+					// .then(function(data) {
+						// $scope.reservations = data.data;
+						// $scope.loading = true;
+						// console.log(data.data); //prints reserved rooms
+						// return pushEvents($scope.reservations);
+					// }).catch(function(err) {
+						// console.log(err)
+					// });
+				// };
 				
-				events(0);
-				//console.log(roomsUsed);
-				//$scope.roomsUsed.then(function(data) {
-					//console.log(data);
-					//$scope.loading = true;
-					//return events(data);
-				//});
-				//console.log(roomsLeft.$$state);
-			}
-			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
-			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+				pushEvents(1);
+				//$scope.roomsUsed();
 			
+			}
 			
 		}
 		else{
