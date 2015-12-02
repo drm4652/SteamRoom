@@ -1,6 +1,6 @@
-var Room = function (roomNumber, phoneLine, teleconference) {
+var Room = function (roomNumber, phoneLine, webcam) {
   this.roomNumber = roomNumber;
   this.phoneLine = phoneLine;
-  this.teleconference = teleconference;
+  this.webcam = webcam;
 };
 

@@ -16,6 +16,8 @@ var room9 = new Room(1662, false, false);
 var room10 = new Room(1663, false, false);
 var room11 = new Room(1665, false, false);
 
+var fullRooms = new Room("FULL", false, false);
+
 var allRooms = [];
 allRooms.push(room1);
 allRooms.push(room2);
@@ -36,6 +38,15 @@ webcamRooms.push(room2);
 phonelineRooms.push(room3);
 phonelineRooms.push(room4);
 
+var nonExtraRooms = [];
+nonExtraRooms.push(room5);
+nonExtraRooms.push(room6);
+nonExtraRooms.push(room7);
+nonExtraRooms.push(room8);
+nonExtraRooms.push(room9);
+nonExtraRooms.push(room10);
+nonExtraRooms.push(room11);
+
 var date1 = new Date(2015, 11, 14, 8, 0, 0, 0);
 
 var mockReservations = [];
@@ -51,13 +62,16 @@ var res9 = new Reservation(student1 ,"Active","Individual",date1, 2, room9);
 var res10 = new Reservation(student1 ,"Active","Individual",date1, 2, room10);
 var res11 = new Reservation(student1 ,"Active","Individual",date1, 2, room11);
 
+
 mockReservations.push(res1);
-/*
 mockReservations.push(res2);
+
 mockReservations.push(res3);
 mockReservations.push(res4);
+
 mockReservations.push(res5);
 mockReservations.push(res6);
+/*
 mockReservations.push(res7);
 mockReservations.push(res8);
 mockReservations.push(res9);

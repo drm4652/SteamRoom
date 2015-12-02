@@ -105,31 +105,94 @@
 		while(cap < 500){
 			
 			if(dayArray.indexOf(currentDay.getDay()) !== -1){
-				Reservations.push(currentDay.toString().substring(0,10));
-				
-				for(i = 0; i < numRooms; i++){
-					currentDay.setHours(startTime);
-					currentDay.setMinutes(0);
-					currentDay.setSeconds(0);
-					currentDay.setMilliseconds(0);
-					addReservation(reservationsForTable, conflictedReservations, rejectedReservations, 
-									currentDay.toLocaleString(), duration, 0);
-				}
-			}
-			currentDay.setDate(currentDay.getDate()+1);
+				currentDay.setHours(startTime);
+				currentDay.setMinutes(0);
+				currentDay.setSeconds(0);
+				currentDay.setMilliseconds(0);
+				addReservation(reservationsForTable, conflictedReservations, rejectedReservations, 
+								currentDay.toLocaleString(), duration, numRooms, numRoomsPhoneline, numRoomsWebcam);
 
+			}
+			
 			if(currentDay.toLocaleDateString() === endDate.toLocaleDateString()){
 				break;
 			}
+			currentDay.setDate(currentDay.getDate()+1);
 			cap++;
 		}
-		//document.getElementById("ResDates").innerHTML = Reservations;
-		displayTableFromRes(reservationsForTable, "openResTable");
-		displayTableFromRes(rejectedReservations, "rejResTable");
-		displayTableFromRes(conflictedReservations, "confResTable");
+
+		
+		displayTableFromRes(reservationsForTable, "openResTable", numRooms);
+		displayTableFromRes(rejectedReservations, "rejResTable", numRooms);
+		displayConflictTableFromRes(conflictedReservations, "confResTable", numRooms);
 	}
 	
-	function displayTableFromRes(resToTable, tableID){
+	function displayTableFromRes(resToTable, tableID, numRooms){
+		var table = document.getElementById(tableID);
+		var headerRow = table.insertRow(0);
+		headerRow.setAttribute("bgcolor", "#98A0A8");	
+
+		var userCell = headerRow.insertCell(0);
+		var statusCell = headerRow.insertCell(1);
+		var typeCell = headerRow.insertCell(2);
+		var dateCell = headerRow.insertCell(3);
+		var durationCell = headerRow.insertCell(4);
+		var roomNumCell = headerRow.insertCell(5);
+		var phonelineCell = headerRow.insertCell(6);
+		var webcamCell = headerRow.insertCell(7);
+		
+		userCell.innerHTML = "User";
+		statusCell.innerHTML = "Status";
+		typeCell.innerHTML = "Type";
+		dateCell.innerHTML = "Date";
+		durationCell.innerHTML = "Duration";
+		roomNumCell.innerHTML = "Room Number";
+		phonelineCell.innerHTML = "Phoneline";
+		webcamCell.innerHTML = "Webcam";
+		
+		var rowCounter = 0;
+		var colorFlip = true;
+		for(i = 1; i <= resToTable.length; i++){
+			var newRow = table.insertRow(i);
+			
+			if(rowCounter <= numRooms - 1){
+				if(colorFlip){
+					newRow.setAttribute("bgcolor", "#c8d1d6");	
+				}
+				else{
+					newRow.setAttribute("bgcolor", "#fafafa");	
+				}
+				rowCounter++;
+			}
+			if(rowCounter == numRooms){
+				colorFlip = !colorFlip;
+				rowCounter = 0;
+			}
+
+			
+			
+			var userCell = newRow.insertCell(0);
+			var statusCell = newRow.insertCell(1);
+			var typeCell = newRow.insertCell(2);
+			var dateCell = newRow.insertCell(3);
+			var durationCell = newRow.insertCell(4);
+			var roomNumCell = newRow.insertCell(5);
+			var phonelineCell = newRow.insertCell(6);
+			var webcamCell = newRow.insertCell(7);
+		
+			userCell.innerHTML = resToTable[i-1].user;
+			statusCell.innerHTML = resToTable[i-1].status;
+			typeCell.innerHTML = resToTable[i-1].type;
+			dateCell.innerHTML = resToTable[i-1].date;
+			durationCell.innerHTML = resToTable[i-1].duration;
+			roomNumCell.innerHTML = resToTable[i-1].roomNum.roomNumber;
+			phonelineCell.innerHTML = resToTable[i-1].roomNum.webcam;
+			webcamCell.innerHTML = resToTable[i-1].roomNum.phoneLine;
+		
+		}
+	}
+
+	function displayConflictTableFromRes(resToTable, tableID, numRooms){
 		var table = document.getElementById(tableID);
 		var headerRow = table.insertRow(0);
 
@@ -139,6 +202,8 @@
 		var dateCell = headerRow.insertCell(3);
 		var durationCell = headerRow.insertCell(4);
 		var roomNumCell = headerRow.insertCell(5);
+		var phonelineCell = headerRow.insertCell(6);
+		var webcamCell = headerRow.insertCell(7);
 		
 		userCell.innerHTML = "User";
 		statusCell.innerHTML = "Status";
@@ -146,25 +211,42 @@
 		dateCell.innerHTML = "Date";
 		durationCell.innerHTML = "Duration";
 		roomNumCell.innerHTML = "Room Number";
+		phonelineCell.innerHTML = "Phoneline";
+		webcamCell.innerHTML = "Webcam";
 		
-		for(i = 1; i <= resToTable.length; i++){
-			var newRow = table.insertRow(i);
-			
-			var userCell = newRow.insertCell(0);
-			var statusCell = newRow.insertCell(1);
-			var typeCell = newRow.insertCell(2);
-			var dateCell = newRow.insertCell(3);
-			var durationCell = newRow.insertCell(4);
-			var roomNumCell = newRow.insertCell(5);
 		
-			userCell.innerHTML = resToTable[i-1].user;
-			statusCell.innerHTML = resToTable[i-1].status;
-			typeCell.innerHTML = resToTable[i-1].type;
-			dateCell.innerHTML = resToTable[i-1].date;
-			durationCell.innerHTML = resToTable[i-1].duration;
-			roomNumCell.innerHTML = resToTable[i-1].roomNum.roomNumber;
-			
+		for(i = 1; i <= resToTable.length*2; i++){
+			if(i % 2 == 1){
+				var newRow = table.insertRow(i);
+				
+				var userCell = newRow.insertCell(0);
+				var statusCell = newRow.insertCell(1);
+				var typeCell = newRow.insertCell(2);
+				var dateCell = newRow.insertCell(3);
+				var durationCell = newRow.insertCell(4);
+				var roomNumCell = newRow.insertCell(5);
+				var phonelineCell = newRow.insertCell(6);
+				var webcamCell = newRow.insertCell(7);
+
+				userCell.innerHTML = resToTable[Math.ceil((i/2)-1)].user;
+				statusCell.innerHTML = resToTable[Math.ceil((i/2)-1)].status;
+				typeCell.innerHTML = resToTable[Math.ceil((i/2)-1)].type;
+				dateCell.innerHTML = resToTable[Math.ceil((i/2)-1)].date;
+				durationCell.innerHTML = resToTable[Math.ceil((i/2)-1)].duration;
+				roomNumCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.roomNumber;
+				phonelineCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.webcam;
+				webcamCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.phoneLine;
+			}
+			else{
+				var errorRow = table.insertRow(i);
+				
+				var errorCell = errorRow.insertCell(0);
+				errorCell.colSpan = 8;
+				
+				errorCell.innerHTML = "Error!";
+			}
 		}
+		
 	}
 	
 	

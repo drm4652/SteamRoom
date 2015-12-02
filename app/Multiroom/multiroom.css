@@ -68,4 +68,13 @@ fieldset p {
 	clear: both;
 	padding: 5px;
 }
+
+#finalFields{
+    font-weight: bold;
+	padding-left: 10px;
+}
+
+#finalProperties{
+	padding-left: 50px;
+}
 			
