@@ -10,6 +10,10 @@
   <script src="../js/PermissionClass.js"></script>
   <script src="../js/ReservationCreation.js"></script>
   <script src="mockDBState.js"></script>
+  <link rel="stylesheet" href="multiroom.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="mainController" onload="loadConfirmation()">
 
@@ -47,20 +51,22 @@
   </div>
 </nav>
 
-Number of rooms: <div id="numRooms"></div><br>
-Days: <div id="dates"></div><br>
-Start Date: <div id="startDate"></div><br>
-End Date: <div id="endDate"></div><br>
-Start Time: <div id="startTime"></div><br>
-End Time: <div id="endTime"></div><br>
-Open Reservations:<br><div id="ResDates"></div><table border=1 width=75% id="openResTable"></table><br>
-Rejected Reservations:<br><div id="rejectedRes"></div><table border=1 width=75% id="rejResTable"></table><br>
-Reservation Conflicts:<br><div id="resConflicts"></div><table border=1 width=75% id="confResTable"></table><br>
+<div id="finalFields">Number of rooms:</div><div id="finalProperties"><div id="numRooms"></div></div><br>
+<div id="finalFields">Days:</div><div id="finalProperties"><div id="dates"></div></div><br>
+<div id="finalFields">Start Date:</div><div id="finalProperties"><div id="startDate"></div></div><br>
+<div id="finalFields">End Date:</div><div id="finalProperties"><div id="endDate"></div></div><br>
+<div id="finalFields">Start Time:</div><div id="finalProperties"><div id="startTime"></div></div><br>
+<div id="finalFields">End Time:</div><div id="finalProperties"><div id="endTime"></div></div><br>
+<div id="finalFields">Open Reservations:</div><div id="finalProperties"><div id="ResDates"></div><table class="table table-condensed" border=1 width=50% id="openResTable"></table></div><br>
+<div id="finalFields">Rejected Reservations:</div><div id="finalProperties"><div id="rejectedRes"></div><table class="table table-condensed" border=1 width=75% id="rejResTable"></table></div><br>
+<div id="finalFields">Reservation Conflicts:</div><div id="finalProperties"><div id="resConflicts"></div><table class="table table-condensed" border=1 width=75% id="confResTable"></table></div><br>
 
 
-Conflict Options:<br>
+<div id="finalFields">Conflict Options:</div>
+<div id="finalProperties">
 <input type="radio"> Remove all conflicted reservations<br>
 <input type="radio"> Change Individual conflicted reservations<br><br>
+</div>
 
 <input type="button" value="Confirm"><input type="button" value="Go Back" onclick="goBack()">
 
