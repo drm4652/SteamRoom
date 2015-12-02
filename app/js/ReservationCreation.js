@@ -3,24 +3,26 @@ function pickARoom(){
 	return allRooms[index].roomNumber;
 }
 
-function pickAWebcamRoom(){
+function pickAWebcamRoom(res){
 	if(webcamRooms.length > 0){
 		var pickedRoom = webcamRooms[0];
 		webcamRooms.splice(0, 1);
 		return pickedRoom;
 	}
 	else{
+		res.error = "There are no webcam rooms available at this time."
 		return -1;
 	}
 }
 
-function pickAPhonelineRoom(){
+function pickAPhonelineRoom(res){
 	if(phonelineRooms.length > 0){
 		var pickedRoom = phonelineRooms[0];
 		phonelineRooms.splice(0, 1);
 		return pickedRoom;
 	}
 	else{
+		res.error = "There are no phoneline rooms available at this time."
 		return -1;
 	}	
 }
@@ -62,7 +64,7 @@ function pickAnOpenRoom(roomsLeft){
 	}
 }
 
-function pickANonExtraRoom(){
+function pickANonExtraRoom(res){
 	if(nonExtraRooms.length > 0){
 		var pickedRoom = nonExtraRooms[0];
 		nonExtraRooms.splice(0, 1);
@@ -79,7 +81,7 @@ function pickANonExtraRoom(){
 		return pickedRoom;
 	}
 	else{
-		console.log("Couldn't assign room");
+		res.error = "There are no rooms available at this time.";
 		return -1;
 	}
 }
@@ -111,44 +113,46 @@ function addReservation(reservations, conflictedReservations, rejectedReservatio
 	var rejRes = false;
 	var phonelineCounter = 0;
 	var webcamCounter = 0;
-	
-	console.log(webcamRooms.length);
-	console.log(phonelineRooms.length);
-	console.log(nonExtraRooms.length);
 
 	for(i = 0; i < mockReservations.length; i++){
 		if(startTime.toLocaleString() === mockReservations[i].date.toLocaleString()){
-			if(webcamRooms.indexOf(mockReservations[i].roomNum) == -1){
-				console.log("webcam");
-				webcamRooms.splice(webcamRooms.indexOf(mockReservations[i].roomNum), 1);
+			
+			for(a = 0; a < webcamRooms.length; a++){
+				if(mockReservations[i].roomNum.roomNumber == webcamRooms[a].roomNumber){
+					webcamRooms.splice(webcamRooms.indexOf(mockReservations[i].roomNum), 1);
+					console.log("Found Webcam room");
+				}
 			}
-			if(phonelineRooms.indexOf(mockReservations[i].roomNum) == -1){
-				console.log("phoneline");
-				phonelineRooms.splice(phonelineRooms.indexOf(mockReservations[i].roomNum), 1);
+			for(b = 0; b < phonelineRooms.length; b++){
+				if(mockReservations[i].roomNum.roomNumber == phonelineRooms[b].roomNumber){
+					phonelineRooms.splice(phonelineRooms.indexOf(mockReservations[i].roomNum), 1);
+					console.log("Found Phoneline room");
+				}
 			}
-			if(nonExtraRooms.indexOf(mockReservations[i].roomNum) == -1){
-				console.log("non extra");
-				nonExtraRooms.splice(nonExtraRooms.indexOf(mockReservations[i].roomNum), 1);
+			for(c = 0; c < nonExtraRooms.length; c++){
+				if(mockReservations[i].roomNum.roomNumber == nonExtraRooms[c].roomNumber){
+					nonExtraRooms.splice(nonExtraRooms.indexOf(mockReservations[i].roomNum), 1);
+					console.log("Found Nonextra room");
+				}
 			}
 		}
 	}
 	
-	console.log(webcamRooms.length);
-	console.log(phonelineRooms.length);
-	console.log(nonExtraRooms.length);
-	
+	var res;
 	for(b = 0; b < numRooms; b++){
 
+		res = new Reservation(faculty1.username, "Active", "Multiroom", startTime, duration, null);
+	
 		if(phonelineCounter < phoneline){
-			resRoomNum = pickAPhonelineRoom();
+			resRoomNum = pickAPhonelineRoom(res);
 			phonelineCounter++;
 		}
 		else if(webcamCounter < webcam){
-			resRoomNum = pickAWebcamRoom();
+			resRoomNum = pickAWebcamRoom(res);
 			webcamCounter++;
 		}
 		else{
-			resRoomNum = pickANonExtraRoom();
+			resRoomNum = pickANonExtraRoom(res);
 		}
 		
 		
@@ -156,18 +160,16 @@ function addReservation(reservations, conflictedReservations, rejectedReservatio
 			allowRes = false;
 			resRoomNum = fullRooms;
 		}
-
+		
+		res.roomNum = resRoomNum;
 		if(allowRes){
-			var res = new Reservation(faculty1.username, "Active", "Multiroom", startTime, duration, resRoomNum);
 			reservations.push(res);
 		}
 		else{
-			var res = new Reservation(faculty1.username, "Active", "Multiroom", startTime, duration, resRoomNum);
 			conflictedReservations.push(res);
 		}
 		
 		if(rejRes){
-			var res = new Reservation(faculty1.username, "Active", "Multiroom", startTime, duration, resRoomNum);
 			rejectedReservations.push(res);
 		}
 		

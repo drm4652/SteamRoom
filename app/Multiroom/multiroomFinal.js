@@ -7,6 +7,9 @@
 		document.getElementById("startTime").innerHTML = sessionStorage.getItem("startTime");
 		document.getElementById("endTime").innerHTML = sessionStorage.getItem("endTime");
 		
+		sessionStorage.setItem("roomBreakdown", sessionStorage.getItem("webcamRooms") + "/" + sessionStorage.getItem("numRoomsPhoneline"));
+		document.getElementById("roomBreakdown").innerHTML = sessionStorage.getItem("roomBreakdown");
+		
 		var date1 = sessionStorage.getItem("startDate");
 		var date2 = sessionStorage.getItem("endDate");
 		var datesSelected = sessionStorage.getItem("dateSelected");
@@ -141,14 +144,14 @@
 		var phonelineCell = headerRow.insertCell(6);
 		var webcamCell = headerRow.insertCell(7);
 		
-		userCell.innerHTML = "User";
-		statusCell.innerHTML = "Status";
-		typeCell.innerHTML = "Type";
-		dateCell.innerHTML = "Date";
-		durationCell.innerHTML = "Duration";
-		roomNumCell.innerHTML = "Room Number";
-		phonelineCell.innerHTML = "Phoneline";
-		webcamCell.innerHTML = "Webcam";
+		userCell.innerHTML = "<b>User</b>";
+		statusCell.innerHTML = "<b>Status</b>";
+		typeCell.innerHTML = "<b>Type</b>";
+		dateCell.innerHTML = "<b>Date</b>";
+		durationCell.innerHTML = "<b>Duration</b>";
+		roomNumCell.innerHTML = "<b>Room Number</b>";
+		phonelineCell.innerHTML = "<b>Phoneline</b>";
+		webcamCell.innerHTML = "<b>Webcam</b>";
 		
 		var rowCounter = 0;
 		var colorFlip = true;
@@ -168,8 +171,6 @@
 				colorFlip = !colorFlip;
 				rowCounter = 0;
 			}
-
-			
 			
 			var userCell = newRow.insertCell(0);
 			var statusCell = newRow.insertCell(1);
@@ -195,6 +196,7 @@
 	function displayConflictTableFromRes(resToTable, tableID, numRooms){
 		var table = document.getElementById(tableID);
 		var headerRow = table.insertRow(0);
+		headerRow.setAttribute("bgcolor", "#98A0A8");	
 
 		var userCell = headerRow.insertCell(0);
 		var statusCell = headerRow.insertCell(1);
@@ -205,14 +207,14 @@
 		var phonelineCell = headerRow.insertCell(6);
 		var webcamCell = headerRow.insertCell(7);
 		
-		userCell.innerHTML = "User";
-		statusCell.innerHTML = "Status";
-		typeCell.innerHTML = "Type";
-		dateCell.innerHTML = "Date";
-		durationCell.innerHTML = "Duration";
-		roomNumCell.innerHTML = "Room Number";
-		phonelineCell.innerHTML = "Phoneline";
-		webcamCell.innerHTML = "Webcam";
+		userCell.innerHTML = "<b>User</b>";
+		statusCell.innerHTML = "<b>Status</b>";
+		typeCell.innerHTML = "<b>Type</b>";
+		dateCell.innerHTML = "<b>Date</b>";
+		durationCell.innerHTML = "<b>Duration</b>";
+		roomNumCell.innerHTML = "<b>Room Number</b>";
+		phonelineCell.innerHTML = "<b>Phoneline</b>";
+		webcamCell.innerHTML = "<b>Webcam</b>";
 		
 		
 		for(i = 1; i <= resToTable.length*2; i++){
@@ -239,11 +241,12 @@
 			}
 			else{
 				var errorRow = table.insertRow(i);
+				errorRow.setAttribute("bgcolor", "#ffc8c8");
 				
 				var errorCell = errorRow.insertCell(0);
 				errorCell.colSpan = 8;
 				
-				errorCell.innerHTML = "Error!";
+				errorCell.innerHTML = resToTable[(i/2)-1].error;
 			}
 		}
 		
