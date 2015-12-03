@@ -3,10 +3,17 @@
   <script src="jquery-2.1.4.min.js"></script>
   <link rel="stylesheet" href="tabs.css">
   <script src="../js/Reservation.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script src="../Multiroom/multiroomFinal.js"></script>
+  <script src="../js/Reservation.js"></script>
+  <script src="../js/Room.js"></script>
+  <script src="../js/User.js"></script>
+  <script src="../js/PermissionClass.js"></script>
+  <script src="../js/ReservationCreation.js"></script>
+  <script src="../Multiroom/mockDBState.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="multiroom.css">
   <script>
 function logout(){
@@ -51,9 +58,57 @@ function resFilterValues(){
 }
 
 function createMockData(){
+/*
   for(i = 0; i < resArray.length;i++){
 	addRowFromRes(resArray[i], i);
   }
+  */
+	var table = document.getElementById("totalReservations");
+	var headerRow = table.insertRow(0);
+	headerRow.setAttribute("bgcolor", "#98A0A8");	
+	
+	var userCell = headerRow.insertCell(0);
+	var statusCell = headerRow.insertCell(1);
+	var typeCell = headerRow.insertCell(2);
+	var dateCell = headerRow.insertCell(3);
+	var durationCell = headerRow.insertCell(4);
+	var roomNumCell = headerRow.insertCell(5);
+	var phonelineCell = headerRow.insertCell(6);
+	var webcamCell = headerRow.insertCell(7);
+		
+	userCell.innerHTML = "<b>User</b>";
+	statusCell.innerHTML = "<b>Status</b>";
+	typeCell.innerHTML = "<b>Type</b>";
+	dateCell.innerHTML = "<b>Date</b>";
+	durationCell.innerHTML = "<b>Duration</b>";
+	roomNumCell.innerHTML = "<b>Room Number</b>";
+	phonelineCell.innerHTML = "<b>Phoneline</b>";
+	webcamCell.innerHTML = "<b>Webcam</b>";
+		
+	var counter = localStorage.getItem("numResInTransaction");
+	console.log(counter);
+	
+	for(i = 1; i <= counter; i++){
+		var newRow = table.insertRow(i);
+			
+		var userCell = newRow.insertCell(0);
+		var statusCell = newRow.insertCell(1);
+		var typeCell = newRow.insertCell(2);
+		var dateCell = newRow.insertCell(3);
+		var durationCell = newRow.insertCell(4);
+		var roomNumCell = newRow.insertCell(5);
+		var phonelineCell = newRow.insertCell(6);
+		var webcamCell = newRow.insertCell(7);
+			
+		userCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "user");
+		statusCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "status");
+		typeCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "type");
+		dateCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "date");
+		durationCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "duration");
+		roomNumCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "roomNumber");
+		phonelineCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "webcam");
+		webcamCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "phoneLine");
+	}
 }
 
 function createTableFromArray(reservations){
@@ -248,7 +303,8 @@ function checkID(i){
 }
 
 </script>
-  
+
+
 </head>
 <body onload="createMockData()">
 <script>
@@ -340,36 +396,8 @@ jQuery(document).ready(function() {
 			<input type="button" value="Filter" onclick="filterReservations()">
 			<br><br><br>
 			</div>
-				<table border="1" style="width:75%" align="center" id="resTable">
-					<tr align="center">
-						<td>User</td>
-						<td>Status</td>
-						<td>Type</td>
-						<td width="20%">Reservation Time</td>
-						<td> Time(hours)</td>
-						<td>Room</td>
-						<td>Operation</td>
-					</tr>
-				</table>
-			<div class="bs-example center">
-				<ul class="pagination">
-					<li><a href="#page1">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">5</a></li>
-				</ul>
-			</div>
-			
-			<div class="#page1">
-			 page 1 dog
-			</div>
 
-			<br>
-			<br>
-			<div class="center">
-				<input type="button" value="Edit Selected Items">
-			</div>
+			<table class="table table-condensed" border=1 width=50% id="totalReservations"></table></div><br>
 			
         </div>
  

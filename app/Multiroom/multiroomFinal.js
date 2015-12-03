@@ -1,18 +1,18 @@
 	function loadConfirmation()
 	{
-		document.getElementById("numRooms").innerHTML = sessionStorage.getItem("numRooms");
-		document.getElementById("dates").innerHTML = sessionStorage.getItem("dates");
-		document.getElementById("startDate").innerHTML = sessionStorage.getItem("startDate");
-		document.getElementById("endDate").innerHTML = sessionStorage.getItem("endDate");
-		document.getElementById("startTime").innerHTML = sessionStorage.getItem("startTime");
-		document.getElementById("endTime").innerHTML = sessionStorage.getItem("endTime");
+		document.getElementById("numRooms").innerHTML = localStorage.getItem("numRooms");
+		document.getElementById("dates").innerHTML = localStorage.getItem("dates");
+		document.getElementById("startDate").innerHTML = localStorage.getItem("startDate");
+		document.getElementById("endDate").innerHTML = localStorage.getItem("endDate");
+		document.getElementById("startTime").innerHTML = localStorage.getItem("startTime");
+		document.getElementById("endTime").innerHTML = localStorage.getItem("endTime");
 		
-		sessionStorage.setItem("roomBreakdown", sessionStorage.getItem("webcamRooms") + "/" + sessionStorage.getItem("numRoomsPhoneline"));
-		document.getElementById("roomBreakdown").innerHTML = sessionStorage.getItem("roomBreakdown");
+		localStorage.setItem("roomBreakdown", localStorage.getItem("webcamRooms") + "/" + localStorage.getItem("numRoomsPhoneline"));
+		document.getElementById("roomBreakdown").innerHTML = localStorage.getItem("roomBreakdown");
 		
-		var date1 = sessionStorage.getItem("startDate");
-		var date2 = sessionStorage.getItem("endDate");
-		var datesSelected = sessionStorage.getItem("dateSelected");
+		var date1 = localStorage.getItem("startDate");
+		var date2 = localStorage.getItem("endDate");
+		var datesSelected = localStorage.getItem("dateSelected");
 
 		findAndDisplayRes(date1, date2, datesSelected);
 	}
@@ -50,7 +50,7 @@
 		endDate.setMonth(date2month);
 		endDate.setFullYear(date2year);
 	  
-		var dayArrayJSON = sessionStorage.getItem("daysSelected");
+		var dayArrayJSON = localStorage.getItem("daysSelected");
 		var dayArray = [];
 		for(i = 0; i < dayArrayJSON.length; i++){
 			if(dayArrayJSON[i] !== ','){
@@ -58,12 +58,12 @@
 			}
 		}
 	  
-		var numRooms = sessionStorage.getItem("numRooms");
-		var numRoomsWebcam = sessionStorage.getItem("webcamRooms");
-		var numRoomsPhoneline = sessionStorage.getItem("numRoomsPhoneline");
+		var numRooms = localStorage.getItem("numRooms");
+		var numRoomsWebcam = localStorage.getItem("webcamRooms");
+		var numRoomsPhoneline = localStorage.getItem("numRoomsPhoneline");
 		
 		
-		var startTime = sessionStorage.getItem("startTime");
+		var startTime = localStorage.getItem("startTime");
 		if(startTime.length === 3){
 			var startSuff = startTime.substring(startTime.length-2, startTime.length);
 			startTime = parseInt(startTime.substring(0,1));
@@ -73,7 +73,7 @@
 			startTime = parseInt(startTime.substring(0,2));
 		}
 		
-		var endTime = sessionStorage.getItem("endTime");
+		var endTime = localStorage.getItem("endTime");
 		if(endTime.length === 3){
 			var endSuff = endTime.substring(endTime.length-2, endTime.length);
 			endTime = parseInt(endTime.substring(0,1));
@@ -259,16 +259,16 @@
 	
 	function confirmMultiroom(){
 		for(i = 0; i < confirmedRes.length; i++){
-			sessionStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
-			sessionStorage.setItem("res" + i.toString() + "status", confirmedRes[i].status);
-			sessionStorage.setItem("res" + i.toString() + "type", confirmedRes[i].type);
-			sessionStorage.setItem("res" + i.toString() + "date", confirmedRes[i].date);
-			sessionStorage.setItem("res" + i.toString() + "duration", confirmedRes[i].duration);
-			sessionStorage.setItem("res" + i.toString() + "roomNumber", confirmedRes[i].roomNum.roomNumber);
-			sessionStorage.setItem("res" + i.toString() + "webcam", confirmedRes[i].roomNum.webcam);
-			sessionStorage.setItem("res" + i.toString() + "phoneLine", confirmedRes[i].roomNum.phoneLine);
+			localStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
+			localStorage.setItem("res" + i.toString() + "status", confirmedRes[i].status);
+			localStorage.setItem("res" + i.toString() + "type", confirmedRes[i].type);
+			localStorage.setItem("res" + i.toString() + "date", confirmedRes[i].date);
+			localStorage.setItem("res" + i.toString() + "duration", confirmedRes[i].duration);
+			localStorage.setItem("res" + i.toString() + "roomNumber", confirmedRes[i].roomNum.roomNumber);
+			localStorage.setItem("res" + i.toString() + "webcam", confirmedRes[i].roomNum.webcam);
+			localStorage.setItem("res" + i.toString() + "phoneLine", confirmedRes[i].roomNum.phoneLine);
 		}
-		sessionStorage.setItem("numResInTransaction", confirmedRes.length);
+		localStorage.setItem("numResInTransaction", confirmedRes.length);
 		window.location="confirmation.html";
 	}
 	
@@ -296,7 +296,7 @@
 		phonelineCell.innerHTML = "<b>Phoneline</b>";
 		webcamCell.innerHTML = "<b>Webcam</b>";
 		
-		var counter = sessionStorage.getItem("numResInTransaction");
+		var counter = localStorage.getItem("numResInTransaction");
 		for(i = 1; i <= counter; i++){
 			var newRow = table.insertRow(i);
 			
@@ -309,13 +309,13 @@
 			var phonelineCell = newRow.insertCell(6);
 			var webcamCell = newRow.insertCell(7);
 				
-			userCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "user");
-			statusCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "status");
-			typeCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "type");
-			dateCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "date");
-			durationCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "duration");
-			roomNumCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "roomNumber");
-			phonelineCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "webcam");
-			webcamCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "phoneLine");
+			userCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "user");
+			statusCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "status");
+			typeCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "type");
+			dateCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "date");
+			durationCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "duration");
+			roomNumCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "roomNumber");
+			phonelineCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "webcam");
+			webcamCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "phoneLine");
 		}
 	}
