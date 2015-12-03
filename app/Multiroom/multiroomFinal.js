@@ -125,6 +125,7 @@
 		}
 
 		
+		confirmedRes = reservationsForTable;
 		displayTableFromRes(reservationsForTable, "openResTable", numRooms);
 		displayTableFromRes(rejectedReservations, "rejResTable", numRooms);
 		displayConflictTableFromRes(conflictedReservations, "confResTable", numRooms);
@@ -252,7 +253,69 @@
 		
 	}
 	
-	
 	function goBack(){
-		window.location="singlePage.html"
+		window.location="singlePage.html";
+	}
+	
+	function confirmMultiroom(){
+		for(i = 0; i < confirmedRes.length; i++){
+			sessionStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
+			sessionStorage.setItem("res" + i.toString() + "status", confirmedRes[i].status);
+			sessionStorage.setItem("res" + i.toString() + "type", confirmedRes[i].type);
+			sessionStorage.setItem("res" + i.toString() + "date", confirmedRes[i].date);
+			sessionStorage.setItem("res" + i.toString() + "duration", confirmedRes[i].duration);
+			sessionStorage.setItem("res" + i.toString() + "roomNumber", confirmedRes[i].roomNum.roomNumber);
+			sessionStorage.setItem("res" + i.toString() + "webcam", confirmedRes[i].roomNum.webcam);
+			sessionStorage.setItem("res" + i.toString() + "phoneLine", confirmedRes[i].roomNum.phoneLine);
+		}
+		sessionStorage.setItem("numResInTransaction", confirmedRes.length);
+		window.location="confirmation.html";
+	}
+	
+	function loadConfirmedResToTable(){
+
+		var table = document.getElementById("confirmedMultiroom");
+		var headerRow = table.insertRow(0);
+		headerRow.setAttribute("bgcolor", "#98A0A8");	
+
+		var userCell = headerRow.insertCell(0);
+		var statusCell = headerRow.insertCell(1);
+		var typeCell = headerRow.insertCell(2);
+		var dateCell = headerRow.insertCell(3);
+		var durationCell = headerRow.insertCell(4);
+		var roomNumCell = headerRow.insertCell(5);
+		var phonelineCell = headerRow.insertCell(6);
+		var webcamCell = headerRow.insertCell(7);
+		
+		userCell.innerHTML = "<b>User</b>";
+		statusCell.innerHTML = "<b>Status</b>";
+		typeCell.innerHTML = "<b>Type</b>";
+		dateCell.innerHTML = "<b>Date</b>";
+		durationCell.innerHTML = "<b>Duration</b>";
+		roomNumCell.innerHTML = "<b>Room Number</b>";
+		phonelineCell.innerHTML = "<b>Phoneline</b>";
+		webcamCell.innerHTML = "<b>Webcam</b>";
+		
+		var counter = sessionStorage.getItem("numResInTransaction");
+		for(i = 1; i <= counter; i++){
+			var newRow = table.insertRow(i);
+			
+			var userCell = newRow.insertCell(0);
+			var statusCell = newRow.insertCell(1);
+			var typeCell = newRow.insertCell(2);
+			var dateCell = newRow.insertCell(3);
+			var durationCell = newRow.insertCell(4);
+			var roomNumCell = newRow.insertCell(5);
+			var phonelineCell = newRow.insertCell(6);
+			var webcamCell = newRow.insertCell(7);
+				
+			userCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "user");
+			statusCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "status");
+			typeCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "type");
+			dateCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "date");
+			durationCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "duration");
+			roomNumCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "roomNumber");
+			phonelineCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "webcam");
+			webcamCell.innerHTML = sessionStorage.getItem("res" + (i-1).toString() + "phoneLine");
+		}
 	}

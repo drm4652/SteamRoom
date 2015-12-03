@@ -1,6 +1,8 @@
 var faculty = new PermissionClass(1);
 var student = new PermissionClass(2);
-
+var numConflicts = 0;
+var confirmedRes;
+var balls = 5;
 var student1 = new User("Daniel", "Moody", "drm4652", student);
 var faculty1 = new User("Larry", "Kiser", "lmr8394", faculty);
 

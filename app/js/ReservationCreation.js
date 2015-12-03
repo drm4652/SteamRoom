@@ -166,6 +166,7 @@ function addReservation(reservations, conflictedReservations, rejectedReservatio
 			reservations.push(res);
 		}
 		else{
+			numConflicts++;
 			conflictedReservations.push(res);
 		}
 		
