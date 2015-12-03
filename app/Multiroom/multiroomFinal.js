@@ -188,8 +188,13 @@
 			dateCell.innerHTML = resToTable[i-1].date;
 			durationCell.innerHTML = resToTable[i-1].duration;
 			roomNumCell.innerHTML = resToTable[i-1].roomNum.roomNumber;
-			phonelineCell.innerHTML = resToTable[i-1].roomNum.webcam;
-			webcamCell.innerHTML = resToTable[i-1].roomNum.phoneLine;
+			
+			if(resToTable[i-1].roomNum.webcam){
+				phonelineCell.innerHTML = "<img src='phone.png'>";
+			}
+			if(resToTable[i-1].roomNum.phoneLine){
+				webcamCell.innerHTML = "<img src='webcam.png'>";
+			}
 		
 		}
 	}
@@ -237,8 +242,13 @@
 				dateCell.innerHTML = resToTable[Math.ceil((i/2)-1)].date;
 				durationCell.innerHTML = resToTable[Math.ceil((i/2)-1)].duration;
 				roomNumCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.roomNumber;
-				phonelineCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.webcam;
-				webcamCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.phoneLine;
+				if(resToTable[Math.ceil((i/2)-1)].roomNum.webcam){
+					phonelineCell.innerHTML = "<img src='phone.png'>";
+				}
+				if(resToTable[Math.ceil((i/2)-1)].roomNum.phoneLine){
+					webcamCell.innerHTML = "<img src='webcam.png'>";
+				}
+		
 			}
 			else{
 				var errorRow = table.insertRow(i);
@@ -315,7 +325,12 @@
 			dateCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "date");
 			durationCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "duration");
 			roomNumCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "roomNumber");
-			phonelineCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "webcam");
-			webcamCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "phoneLine");
+			console.log(localStorage.getItem("res" + (i-1).toString() + "webcam"));
+			if(localStorage.getItem("res" + (i-1).toString() + "webcam") === 'true'){
+				phonelineCell.innerHTML = "<img src='phone.png'>";
+			}
+			if(localStorage.getItem("res" + (i-1).toString() + "phoneLine")=== 'true'){
+				webcamCell.innerHTML = "<img src='webcam.png'>";
+			}
 		}
 	}

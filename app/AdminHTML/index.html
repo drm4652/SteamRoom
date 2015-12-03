@@ -57,12 +57,25 @@ function resFilterValues(){
   return values;
 }
 
+function clearTable(){
+    var table = document.getElementById("totalReservations");
+
+	var x = table.rows.length-1;
+	
+	for(i = x; i >= 0; i--){
+		document.getElementById("totalReservations").deleteRow(i);
+	}
+}
+
 function createMockData(){
 /*
   for(i = 0; i < resArray.length;i++){
 	addRowFromRes(resArray[i], i);
   }
   */
+  
+	clearTable();
+
 	var table = document.getElementById("totalReservations");
 	var headerRow = table.insertRow(0);
 	headerRow.setAttribute("bgcolor", "#98A0A8");	
@@ -86,8 +99,7 @@ function createMockData(){
 	webcamCell.innerHTML = "<b>Webcam</b>";
 		
 	var counter = localStorage.getItem("numResInTransaction");
-	console.log(counter);
-	
+
 	for(i = 1; i <= counter; i++){
 		var newRow = table.insertRow(i);
 			
@@ -106,8 +118,13 @@ function createMockData(){
 		dateCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "date");
 		durationCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "duration");
 		roomNumCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "roomNumber");
-		phonelineCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "webcam");
-		webcamCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "phoneLine");
+		
+		if(localStorage.getItem("res" + (i-1).toString() + "webcam")=== 'true'){
+			phonelineCell.innerHTML = "<img src='phone.png'>";
+		}
+		if(localStorage.getItem("res" + (i-1).toString() + "phoneLine")=== 'true'){
+			webcamCell.innerHTML = "<img src='webcam.png'>";
+		}
 	}
 }
 
@@ -336,18 +353,18 @@ jQuery(document).ready(function() {
  
     <div class="tab-content">
         <div id="tab1" class="tab active">
-		<style>
-		.center {
-			margin: auto;
-			width: 75%;
-			}
-		.dropdown {
-			margin: auto;
-			width: 75%;
-			display: inline;
-			padding-left: 20px;
-			}
-		</style>
+			<style>
+			.center {
+				margin: auto;
+				width: 75%;
+				}
+			.dropdown {
+				margin: auto;
+				width: 75%;
+				display: inline;
+				padding-left: 20px;
+				}
+			</style>
 			
 			<div class="center">
 			Show only items where:<br><br>
@@ -397,9 +414,13 @@ jQuery(document).ready(function() {
 			<br><br><br>
 			</div>
 
-			<table class="table table-condensed" border=1 width=50% id="totalReservations"></table></div><br>
+			<table class="table table-condensed" border=1 width=50% id="totalReservations"></table>
 			
-        </div>
+			<input type="button" value="Refresh" onclick="createMockData()">
+			
+			</div>
+			
+
  
         <div id="tab2" class="tab">
 
@@ -461,20 +482,18 @@ jQuery(document).ready(function() {
 		</div>
 		
 		<div id="tab4" class="tab">
-		<fieldset>
-			<p><label class="field">Minimum Team Size:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
-			<div class="error" id="error1"></div>
-			<p><label class="field">Maximum Team Size:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
-			<div class="error" id="error2"></div>
-			<p><label class="field">Advance Reservation Time:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
-			<div class="error" id="error3"></div>
-			<p><label class="field">Maximum Reservation Length:</label>
-		</fieldset>
+			<fieldset>
+				<p><label class="field">Minimum Team Size:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
+				<div class="error" id="error1"></div>
+				<p><label class="field">Maximum Team Size:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
+				<div class="error" id="error2"></div>
+				<p><label class="field">Advance Reservation Time:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
+				<div class="error" id="error3"></div>
+				<p><label class="field">Maximum Reservation Length:</label>
+			</fieldset>
 		</div>
     </div>
 </div>
-
-<p id="demo"></p>
 </body>
 
 
