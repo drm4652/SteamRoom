@@ -1,0 +1,31 @@
+<html>
+<head>
+   <!-- SCROLLS -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1 height=device-height">
+  <script src="multiroomFinal.js"></script>
+  <script src="../js/Reservation.js"></script>
+  <script src="../js/Room.js"></script>
+  <script src="../js/User.js"></script>
+  <script src="../js/PermissionClass.js"></script>
+  <script src="../js/ReservationCreation.js"></script>
+  <script src="mockDBState.js"></script>
+  <link rel="stylesheet" href="multiroom.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+
+<body onload="loadConfirmedResToTable()">
+
+The following reservations have been added!
+<br><br><br>
+Reservations: <div id="finalProperties"><div id="ResDates">
+</div><table class="table table-condensed" border=1 width=50% id="confirmedMultiroom"></table></div><br>
+<br>
+<br>
+<input type="button" value="Reserve Again">
+<input type="button" value="Home">
+
+</body>
+</html>

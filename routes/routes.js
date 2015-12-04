@@ -69,21 +69,19 @@ function getAvailableRooms(req, res) {
 		var availableRooms = allRooms.filter(function(el) {
 			return usedRooms.indexOf(el) <0;
 		});
-		//console.log(availableRooms);
-		//console.log(rooms);
 		Reservation.create({
 			reserver : req.session.username,
 			reservedAs : 3,
 			date : req.body.resDate,
 			checkedIn: false,
 			checkedOut: false,
-			roomNumber: availableRooms[0]
+			roomNumber: availableRooms[0],
+			dateRoom: req.body.resDate.toString() + availableRooms[0].toString()
 		}, function(err, reservation) {
 			if(err) {
 				res.send(err);
 			}
 		});
-		//res.json(availableRooms[0]);
 	});
 };
 

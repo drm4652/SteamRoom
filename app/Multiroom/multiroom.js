@@ -98,7 +98,7 @@ function validateForm(){
 	   document.getElementById("error5").innerHTML == "" &&
 	   document.getElementById("error6").innerHTML == "" &&
 	   document.getElementById("error7").innerHTML == ""	){
-		sessionStorage.setItem("numRooms", numRooms);
+		localStorage.setItem("numRooms", numRooms);
 		
 		var days = "";
 		var array = [];
@@ -128,19 +128,19 @@ function validateForm(){
 				}
 			}
 		}
-		sessionStorage.setItem("dates", days);
-		sessionStorage.setItem("startDate", startDateValue);
-		sessionStorage.setItem("endDate", endDateValue);
+		localStorage.setItem("dates", days);
+		localStorage.setItem("startDate", startDateValue);
+		localStorage.setItem("endDate", endDateValue);
 		
 
 		var stringArray = JSON.stringify(array);
-		sessionStorage.setItem("daysSelected", array);
+		localStorage.setItem("daysSelected", array);
 
-		sessionStorage.setItem("startTime", startTime);
-		sessionStorage.setItem("endTime", endTime);
+		localStorage.setItem("startTime", startTime);
+		localStorage.setItem("endTime", endTime);
 		
-		sessionStorage.setItem("webcamRooms", numRoomsWebcam);
-		sessionStorage.setItem("numRoomsPhoneline", numRoomsPhoneline);
+		localStorage.setItem("webcamRooms", numRoomsWebcam);
+		localStorage.setItem("numRoomsPhoneline", numRoomsPhoneline);
 		
 		window.location="multiroomFinal.html";
 	}
