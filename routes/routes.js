@@ -123,6 +123,12 @@ module.exports = function(app) {
 		}
 	});
 	
+	//loads find page
+	apt.get('/find', function(req, res){
+		res.sendFile(path.join(__dirname + '/find.html'));
+		
+	});
+	
 	//load calendar page
 	app.get('/calendar', function(req, res) {
 		res.sendFile(path.join(__dirname + '/../calendar/index.html'));

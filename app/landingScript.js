@@ -1,7 +1,11 @@
 	// create the module and name it scotchApp
-var calendarDemoApp = angular.module('calenderDemoApp', ['ui.bootstrap'])
+//var calendarDemoApp = angular.module('calenderDemoApp', ['ui.bootstrap'])
 	
- function AccordionDemoCtrl($scope){
+ 
+
+var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
+
+function AccordionDemoCtrl($scope){
 	 $scope.oneAtATime = true;
   
   console.log('bla');
@@ -23,8 +27,6 @@ var calendarDemoApp = angular.module('calenderDemoApp', ['ui.bootstrap'])
     $scope.items.push('Item ' + newItemNo);
   };
 }
-
-var scotchApp = angular.module('scotchApp', ['ngRoute'])
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
 		$routeProvider
@@ -48,8 +50,8 @@ var scotchApp = angular.module('scotchApp', ['ngRoute'])
 			})
 			
 			.when('/find', {
-				templateUrl : 'find.html',
-				controller  : 'findController'
+				 templateUrl : 'find.html',
+				 controller  : 'findController'
 			})
 			
 			.when('/myReservation', {
