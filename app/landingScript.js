@@ -5,28 +5,7 @@
 
 var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
 
-function AccordionDemoCtrl($scope){
-	 $scope.oneAtATime = true;
-  
-  console.log('bla');
-  $scope.groups = [
-    {
-      title: "Dynamic Group Header - 1",
-      content: "Dynamic Group Body - 1"
-    },
-    {
-      title: "Dynamic Group Header - 2",
-      content: "Dynamic Group Body - 2"
-    }
-  ];
 
-  $scope.items = ['Item 1', 'Item 2', 'Item 3'];
-
-  $scope.addItem = function() {
-    var newItemNo = $scope.items.length + 1;
-    $scope.items.push('Item ' + newItemNo);
-  };
-}
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
 		$routeProvider
@@ -90,5 +69,14 @@ function AccordionDemoCtrl($scope){
 
 	scotchApp.controller('findController', function($scope) {
 		$scope.message = 'Here is your reservations.';
-		
+			 $scope.oneAtATime = true;
+$scope.date = 'dateTest';
+$scope.time = 'timeTest';
+$scope.room = 'roomTest';
+   //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
+	/*
+   $scope.addItem = function() {
+     var newItemNo = $scope.items.length + 1;
+     $scope.items.push('Item ' + newItemNo);
+   };*/
 	});
