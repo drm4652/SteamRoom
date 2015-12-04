@@ -1,38 +1,34 @@
-<html lang="en" ng-app="calendarDemoApp" id="top">
+<!DOCTYPE HTML>
+<html lang="en-US" ng-app="calenderDemoApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Accordion test</title>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.0.5/angular.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.4.0/ui-bootstrap-tpls.min.js"></script>
+  <script type="text/javascript" src="landingScript.js"></script>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+</head>
+<body>
+<div ng-controller="AccordionDemoCtrl">
+  <label class="checkbox">
+    <input type="checkbox" ng-model="oneAtATime">
+    Open only one at a time
+  </label>
 
-<script src="../bower_components/jquery/dist/jquery.js"></script>
-
-    <script src="../bower_components/angular/angular.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.0.js"></script>
-    <script src="../bower_components/moment/moment.js"></script>
-    <script type="text/javascript" src="../bower_components/fullcalendar/dist/fullcalendar.js"></script>
-    <script src="../bower_components/fullcalendar/dist/gcal.js"></script>
-    <script type="text/javascript" src="../src/calendar.js"></script>
-    <script type="text/javascript" src="../calendar/calendarDemo.js"></script>
-    <script type="text/javascript" src="landingScript.js"></script>
-
-
-<div class="jumbotron text-center">
-    		
-<div id="main" style="text-align:center">
-
-		<p>{{ message }}</p>
-    </div>
-<!-- <form ng-submit="accordionCtrl.getReservations()">
-      Username:
-      <input type="text" ng-model="username" name="username" />
-      <input type="submit" class="btn btn-default btn-sm" id="submit" value="Get" />
-    </form> -->
-
-   
-        <br>
-        <button type="button" class="btn btn-default btn-sm" ng-click="check()">Check In/Out</button>
-        <br>
-        <button type="button" class="btn btn-default btn-sm" ng-click="cancel()">Cancel</button>
-        <br>
-        <button type="button" class="btn btn-default btn-sm" ng-click="alert()">Alert</button>
-     
+  <accordion close-others="oneAtATime">
+    <accordion-group heading="Static Header">
+      This content is straight in the template.
+    </accordion-group>
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      {{group.content}}
+    </accordion-group>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents</p>
+        <button class="btn btn-small" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
+  </accordion>
 </div>
 
+</body>
 </html>
-

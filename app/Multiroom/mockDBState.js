@@ -1,5 +1,7 @@
 var faculty = new PermissionClass(1);
 var student = new PermissionClass(2);
+var numConflicts = 0;
+var confirmedRes;
 
 var student1 = new User("Daniel", "Moody", "drm4652", student);
 var faculty1 = new User("Larry", "Kiser", "lmr8394", faculty);
@@ -16,7 +18,7 @@ var room9 = new Room(1662, false, false);
 var room10 = new Room(1663, false, false);
 var room11 = new Room(1665, false, false);
 
-var fullRooms = new Room("FULL", false, false);
+var fullRooms = new Room("FULL", "---", "---");
 
 var allRooms = [];
 allRooms.push(room1);
@@ -66,15 +68,15 @@ var res11 = new Reservation(student1 ,"Active","Individual",date1, 2, room11);
 mockReservations.push(res1);
 mockReservations.push(res2);
 
+
 mockReservations.push(res3);
 mockReservations.push(res4);
 
 mockReservations.push(res5);
 mockReservations.push(res6);
-/*
+
 mockReservations.push(res7);
 mockReservations.push(res8);
 mockReservations.push(res9);
 mockReservations.push(res10);
 mockReservations.push(res11);
-*/

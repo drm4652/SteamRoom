@@ -1,7 +1,30 @@
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+var calendarDemoApp = angular.module('calenderDemoApp', ['ui.bootstrap'])
 	
-	
+ function AccordionDemoCtrl($scope){
+	 $scope.oneAtATime = true;
+  
+  console.log('bla');
+  $scope.groups = [
+    {
+      title: "Dynamic Group Header - 1",
+      content: "Dynamic Group Body - 1"
+    },
+    {
+      title: "Dynamic Group Header - 2",
+      content: "Dynamic Group Body - 2"
+    }
+  ];
+
+  $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+  $scope.addItem = function() {
+    var newItemNo = $scope.items.length + 1;
+    $scope.items.push('Item ' + newItemNo);
+  };
+}
+
+var scotchApp = angular.module('scotchApp', ['ngRoute'])
 	// configure our routes
 	scotchApp.config(function($routeProvider) {
 		$routeProvider
