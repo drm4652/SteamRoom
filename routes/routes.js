@@ -51,8 +51,8 @@ function getNumOfReservations(req, res) {
 	//res.json(roomsAtTime);
 };
 
-//Returns list of currently unused rooms based on a certain date
-function getAvailableRooms(req, res) {
+//grabs available rooms and makes a reservation according to user specifications
+function createReservation(req, res) {
 	console.log(req.body.resDate);
 	Reservation.find(
 	{'date': req.body.resDate},
@@ -150,7 +150,7 @@ module.exports = function(app) {
 	app.post('/reservationCheck', function(req, res) {
 		//create a reservation, information comes from AJAX request from Angular
 		//TODO use getUsedRooms to select an unused room to use
-		getAvailableRooms(req, res);
+		createReservation(req, res);
 		console.log(req.body.resDate);
 	});
 	
