@@ -1,7 +1,11 @@
 <!DOCTYPE HTML>
 <html lang="en-US" ng-app="scotchApp">
 <head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
   <script type="text/javascript" src="landingScript.js"></script>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  
 
  </head>
 <body>
@@ -9,18 +13,26 @@
   <div class="jumbotron text-center">		
 	<div id="main" style="text-align:center">	
 		<p>{{ message }}</p>
-
-  <accordion close-others="oneAtATime">
+<accordion close-others="oneAtATime">
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      <accordion-heading>
+          {{ group.title }} 
+      </accordion-heading>
+		<button class="btn btn-success" ng-click="addItem()">Check In/Out</button>
+        <button class="btn btn-danger">Cancel</button>
+        <button class="btn btn-info" ng-click="addItem()">Alert</button>
+    </accordion-group>
+  </accordion>
+  <!-- <accordion close-others="oneAtATime">
    
     <accordion-group heading="Reservation 1">
       <p>You have reserved on {{date}} at {{time}} in room {{room}}</p>
         <button class="btn btn-success" ng-click="addItem()">Check In/Out</button>
-<!--         <div ng-repeat="item in items">{{item}}</div> -->
         <button class="btn btn-danger">Cancel</button>
         <button class="btn btn-info" ng-click="addItem()">Alert</button>
 
     </accordion-group>
-  </accordion>
+  </accordion> -->
   </div>
   </div>
 </div>
