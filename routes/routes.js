@@ -124,7 +124,7 @@ module.exports = function(app) {
 	});
 	
 	//loads find page
-	apt.get('/find', function(req, res){
+	app.get('/find', function(req, res){
 		res.sendFile(path.join(__dirname + '/find.html'));
 		
 	});

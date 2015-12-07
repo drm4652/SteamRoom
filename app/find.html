@@ -1,27 +1,28 @@
 <!DOCTYPE HTML>
-<html lang="en-US" ng-app="calenderDemoApp">
+<html lang="en-US" ng-app="scotchApp">
 <head>
+  <script type="text/javascript" src="landingScript.js"></script>
+
  </head>
 <body>
-<div ng-controller="mainController">
-  <label class="checkbox">
-    <input type="checkbox" ng-model="oneAtATime">
-    Open only one at a time
-  </label>
+<div ng-controller="findController">
+  <div class="jumbotron text-center">		
+	<div id="main" style="text-align:center">	
+		<p>{{ message }}</p>
 
   <accordion close-others="oneAtATime">
-    <accordion-group heading="Static Header">
-      This content is straight in the template.
-    </accordion-group>
-    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-      {{group.content}}
-    </accordion-group>
-    <accordion-group heading="Dynamic Body Content">
-      <p>The body of the accordion group grows to fit the contents</p>
-        <button class="btn btn-small" ng-click="addItem()">Add Item</button>
-        <div ng-repeat="item in items">{{item}}</div>
+   
+    <accordion-group heading="Reservation 1">
+      <p>You have reserved on {{date}} at {{time}} in room {{room}}</p>
+        <button class="btn btn-success" ng-click="addItem()">Check In/Out</button>
+<!--         <div ng-repeat="item in items">{{item}}</div> -->
+        <button class="btn btn-danger">Cancel</button>
+        <button class="btn btn-info" ng-click="addItem()">Alert</button>
+
     </accordion-group>
   </accordion>
+  </div>
+  </div>
 </div>
 
 </body>
