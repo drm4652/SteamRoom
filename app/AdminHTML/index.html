@@ -36,6 +36,9 @@ function goToReservations(){
 
   var resInAdmin = [];
   var dateSortControl = false;
+  
+  var permissionControl = false;
+  var roomControl = false;
 
 function resFilterStatus(){
   var userNameCheck = document.getElementById("userNameCheck").checked;
@@ -97,6 +100,7 @@ function createMockData(){
 	var roomNumCell = headerRow.insertCell(5);
 	var phonelineCell = headerRow.insertCell(6);
 	var webcamCell = headerRow.insertCell(7);
+	var operationCell = headerRow.insertCell(8);
 		
 	userCell.innerHTML = "<b>User</b>";
 	statusCell.innerHTML = "<b>Status</b>";
@@ -106,6 +110,7 @@ function createMockData(){
 	roomNumCell.innerHTML = "<b>Room Number</b>";
 	phonelineCell.innerHTML = "<b>Phoneline</b>";
 	webcamCell.innerHTML = "<b>Webcam</b>";
+	operationCell.innerHTML = "<b>Operations</b>"
 		
 	var counter = localStorage.getItem("numResInTransaction");
 
@@ -120,6 +125,7 @@ function createMockData(){
 		var roomNumCell = newRow.insertCell(5);
 		var phonelineCell = newRow.insertCell(6);
 		var webcamCell = newRow.insertCell(7);
+		var operationCell = newRow.insertCell(8);
 			
 		userCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "user");
 		statusCell.innerHTML = localStorage.getItem("res" + (i-1).toString() + "status");
@@ -134,6 +140,7 @@ function createMockData(){
 		if(localStorage.getItem("res" + (i-1).toString() + "phoneLine")=== 'true'){
 			webcamCell.innerHTML = "<img src='webcam.png'>";
 		}
+		operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(1, "+(i-1)+")'>";
 	}
 	
 	createArrayFromTable();
@@ -336,7 +343,7 @@ function addRowFromRes(res, i){
     var roomNumCell = row.insertCell(5);
 	var phonelineCell = row.insertCell(6);
 	var webcamCell = row.insertCell(7);
-	//var operationCell = row.insertCell(6);
+	var operationCell = row.insertCell(8);
 	
     userCell.innerHTML = res.user;
     statusCell.innerHTML = res.status;
@@ -350,9 +357,8 @@ function addRowFromRes(res, i){
 	if(res.phoneLine === 'true'){
 			webcamCell.innerHTML = "<img src='webcam.png'>";
 	}
+	operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(2, "+(i)+")'>";
 	
-	//operationCell.innerHTML = "<input type='button' id='generatedEdit' value='Edit' onclick='editRow("+i+")'>";
-	//document.getElementById("generatedEdit").id = "edit" + i;
 }
 
 
@@ -445,7 +451,7 @@ function createRoomTable(){
 		roomNumCell.innerHTML = allRooms[i-1].roomNumber;
 		webcamCell.innerHTML = allRooms[i-1].webcam;
 		phonelineCell.innerHTML = allRooms[i-1].phoneLine;
-		operationCell.innerHTML = "<input type='button' value='Edit'><input type='button' value='Delete' onclick='deleteItem(2, "+(i-1)+")'>";
+		operationCell.innerHTML = "<input type='button' value='Edit' id='room"+i+"' onclick='edit(2, "+(i-1)+")'><input type='button' value='Delete' onclick='deleteItem(2, "+(i-1)+")'>";
 	}
 }
 
@@ -496,37 +502,216 @@ function createPermissionsTable(){
 		adminCell.innerHTML = permissions[i-1].admin;
 		labbieCell.innerHTML = permissions[i-1].labbie;
 		priorityCell.innerHTML = permissions[i-1].priority;
-		operationCell.innerHTML = "<input type='button' value='Edit'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";
+		operationCell.innerHTML = "<input type='button' value='Edit' id='permission"+i+"' onclick='edit(3, "+(i-1)+")'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";
 	}
+}
+
+function createResTable(){
+
+	var table = document.getElementById("totalReservations");
+	var headerRow = table.insertRow(0);
+	headerRow.setAttribute("bgcolor", "#98A0A8");	
+	
+	var userCell = headerRow.insertCell(0);
+	var statusCell = headerRow.insertCell(1);
+	var typeCell = headerRow.insertCell(2);
+	var dateCell = headerRow.insertCell(3);
+	var durationCell = headerRow.insertCell(4);
+	var roomNumCell = headerRow.insertCell(5);
+	var phonelineCell = headerRow.insertCell(6);
+	var webcamCell = headerRow.insertCell(7);
+	var operationCell = headerRow.insertCell(8);
+		
+	userCell.innerHTML = "<b>User</b>";
+	statusCell.innerHTML = "<b>Status</b>";
+	typeCell.innerHTML = "<b>Type</b>";
+	dateCell.innerHTML = "<b><div id='dateSort' onclick='dateSort()'>Date</div></b>";
+	durationCell.innerHTML = "<b>Duration</b>";
+	roomNumCell.innerHTML = "<b>Room Number</b>";
+	phonelineCell.innerHTML = "<b>Phoneline</b>";
+	webcamCell.innerHTML = "<b>Webcam</b>";
+	operationCell.innerHTML = "<b>Operations</b>"
+
+	for(i = 1; i <= resInAdmin.length; i++){
+		var newRow = table.insertRow(i);
+			
+		var userCell = newRow.insertCell(0);
+		var statusCell = newRow.insertCell(1);
+		var typeCell = newRow.insertCell(2);
+		var dateCell = newRow.insertCell(3);
+		var durationCell = newRow.insertCell(4);
+		var roomNumCell = newRow.insertCell(5);
+		var phonelineCell = newRow.insertCell(6);
+		var webcamCell = newRow.insertCell(7);
+		var operationCell = newRow.insertCell(8);
+			
+		userCell.innerHTML = resInAdmin[i-1].user;
+		statusCell.innerHTML = resInAdmin[i-1].status;
+		typeCell.innerHTML = resInAdmin[i-1].type;
+		dateCell.innerHTML = resInAdmin[i-1].date;
+		durationCell.innerHTML = resInAdmin[i-1].duration;
+		roomNumCell.innerHTML = resInAdmin[i-1].roomNum;
+		
+		if(resInAdmin[i-1].webcam === 'true'){
+			phonelineCell.innerHTML = "<img src='phone.png'>";
+		}
+		if(resInAdmin[i-1].phoneLine === 'true'){
+			webcamCell.innerHTML = "<img src='webcam.png'>";
+		}
+		operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(1, "+(i-1)+")'>";
+	}
+		
 }
 
 function deleteItem(type, index){
 	if(type === 1){
-	
+		resInAdmin.splice(index, 1);
+		emptyTable("totalReservations");
+		createResTable();
 	}
 	else if(type === 2){
 		allRooms.splice(index, 1);
 		emptyTable("roomsTable");
 		createRoomTable();
+		roomControl = false;
 	}
 	else if(type === 3){
 		permissions.splice(index, 1);
 		emptyTable("permissionsTable");
 		createPermissionsTable();
+		permissionControl = false;
 	}
-	
 }
 
 function edit(type, index){
-
+//type, reserve, cancelOwn, cancelOther, multiroom, admin, labbie, priority
+	if(type === 2){
+		if(!roomControl){
+			var editRow;
+			var number = allRooms[index].roomNumber;
+			var webcam = allRooms[index].webcam;
+			var phoneline = allRooms[index].phoneLine;
+			
+			var table = document.getElementById("roomsTable");
+			editRow = table.rows[index+1];
+			editRow.cells[0].innerHTML = "<input type='text' value='"+number+"' id='perCellroom0"+index+"' size=2>";
+			editRow.cells[1].innerHTML = "<select id='perCellroom1"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCellroom1"+index).value = webcam;
+			editRow.cells[2].innerHTML = "<select id='perCellroom2"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCellroom2"+index).value = phoneline;
+			
+			document.getElementById("room"+(index+1)).value = "OK";
+			roomControl = !roomControl;
+		}
+		else{
+			var editRow;
+			var table = document.getElementById("roomsTable");
+			editRow = table.rows[index+1];
+			
+			allRooms[index].roomNumber = document.getElementById("perCellroom0"+index).value;
+			editRow.cells[0].innerHTML = allRooms[index].roomNumber;
+			
+			allRooms[index].webcam = document.getElementById("perCellroom1"+index).value;
+			editRow.cells[1].innerHTML = allRooms[index].webcam;
+			
+			allRooms[index].phoneLine = document.getElementById("perCellroom2"+index).value;
+			editRow.cells[2].innerHTML = allRooms[index].phoneLine;
+			
+			document.getElementById("room"+(index+1)).value = "Edit";
+			roomControl = !roomControl;
+		}
+	}
+	else if(type === 3){
+		if(!permissionControl){
+			var editRow;
+			var type = permissions[index].type;
+			var reserve = permissions[index].reserve;
+			var cancelOwn = permissions[index].cancelOwn;
+			var cancelOther = permissions[index].cancelOther;
+			var multiroom = permissions[index].multiroom;
+			var admin = permissions[index].admin;
+			var labbie = permissions[index].labbie;
+			var priority = permissions[index].priority;
+			
+			var table = document.getElementById("permissionsTable");
+			editRow = table.rows[index+1];
+			editRow.cells[0].innerHTML = "<input type='text' value='"+type+"' id='perCell0"+index+"' size=8>";
+			editRow.cells[1].innerHTML = "<select id='perCell1"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell1"+index).value = reserve;
+			editRow.cells[2].innerHTML = "<select id='perCell2"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell2"+index).value = cancelOwn;
+			editRow.cells[3].innerHTML = "<select id='perCell3"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell3"+index).value = cancelOther;
+			editRow.cells[4].innerHTML = "<select id='perCell4"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell4"+index).value = multiroom;
+			editRow.cells[5].innerHTML = "<select id='perCell5"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell5"+index).value = admin;
+			editRow.cells[6].innerHTML = "<select id='perCell6"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
+			document.getElementById("perCell6"+index).value = labbie;
+			editRow.cells[7].innerHTML = "<select id='perCell7"+index+"'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>";
+			document.getElementById("perCell7"+index).value = priority;
+			
+			document.getElementById("permission"+(index+1)).value = "OK";
+			permissionControl = !permissionControl;
+		}
+		else{
+			var editRow;
+			var table = document.getElementById("permissionsTable");
+			editRow = table.rows[index+1];
+			permissions[index].type = document.getElementById("perCell0"+index).value;
+			editRow.cells[0].innerHTML = permissions[index].type;
+			
+			permissions[index].reserve = document.getElementById("perCell1"+index).value;
+			editRow.cells[1].innerHTML = permissions[index].reserve;
+			
+			permissions[index].cancelOwn = document.getElementById("perCell2"+index).value;
+			editRow.cells[2].innerHTML = permissions[index].cancelOwn;
+			
+			permissions[index].cancelOther = document.getElementById("perCell3"+index).value;
+			editRow.cells[3].innerHTML = permissions[index].cancelOther;
+			
+			permissions[index].multiroom = document.getElementById("perCell4"+index).value;
+			editRow.cells[4].innerHTML = permissions[index].multiroom;
+			
+			permissions[index].admin = document.getElementById("perCell5"+index).value;
+			editRow.cells[5].innerHTML = permissions[index].admin;
+			
+			permissions[index].labbie = document.getElementById("perCell6"+index).value;
+			editRow.cells[6].innerHTML = permissions[index].labbie;
+			
+			permissions[index].priority = document.getElementById("perCell7"+index).value;
+			editRow.cells[7].innerHTML = permissions[index].priority;
+			
+			document.getElementById("permission"+(index+1)).value = "Edit";
+			permissionControl = !permissionControl;
+		}
+	}
 }
 
 function createPermission(){
+
+
 
 }
 
 function createRoom(){
 
+	var table = document.getElementById("roomsTable");
+	var newRow = table.insertRow(1);
+	
+	var numberCell = newRow.insertCell(0);
+	var webcamCell = newRow.insertCell(1);
+	var phonelineCell = newRow.insertCell(2);
+	var operationCell = newRow.insertCell(3);
+	
+	numberCell.innerHTML = "<input type='text' 'value=''>";
+	webcamCell.innerHTML = "<select id=''><option value='true'>true</option><option value='false'>false</option></select>";
+	phonelineCell.innerHTML = "<select id=''><option value='true'>true</option><option value='false'>false</option></select>";
+	operationCell.innerHTML = "<input type='button' value='OK' id='room"+allRooms.length+"' onclick='edit(3, "+(allRooms.length-1)+")'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";	
+	
+	
+	//var newRoom = new Room();
+	//allRooms.splice(0,0, newRoom);
 }
 
 function loadAdmin(){
@@ -629,15 +814,13 @@ jQuery(document).ready(function() {
 
  
         <div id="tab2" class="tab">
-			Current Permissions<br><br>
-			<input type="button" value="Create New Permission"><br>
+			<input type="button" value="Create New Permission"><br><br>
 			<table class="table table-condensed" border=1 width=50% id="permissionsTable"></table>
 			<br><br>
         </div>
  
         <div id="tab3" class="tab">
-			Current Rooms<br><br>
-			<input type="button" value="Create New Room"><br>
+			<input type="button" value="Create New Room" onclick="createRoom()"><br><br>
 			<table class="table-condensed" border=1 width=50% id="roomsTable"></table>
 		</div>
  
