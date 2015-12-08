@@ -1,7 +1,10 @@
 <!DOCTYPE HTML>
 <html lang="en-US" ng-app="scotchApp">
 <head>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
   <script type="text/javascript" src="landingScript.js"></script>
+  
 
  </head>
 <body>
@@ -9,18 +12,32 @@
   <div class="jumbotron text-center">		
 	<div id="main" style="text-align:center">	
 		<p>{{ message }}</p>
+<accordion close-others="oneAtATime">
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+      <accordion-heading>
+          {{ group.title }} 
+      </accordion-heading>
+	  <div class="btn-group">
+	    <label class="btn btn-success" ng-click="checkIn()" ng-model="radioModel" uib-btn-radio="'Check In'">Check In</label>
+        <label class="btn btn-warning" ng-click="checkOut()"ng-model="radioModel" uib-btn-radio="'Check Out'">Check Out</label>
 
-  <accordion close-others="oneAtATime">
+	  </div>
+<!-- 		<button class="btn btn-success" ng-click="checkIn()">Check In</button>
+ -->
+        <button class="btn btn-danger" ng-click="deleteReservation()">Cancel</button>
+        <button class="btn btn-info" ng-click="alertAdmin()">Alert</button>
+    </accordion-group>
+  </accordion>
+  <!-- <accordion close-others="oneAtATime">
    
     <accordion-group heading="Reservation 1">
       <p>You have reserved on {{date}} at {{time}} in room {{room}}</p>
         <button class="btn btn-success" ng-click="addItem()">Check In/Out</button>
-<!--         <div ng-repeat="item in items">{{item}}</div> -->
         <button class="btn btn-danger">Cancel</button>
         <button class="btn btn-info" ng-click="addItem()">Alert</button>
 
     </accordion-group>
-  </accordion>
+  </accordion> -->
   </div>
   </div>
 </div>

@@ -70,9 +70,57 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
 	scotchApp.controller('findController', function($scope) {
 		$scope.message = 'Here is your reservations.';
 			 $scope.oneAtATime = true;
-$scope.date = 'dateTest';
-$scope.time = 'timeTest';
-$scope.room = 'roomTest';
+			var date = 'dateTest';
+			var time = 'timeTest';
+			var room = 'roomTest';
+			var amountReservation = 4;
+		$scope.addGroup = function(idx, group, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    var newGroup = angular.copy(group);
+    $scope.groups.splice(idx + 1, 0, newGroup);
+  };
+  
+  $scope.removeGroup = function(idx, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    $scope.groups.splice(idx, 1);
+  };
+  //make the amount of accordion based on how many in database
+
+  $scope.groups = [
+
+    {
+      title: "You have reserved on " + date + " at " + time + " in room " + room,
+		},
+    {
+      title: "You have reserved on " + date + " at " + time + " in room " + room,
+    }
+  ];
+    
+
+  
+    $scope.checkIn = function() {
+		//code goes here
+		alert("check in");
+	};
+	$scope.checkOut = function() {
+		//code goes here
+		alert("check outed");
+	};
+	$scope.deleteReservation = function() {
+		//code goes here
+	};
+    
+	$scope.alertAdmin = function(){
+		//code goes here
+	};
    //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
 	/*
    $scope.addItem = function() {

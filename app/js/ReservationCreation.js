@@ -161,6 +161,7 @@ function addReservation(reservations, conflictedReservations, rejectedReservatio
 			resRoomNum = fullRooms;
 		}
 		
+		
 		res.roomNum = resRoomNum;
 		if(allowRes){
 			reservations.push(res);

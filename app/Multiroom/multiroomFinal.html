@@ -58,15 +58,18 @@
 <div id="finalFields">End Date:</div><div id="finalProperties"><div id="endDate"></div></div><br>
 <div id="finalFields">Start Time:</div><div id="finalProperties"><div id="startTime"></div></div><br>
 <div id="finalFields">End Time:</div><div id="finalProperties"><div id="endTime"></div></div><br>
-<div id="finalFields">Open Reservations:</div><div id="finalProperties"><div id="ResDates"></div><table class="table table-condensed" border=1 width=50% id="openResTable"></table></div><br>
+<div id="finalFields">Pending Reservations:</div><div id="finalProperties"><div id="ResDates"></div><table class="table table-condensed" border=1 width=50% id="openResTable"></table></div><br>
 <div id="finalFields">Rejected Reservations:</div><div id="finalProperties"><div id="rejectedRes"></div><table class="table table-condensed" border=1 width=75% id="rejResTable"></table></div><br>
-<div id="finalFields">Reservation Conflicts:</div><div id="finalProperties"><div id="resConflicts"></div><table class="table table-condensed" border=1 width=75% id="confResTable"></table></div><br>
+<div id="finalFields">Conflicted Reservations:</div><div id="finalProperties"><div id="resConflicts"></div><table class="table table-condensed" border=1 width=75% id="confResTable"></table></div><br>
 
 
 <div id="finalFields">Conflict Options:</div>
 <div id="finalProperties">
-<input type="radio"> Remove all conflicted reservations<br>
-<input type="radio"> Change Individual conflicted reservations<br><br>
+<form>
+	<input type="radio" name="resolution" id="removeAll" checked="check"> Remove all conflicted reservations<br>
+	<input type="radio" name="resolution" id="quickFix"> Quick Fix all conflicts <br>
+	<input type="radio" name="resolution" id="changeInd"> Change Individual conflicted reservations<br><br>
+</form>
 </div>
 
 <input type="button" value="Confirm" onclick="confirmMultiroom()">
