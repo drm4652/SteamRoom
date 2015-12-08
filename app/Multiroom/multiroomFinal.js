@@ -98,10 +98,7 @@
 	  
 	    var duration = endNum - startNum;
 	  
-		var Reservations = [];
-		var reservationsForTable = [];
-		var conflictedReservations = [];
-		var rejectedReservations = [];
+
 		var currentDay = startDate;
 
 		var cap = 0;
@@ -128,11 +125,16 @@
 		confirmedRes = reservationsForTable;
 		displayTableFromRes(reservationsForTable, "openResTable", numRooms);
 		displayTableFromRes(rejectedReservations, "rejResTable", numRooms);
-		displayConflictTableFromRes(conflictedReservations, "confResTable", numRooms);
+		displayConflictTableFromRes(conflictedReservations, "confResTable");
 	}
 	
 	function displayTableFromRes(resToTable, tableID, numRooms){
 		var table = document.getElementById(tableID);
+		
+		for(i = table.rows.length - 1; i >= 0; i--){
+			table.deleteRow(i);
+		}
+		
 		var headerRow = table.insertRow(0);
 		headerRow.setAttribute("bgcolor", "#98A0A8");	
 
@@ -199,8 +201,13 @@
 		}
 	}
 
-	function displayConflictTableFromRes(resToTable, tableID, numRooms){
+	function displayConflictTableFromRes(resToTable, tableID){
 		var table = document.getElementById(tableID);
+		
+		for(i = table.rows.length - 1; i >= 0; i--){
+			table.deleteRow(i);
+		}
+		
 		var headerRow = table.insertRow(0);
 		headerRow.setAttribute("bgcolor", "#98A0A8");	
 
@@ -242,10 +249,10 @@
 				dateCell.innerHTML = resToTable[Math.ceil((i/2)-1)].date;
 				durationCell.innerHTML = resToTable[Math.ceil((i/2)-1)].duration;
 				roomNumCell.innerHTML = resToTable[Math.ceil((i/2)-1)].roomNum.roomNumber;
-				if(resToTable[Math.ceil((i/2)-1)].roomNum.webcam){
+				if(resToTable[Math.ceil((i/2)-1)].roomNum.webcam === 'true'){
 					phonelineCell.innerHTML = "<img src='phone.png'>";
 				}
-				if(resToTable[Math.ceil((i/2)-1)].roomNum.phoneLine){
+				if(resToTable[Math.ceil((i/2)-1)].roomNum.phoneLine === 'true'){
 					webcamCell.innerHTML = "<img src='webcam.png'>";
 				}
 		
@@ -268,18 +275,55 @@
 	}
 	
 	function confirmMultiroom(){
-		for(i = 0; i < confirmedRes.length; i++){
-			localStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
-			localStorage.setItem("res" + i.toString() + "status", confirmedRes[i].status);
-			localStorage.setItem("res" + i.toString() + "type", confirmedRes[i].type);
-			localStorage.setItem("res" + i.toString() + "date", confirmedRes[i].date);
-			localStorage.setItem("res" + i.toString() + "duration", confirmedRes[i].duration);
-			localStorage.setItem("res" + i.toString() + "roomNumber", confirmedRes[i].roomNum.roomNumber);
-			localStorage.setItem("res" + i.toString() + "webcam", confirmedRes[i].roomNum.webcam);
-			localStorage.setItem("res" + i.toString() + "phoneLine", confirmedRes[i].roomNum.phoneLine);
+		if(document.getElementById("removeAll").checked){
+			for(i = 0; i < confirmedRes.length; i++){
+				localStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
+				localStorage.setItem("res" + i.toString() + "status", confirmedRes[i].status);
+				localStorage.setItem("res" + i.toString() + "type", confirmedRes[i].type);
+				localStorage.setItem("res" + i.toString() + "date", confirmedRes[i].date);
+				localStorage.setItem("res" + i.toString() + "duration", confirmedRes[i].duration);
+				localStorage.setItem("res" + i.toString() + "roomNumber", confirmedRes[i].roomNum.roomNumber);
+				localStorage.setItem("res" + i.toString() + "webcam", confirmedRes[i].roomNum.webcam);
+				localStorage.setItem("res" + i.toString() + "phoneLine", confirmedRes[i].roomNum.phoneLine);
+			}
+			localStorage.setItem("numResInTransaction", confirmedRes.length);
+			localStorage.setItem("totalReservationNumber", parseInt(localStorage.getItem("totalReservationNumber"))+confirmedRes.length);
+			window.location="confirmation.html";
 		}
-		localStorage.setItem("numResInTransaction", confirmedRes.length);
-		window.location="confirmation.html";
+		else if(document.getElementById("quickFix").checked){
+			var changedRes = [];
+			for(i = 0; i < conflictedReservations.length; i++){
+				if(conflictedReservations[i].error === "There are no webcam rooms available at this time."){
+					console.log("Webcam error check");
+					conflictedReservations[i].roomNum = pickANonExtraRoom(conflictedReservations[i]);
+					reservationsForTable.push(conflictedReservations[i]);
+					changedRes.push(i);
+				}
+				else if(conflictedReservations[i].error === "There are no phoneline rooms available at this time."){
+					console.log("Webcam error check");
+					conflictedReservations[i].roomNum = pickANonExtraRoom(conflictedReservations[i]);
+					reservationsForTable.push(conflictedReservations[i]);
+					changedRes.push(i);
+				}
+			}
+			
+			for(i = changedRes.length; i >= 0; i--){
+				conflictedReservations.splice(changedRes[i], 1);
+			}
+			
+			
+			
+			if(changedRes.length > 0){
+				displayTableFromRes(reservationsForTable, "openResTable", 1);
+				displayConflictTableFromRes(conflictedReservations, "confResTable");
+				loadConfirmedResToTable()
+			}
+			
+			sortReservations(reservationsForTable);
+		}
+		else if(document.getElementById("changeInd").checked){
+			
+		}
 	}
 	
 	function loadConfirmedResToTable(){
@@ -333,4 +377,6 @@
 				webcamCell.innerHTML = "<img src='webcam.png'>";
 			}
 		}
+
+		console.log(localStorage.getItem("totalReservationNumber"));
 	}

@@ -1,9 +1,30 @@
-var faculty = new PermissionClass(1);
-var student = new PermissionClass(2);
+var permissions = [];
+
+var faculty = new PermissionClass("Faculty", true, true, false, true, false, false, 1);
+var seniorProject = new PermissionClass("Senior Project", true, true, false, false, false, false, 2);
+var courseTeam = new PermissionClass("Course Team", true, true, false, false, false, false, 3);
+var admin = new PermissionClass("Admin", true, true, true, true, true, true, 1);
+var labbie = new PermissionClass("Labbie", true, true, false, false, false, true, 3);
+
+permissions.push(faculty);
+permissions.push(seniorProject);
+permissions.push(courseTeam);
+permissions.push(admin);
+permissions.push(labbie);
+
+var totalReservationNumber = 0;
+var transactionNumber = 0;
+
+localStorage.setItem("totalReservationNumber", totalReservationNumber);
+
 var numConflicts = 0;
 var confirmedRes;
+var Reservations = [];
+var reservationsForTable = [];
+var conflictedReservations = [];
+var rejectedReservations = [];
 
-var student1 = new User("Daniel", "Moody", "drm4652", student);
+var student1 = new User("Daniel", "Moody", "drm4652", courseTeam);
 var faculty1 = new User("Larry", "Kiser", "lmr8394", faculty);
 
 var room1 = new Room(1560, true, false);
@@ -67,16 +88,14 @@ var res11 = new Reservation(student1 ,"Active","Individual",date1, 2, room11);
 
 mockReservations.push(res1);
 mockReservations.push(res2);
-
-
 mockReservations.push(res3);
 mockReservations.push(res4);
-
+/*
 mockReservations.push(res5);
 mockReservations.push(res6);
-
 mockReservations.push(res7);
 mockReservations.push(res8);
 mockReservations.push(res9);
 mockReservations.push(res10);
 mockReservations.push(res11);
+*/

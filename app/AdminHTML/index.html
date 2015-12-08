@@ -34,15 +34,16 @@ function goToReservations(){
   var backupRes = resArray;
   var currentSize = resArray.length;
 
+  var resInAdmin = [];
+  var dateSortControl = false;
 
 function resFilterStatus(){
   var userNameCheck = document.getElementById("userNameCheck").checked;
   var resStatusCheck = document.getElementById("resStatusCheck").checked;
   var resTypeCheck = document.getElementById("typeCheck").checked;
   var roomNumCheck = document.getElementById("roomNumCheck").checked;
-  var dateCheck = document.getElementById("dateCheck").checked;	
   
-  var filters = [userNameCheck, resStatusCheck, resTypeCheck, roomNumCheck, dateCheck];
+  var filters = [userNameCheck, resStatusCheck, resTypeCheck, roomNumCheck];
   return filters;
 }
 
@@ -51,9 +52,8 @@ function resFilterValues(){
   var resStatusDropDown = document.getElementById("resStatus").value;
   var resTypeDropDown = document.getElementById("resType").value;
   var roomNumValue = document.getElementById("roomNum").value;
-  var dateValue = document.getElementById("date").value;
   
-  var values = [userNameValue, resStatusDropDown, resTypeDropDown, roomNumValue, dateValue];
+  var values = [userNameValue, resStatusDropDown, resTypeDropDown, roomNumValue];
   return values;
 }
 
@@ -67,13 +67,22 @@ function clearTable(){
 	}
 }
 
+function emptyTable(id){
+    var table = document.getElementById(id);
+
+	var x = table.rows.length-1;
+	
+	for(i = x; i >= 0; i--){
+		document.getElementById(id).deleteRow(i);
+	}
+}
+
 function createMockData(){
 /*
   for(i = 0; i < resArray.length;i++){
 	addRowFromRes(resArray[i], i);
   }
   */
-  
 	clearTable();
 
 	var table = document.getElementById("totalReservations");
@@ -92,7 +101,7 @@ function createMockData(){
 	userCell.innerHTML = "<b>User</b>";
 	statusCell.innerHTML = "<b>Status</b>";
 	typeCell.innerHTML = "<b>Type</b>";
-	dateCell.innerHTML = "<b>Date</b>";
+	dateCell.innerHTML = "<b><div id='dateSort' onclick='dateSort()'>Date</div></b>";
 	durationCell.innerHTML = "<b>Duration</b>";
 	roomNumCell.innerHTML = "<b>Room Number</b>";
 	phonelineCell.innerHTML = "<b>Phoneline</b>";
@@ -126,7 +135,28 @@ function createMockData(){
 			webcamCell.innerHTML = "<img src='webcam.png'>";
 		}
 	}
+	
+	createArrayFromTable();
 }
+
+function createArrayFromTable(){
+
+	var counter = localStorage.getItem("numResInTransaction");
+
+	for(i = 1; i <= counter; i++){
+	
+		var res = new Reservation(localStorage.getItem("res" + (i-1).toString() + "user"), 
+								  localStorage.getItem("res" + (i-1).toString() + "status"), 
+								  localStorage.getItem("res" + (i-1).toString() + "type"), 
+								  localStorage.getItem("res" + (i-1).toString() + "date"), 
+								  localStorage.getItem("res" + (i-1).toString() + "duration"), 
+								  localStorage.getItem("res" + (i-1).toString() + "roomNumber"),
+								  localStorage.getItem("res" + (i-1).toString() + "webcam"), 
+								  localStorage.getItem("res" + (i-1).toString() + "phoneLine"));
+		resInAdmin.push(res);
+	}
+}
+
 
 function createTableFromArray(reservations){
 
@@ -138,6 +168,7 @@ function createTableFromArray(reservations){
 	  }
   }
 }
+
 
 function filterUsername(reservations){
 	var newReservations;
@@ -164,13 +195,11 @@ function filterDate(reservations){
 }
 
 function filterReservations(){
-  var finalReservations;
+  var finalReservations=[];
   var filters = resFilterStatus();
   var filterValues = resFilterValues();
   
-  finalReservations = resArray;
-
-  resetTable(currentSize);
+  resetTable();
   
   var res1;
   res1 = [];
@@ -183,83 +212,131 @@ function filterReservations(){
   var res5;
   res5 = [];
   
+  var filteredRes = [];
+  var prevFilter = false;
+  
   if(filters[0]){
 	if(filterValues[0] != ''){
-		for(i = 0; i < resArray.length; i++){
-		  if(resArray[i].user == filterValues[0]){
-			res1.push(resArray[i]);
+		for(i = 0; i < resInAdmin.length; i++){
+		  if(resInAdmin[i].user == filterValues[0]){
+			filteredRes.push(resInAdmin[i]);
 		  }
 		}
-	    finalReservations = res1;
+		prevFilter = true;
 	}
   }
   if(filters[1]){
-
-	if(res1.length == 0){
-	  res1 = finalReservations;
-	}
-		for(i = 0; i < res1.length; i++){
-		console.log(filterValues[1]);
-			if(res1[i].status == filterValues[1]){
-				res2.push(res1[i]);
+	if(prevFilter === false){
+		for(i = 0; i < resInAdmin.length; i++){
+			if(resInAdmin[i].status === filterValues[1]){
+				filteredRes.push(resInAdmin[i]);
 			}
 		}
-	finalReservations = res2;
+		prevFilter = true;
+	}
+	else{
+		var temp = filteredRes;
+		filteredRes = [];
+		for(i = 0; i < temp.length; i++){
+			if(temp[i].status === filterValues[1]){
+				filteredRes.push(temp[i]);
+			}
+		}
+		prevFilter = true;
+	}
   }
   
   if(filters[2]){
-  
-	if(res2.length == 0){
-	  res2 = finalReservations;
-	}
-		for(i = 0; i < res2.length; i++){
-		console.log(filterValues[2]);
-			if(res2[i].type == filterValues[2]){
-				res3.push(res2[i]);
+	if(prevFilter === false){
+		for(i = 0; i < resInAdmin.length; i++){
+			if(resInAdmin[i].type === filterValues[2]){
+				filteredRes.push(resInAdmin[i]);
 			}
 		}
-	finalReservations = res3;
+		prevFilter = true;
+	}
+	else{
+		var temp = filteredRes;
+		filteredRes = [];
+		for(i = 0; i < temp.length; i++){
+			if(temp[i].type === filterValues[2]){
+				filteredRes.push(temp[i]);
+			}
+		}
+		prevFilter = true;
+	}	
   }
   if(filters[3]){
+	if(prevFilter === false){
+		for(i = 0; i < resInAdmin.length; i++){
 
-	if(res3.length == 0){
-	  res3 = finalReservations;
-	}
-		for(i = 0; i < res3.length; i++){
-		console.log(filterValues[3]);
-			if(res3[i].roomNum == filterValues[3]){
-				res4.push(res3[i]);
+			if(resInAdmin[i].roomNum === filterValues[3]){
+				filteredRes.push(resInAdmin[i]);
 			}
 		}
-	finalReservations = res4;
-  }
-  if(filters[4]){
-
-  
+		prevFilter = true;
+	}
+	else{
+		var temp = filteredRes;
+		filteredRes = [];
+		for(i = 0; i < temp.length; i++){
+			if(temp[i].roomNum === filterValues[3]){
+				filteredRes.push(temp[i]);
+			}
+		}
+		prevFilter = true;
+	}
   }
  
-  createTableFromArray(finalReservations);
+  createTableFromArray(filteredRes);
+  
 }
 
-function addRow(){
+function dateSort(){
 
+/*
+	if(!dateSortControl){
+		for(i = 0; i < resInAdmin.length-1; i++){
+			if(resInAdmin[i].date.toLocaleString() > resInAdmin[i+1].date.toLocaleString()){
+				swap(resInAdmin[i], resInAdmin[i+1]);
+				i = 0;
+			}
+		}
+		dateSortControl = !dateSortControl;
+	}
+	else{
+		for(i = 0; i < resInAdmin.length-1; i++){
+			if(resInAdmin[i].date.toLocaleString() < resInAdmin[i+1].date.toLocaleString()){
+				swap(resInAdmin[i], resInAdmin[i+1]);
+				i = 0;
+			}
+		}
+	}
+
+	refreshTable();
+	
+*/
+}
+
+function swap(firstIndex, secondIndex){
+    var temp = resInAdmin[firstIndex];
+    resInAdmin[firstIndex] = resInAdmin[secondIndex];
+    resInAdmin[secondIndex] = temp;
 }
 
 function addRowFromRes(res, i){
-    var table = document.getElementById("resTable");
+    var table = document.getElementById("totalReservations");
     var row = table.insertRow(i+1);
 	
-	//var checkboxCell = row.insertCell(0)
     var userCell = row.insertCell(0);
     var statusCell = row.insertCell(1);
     var typeCell = row.insertCell(2);
     var dateCell = row.insertCell(3);
     var durationCell = row.insertCell(4);
     var roomNumCell = row.insertCell(5);
-	var operationCell = row.insertCell(6);
-	
-	//checkboxCell.innerHTML = "<input type='checkbox' id='generatedCheckBox'>";
-	//document.getElementById("generatedCheckBox").id = i;
+	var phonelineCell = row.insertCell(6);
+	var webcamCell = row.insertCell(7);
+	//var operationCell = row.insertCell(6);
 	
     userCell.innerHTML = res.user;
     statusCell.innerHTML = res.status;
@@ -267,20 +344,41 @@ function addRowFromRes(res, i){
     dateCell.innerHTML = res.date;
     durationCell.innerHTML = res.duration;
     roomNumCell.innerHTML = res.roomNum;
-	operationCell.innerHTML = "<input type='button' id='generatedEdit' value='Edit' onclick='editRow("+i+")'>";
-	document.getElementById("generatedEdit").id = "edit" + i;
+	if(res.webcam === 'true'){
+		phonelineCell.innerHTML = "<img src='phone.png'>";
+	}
+	if(res.phoneLine === 'true'){
+			webcamCell.innerHTML = "<img src='webcam.png'>";
+	}
+	
+	//operationCell.innerHTML = "<input type='button' id='generatedEdit' value='Edit' onclick='editRow("+i+")'>";
+	//document.getElementById("generatedEdit").id = "edit" + i;
 }
+
 
 function resetTable(){
 
-    var table = document.getElementById("resTable");
+    var table = document.getElementById("totalReservations");
 
 	var x = table.rows.length-1;
 	
 		for(i = x; i >= 1; i--){
-			document.getElementById("resTable").deleteRow(i);
+			document.getElementById("totalReservations").deleteRow(i);
 		}
 }
+
+function refreshTable(){
+
+  resetTable();
+
+  if(resInAdmin !== 'undefined'){
+	  for(i = 0; i < resInAdmin.length; i++){
+		addRowFromRes(resInAdmin[i], i);
+	  }
+  }
+
+}
+
 
 function subRow(){
 	var checkedRows;
@@ -319,11 +417,128 @@ function checkID(i){
 	document.getElementById("demo").innerHTML = i;
 }
 
+
+function createRoomTable(){
+
+	var table = document.getElementById("roomsTable");
+	var headerRow = table.insertRow(0);
+	headerRow.setAttribute("bgcolor", "#98A0A8");	
+	
+	var roomNumCell = headerRow.insertCell(0);
+	var webcamCell = headerRow.insertCell(1);
+	var phonelineCell = headerRow.insertCell(2);
+	var operationCell = headerRow.insertCell(3);
+		
+	roomNumCell.innerHTML = "<b>Number</b>";
+	webcamCell.innerHTML = "<b>Webcam</b>";
+	phonelineCell.innerHTML = "<b>Phoneline</b>";
+	operationCell.innerHTML = "<b>Operations</b>"
+
+	for(i = 1; i <= allRooms.length; i++){
+		var newRow = table.insertRow(i);
+			
+		var roomNumCell = newRow.insertCell(0);
+		var webcamCell = newRow.insertCell(1);
+		var phonelineCell = newRow.insertCell(2);
+		var operationCell = newRow.insertCell(3);
+		
+		roomNumCell.innerHTML = allRooms[i-1].roomNumber;
+		webcamCell.innerHTML = allRooms[i-1].webcam;
+		phonelineCell.innerHTML = allRooms[i-1].phoneLine;
+		operationCell.innerHTML = "<input type='button' value='Edit'><input type='button' value='Delete' onclick='deleteItem(2, "+(i-1)+")'>";
+	}
+}
+
+function createPermissionsTable(){
+
+	var table = document.getElementById("permissionsTable");
+	var headerRow = table.insertRow(0);
+	headerRow.setAttribute("bgcolor", "#98A0A8");	
+	
+	var typeCell = headerRow.insertCell(0);
+	var reserveCell = headerRow.insertCell(1);
+	var cancelOwnCell = headerRow.insertCell(2);
+	var cancelOtherCell = headerRow.insertCell(3);
+	var multiroomCell = headerRow.insertCell(4);
+	var adminCell = headerRow.insertCell(5);
+	var labbieCell = headerRow.insertCell(6);
+	var priorityCell = headerRow.insertCell(7);
+	var operationCell = headerRow.insertCell(8);
+
+	typeCell.innerHTML = "<b>Type</b>";
+	reserveCell.innerHTML = "<b>Reserve</b>";
+	cancelOwnCell.innerHTML = "<b>Cancel Own</b>";
+	cancelOtherCell.innerHTML = "<b>Cancel Other</b>";
+	multiroomCell.innerHTML = "<b>Multiroom</b>";
+	adminCell.innerHTML = "<b>Admin</b>";
+	labbieCell.innerHTML = "<b>Labbie</b>";
+	priorityCell.innerHTML = "<b>Priority</b>";
+	operationCell.innerHTML = "<b>Operations</b>"
+	
+	for(i = 1; i <= permissions.length; i++){
+		var newRow = table.insertRow(i);
+			
+		var typeCell = newRow.insertCell(0);
+		var reserveCell = newRow.insertCell(1);
+		var cancelOwnCell = newRow.insertCell(2);
+		var cancelOtherCell = newRow.insertCell(3);
+		var multiroomCell = newRow.insertCell(4);
+		var adminCell = newRow.insertCell(5);
+		var labbieCell = newRow.insertCell(6);
+		var priorityCell = newRow.insertCell(7);
+		var operationCell = newRow.insertCell(8);
+
+		typeCell.innerHTML = permissions[i-1].type;
+		reserveCell.innerHTML = permissions[i-1].reserve;
+		cancelOwnCell.innerHTML = permissions[i-1].cancelOwn;
+		cancelOtherCell.innerHTML = permissions[i-1].cancelOther;
+		multiroomCell.innerHTML = permissions[i-1].multiroom;
+		adminCell.innerHTML = permissions[i-1].admin;
+		labbieCell.innerHTML = permissions[i-1].labbie;
+		priorityCell.innerHTML = permissions[i-1].priority;
+		operationCell.innerHTML = "<input type='button' value='Edit'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";
+	}
+}
+
+function deleteItem(type, index){
+	if(type === 1){
+	
+	}
+	else if(type === 2){
+		allRooms.splice(index, 1);
+		emptyTable("roomsTable");
+		createRoomTable();
+	}
+	else if(type === 3){
+		permissions.splice(index, 1);
+		emptyTable("permissionsTable");
+		createPermissionsTable();
+	}
+	
+}
+
+function edit(type, index){
+
+}
+
+function createPermission(){
+
+}
+
+function createRoom(){
+
+}
+
+function loadAdmin(){
+	createMockData();
+	createRoomTable();
+	createPermissionsTable();
+}
 </script>
 
 
 </head>
-<body onload="createMockData()">
+<body onload="loadAdmin()">
 <script>
 jQuery(document).ready(function() {
     jQuery('.tabs .tab-links a').on('click', function(e)  {
@@ -339,16 +554,14 @@ jQuery(document).ready(function() {
     });
 });
 </script>
-
-<input type="button" onclick="logout()" value="<-- Logout">
-<input type="button" onclick="goToReservations()" value="Reservations">
 <br>
 <div class="tabs">
     <ul class="tab-links">
         <li class="active"><a href="#tab1">Reservations</a></li>
         <li><a href="#tab2">Permissions</a></li>
-        <li><a href="#tab3">Reports</a></li>
-		<li><a href="#tab4">Configuration</a><li>
+		<li><a href="#tab3">Rooms</a></li>
+        <li><a href="#tab4">Reports</a></li>
+		<li><a href="#tab5">Configuration</a><li>
     </ul>
  
     <div class="tab-content">
@@ -382,7 +595,7 @@ jQuery(document).ready(function() {
 			<div class="dropdown">	
 				<select id="resType">
 					<option value="Individual">Individual</option>
-					<option value="Team">Team</option>
+					<option value="Multiroom">Multiroom</option>
 				</select>
 			</div><br>
 			<input type="checkbox" id="roomNumCheck">Room Number
@@ -402,86 +615,37 @@ jQuery(document).ready(function() {
 					<option value="1665">1665</option>
 				</select>
 			</div><br>
-			
-			<input type="checkbox" id="dateCheck">Date
-			<div class="dropdown">	
-				<select id="date">
-					<option value="Newest">Newest</option>
-					<option value="Oldest">Oldest</option>
-				</select>
-			</div><br>
+		
 			<input type="button" value="Filter" onclick="filterReservations()">
 			<br><br><br>
 			</div>
 
 			<table class="table table-condensed" border=1 width=50% id="totalReservations"></table>
 			
-			<input type="button" value="Refresh" onclick="createMockData()">
+			<input type="button" value="Refresh" onclick="refreshTable()">
 			
 			</div>
 			
 
  
         <div id="tab2" class="tab">
-
-			<table border="1" style="width:75%" align="center">
-				<tr align="center">
-					<td width="3%"></td>
-					<td>Name</td>
-					<td>Reserve</td>
-					<td>Cancel Own</td>
-					<td>Cancel Other</td>
-					<td>Check-In/Out</td>
-					<td>Create/Edit</td>
-					<td>Preemption</td>
-					<td>Edit</td>
-				</tr>
-				<tr align="center">
-					<td><input type="checkbox"></td>
-					<td>Student</td>
-					<td>yes</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>3</td>
-					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
-				</tr>
-				<tr align="center">
-					<td><input type="checkbox"></td>
-					<td>Student</td>
-					<td>yes</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>3</td>
-					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
-				</tr>
-				<tr align="center">
-					<td><input type="checkbox"></td>
-					<td>Student</td>
-					<td>yes</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>yes</td>
-					<td>no</td>
-					<td>3</td>
-					<td><a href="editReservation.html">Edit</a>/<a href="deleteReservation.html">Delete</a></td>
-				</tr>
-			</table>
+			Current Permissions<br><br>
+			<input type="button" value="Create New Permission"><br>
+			<table class="table table-condensed" border=1 width=50% id="permissionsTable"></table>
 			<br><br>
-			<div class="center">
-				<input type="button" value="Add">
-				<input type="button" value="Edit Selected Items">
-			</div><br>
         </div>
  
         <div id="tab3" class="tab">
-		Reports
+			Current Rooms<br><br>
+			<input type="button" value="Create New Room"><br>
+			<table class="table-condensed" border=1 width=50% id="roomsTable"></table>
+		</div>
+ 
+        <div id="tab4" class="tab">
+			<input type="button" value="Print Reservations">
 		</div>
 		
-		<div id="tab4" class="tab">
+		<div id="tab5" class="tab">
 			<fieldset>
 				<p><label class="field">Minimum Team Size:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
 				<div class="error" id="error1"></div>
