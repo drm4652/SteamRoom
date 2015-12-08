@@ -104,6 +104,23 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
     }
   ];
     
+
+  
+    $scope.checkIn = function() {
+		//code goes here
+		alert("check in");
+	};
+	$scope.checkOut = function() {
+		//code goes here
+		alert("check outed");
+	};
+	$scope.deleteReservation = function() {
+		//code goes here
+	};
+    
+	$scope.alertAdmin = function(){
+		//code goes here
+	};
    //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
 	/*
    $scope.addItem = function() {

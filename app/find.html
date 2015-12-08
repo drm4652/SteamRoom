@@ -4,7 +4,6 @@
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.6.0.js"></script>
   <script type="text/javascript" src="landingScript.js"></script>
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
   
 
  </head>
@@ -18,9 +17,15 @@
       <accordion-heading>
           {{ group.title }} 
       </accordion-heading>
-		<button class="btn btn-success" ng-click="addItem()">Check In/Out</button>
-        <button class="btn btn-danger">Cancel</button>
-        <button class="btn btn-info" ng-click="addItem()">Alert</button>
+	  <div class="btn-group">
+	    <label class="btn btn-success" ng-click="checkIn()" ng-model="radioModel" uib-btn-radio="'Check In'">Check In</label>
+        <label class="btn btn-warning" ng-click="checkOut()"ng-model="radioModel" uib-btn-radio="'Check Out'">Check Out</label>
+
+	  </div>
+<!-- 		<button class="btn btn-success" ng-click="checkIn()">Check In</button>
+ -->
+        <button class="btn btn-danger" ng-click="deleteReservation()">Cancel</button>
+        <button class="btn btn-info" ng-click="alertAdmin()">Alert</button>
     </accordion-group>
   </accordion>
   <!-- <accordion close-others="oneAtATime">
