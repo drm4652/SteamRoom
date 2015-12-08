@@ -10,7 +10,10 @@ function getReservations(req, res) {
 		if(err) {
 			res.send(err);
 		}
-		res.json(reservations);
+		//console.log(req.session.username);
+		//req.session.reservations = reservations;
+		//console.log(reservations);
+		//res.json(reservations);
 	});
 };
 
@@ -47,7 +50,6 @@ function getNumOfReservations(req, res) {
 			console.log(roomsAtTime);
 		});
 	}
-	console.log(3);
 	//res.json(roomsAtTime);
 };
 
@@ -61,6 +63,8 @@ function createReservation(req, res) {
 			res.send(err);
 		}
 		var allRooms = [1560, 1561, 1562, 1563, 1564, 1565, 1660, 1661, 1662, 1663, 1665];
+		var webCamRooms = [1565, 1665];
+		var phoneRooms = [1560, 1561];
 		var usedRooms = [];
 		for(var i = 0; i < rooms.length; i++) {
 			usedRooms.push(rooms[i].roomNumber);
@@ -69,6 +73,15 @@ function createReservation(req, res) {
 		var availableRooms = allRooms.filter(function(el) {
 			return usedRooms.indexOf(el) <0;
 		});
+		
+		var webCamRooms = webCamRooms.filter(function(el) {
+			return webCamRooms.indexOf(el) < 0;
+		});
+		
+		var phoneRooms = phoneRooms.filter(function(el) {
+			return webCamRooms.indexOf(el) < 0;
+		});
+		
 		Reservation.create({
 			reserver : req.session.username,
 			reservedAs : 3,
@@ -94,7 +107,7 @@ module.exports = function(app) {
 		//res.send('hello world');
 		sesh = req.session;
 		if(sesh.username) {
-			res.redirect('/landing');
+			res.redirect('/landing/');
 		}
 		else {
 			res.sendFile(path.join(__dirname + '/../app/index.html'));
@@ -106,7 +119,8 @@ module.exports = function(app) {
 	app.post('/login', function(req, res) {
 		sesh = req.session;
 		sesh.username=req.body.username;
-		console.log(sesh.username);
+		//console.log(sesh.username);
+		//console.log(sesh.reservations);
 		res.end('done');
 	});
 	
@@ -116,7 +130,8 @@ module.exports = function(app) {
 		sesh = req.session;
 		if(sesh.username) {
 			res.sendFile(path.join(__dirname + '/../app/landingIndex.html'));
-			console.log(sesh.username);
+			//getReservations(req, res);
+			
 		}
 		else {
 			res.redirect('/');
@@ -134,7 +149,7 @@ module.exports = function(app) {
 		res.sendFile(path.join(__dirname + '/../calendar/index.html'));
 	});
 	
-	//get all of the current user's reservations
+	
 /* 	app.post('/calendar', function(req, res) {
 		//use mongoose to get current user's reservations in database
 		getReservations(req, res);

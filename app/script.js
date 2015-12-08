@@ -113,6 +113,18 @@ function SearchCtrl($scope, $http) {
 			$('#test').fullCalendar( 'gotoDate', date.format());
 		};
 		
+		$http.roomType = "none";
+		
+		$scope.phoneSelect = function() {
+			$http.roomType = "phone";
+		}
+		$scope.webCamSelect = function() {
+			$http.roomType = "camera";
+		}
+		$scope.defaultSelect = function() {
+			$http.roomType = "none";
+		}
+		
 		$scope.makeReservation = function(){
 			$scope.loading = true;
 			Reservations1.create({resDate: $http.resDate})
