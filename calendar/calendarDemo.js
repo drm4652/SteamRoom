@@ -55,15 +55,24 @@ calendarDemoApp.controller('CalendarCtrl',
 
 		dateSaver = date.format();
 		var today = moment();
-		//var test = moment();
 		var todayCheck = moment(today).format('YYYY-MM-DD');
 		var todayDay = moment(today).format('DD');
 		todayDay = parseInt(todayDay);
 		
 		var selectionStart = date.format();
-		//alert(selectionStart);
+		
+		//retrieving epoch format
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
+		
+		//create a variable that is 14 days in epoch format
+		var epoch14Days = 1209600000;
+		var dateAdded = today + epoch14Days;
+		
+		
+
+
+		
 		var view = $('#myCalendar1').fullCalendar('getView');
         $scope.alertMessage = dateSaver;
 		globalDate = dateSaver;
@@ -76,10 +85,9 @@ calendarDemoApp.controller('CalendarCtrl',
 		dayClicked = date.format('DD');
 		dayClicked = parseInt(dayClicked);
 		
-		var dayRestriction = dayClicked - todayDay;
+		//ensure that the date clicked isnt 14 days past current dates
 		var lessThan14 = true;
-
-		if(dayRestriction <= 14){
+		if(selectionStart < dateAdded ){
 			var lessThan14 = true;
 		}
 		else{
