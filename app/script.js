@@ -77,31 +77,48 @@ function SearchCtrl($scope, $http) {
 
 		var globalDate = localStorage.getItem("globalDate");
 		var globalTime = localStorage.getItem("globalTime");
+		globalTime = parseInt(globalTime);
+		console.log(globalTime);
+		console.log(globalDate);
 		var globalTimePlus = globalTime * 1 + 1;
 		var globalTimeOver = 0;
 		var dateString = "";
+		var localTime = globalTime + 5;
+		var localDate = "";
+		if (localTime >= 24) {
+			localTime = localTime - 24
+			newDate = new Date(globalDate);
+			localYear = newDate.getFullYear();
+			localMonth = newDate.getMonth()+1;
+			localDay = newDate.getDate()+2;
+			console.log(localDay);
+			localDate = localYear + '-' + localMonth + '-' + localDay;
+			console.log(globalDate);
+		}
+		if(localTime > 9){
+			dateString = localDate + 'T' + localTime + ':00:00';
+		}
+		else{
+			dateString = localDate + 'T0' + localTime + ':00:00';
+		}
 		if(globalTime > 12){
-			dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime - 12;
 			globalTimeOver = globalTime + 1;
 			globalTime = globalTime + 'pm' + ' - ' + globalTimeOver + 'pm';
 		}
 		else if(globalTime == 10){
-			dateString = dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'am';
 		}
 		else if(globalTime == 11){
-			dateString = dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'pm';
 		}
 		else if(globalTime == 12){
-			dateString = globalDate + 'T' + globalTime + ':00:00';
 			globalTime = globalTime + 'pm' + ' - ' + '1pm';
 		}		
 		else{
-			dateString = globalDate + 'T0' + globalTime + ':00:00';
 			globalTime = globalTime + 'am' + ' - ' + globalTimePlus + 'am';
 		}
+		
 		$http.resDate = new Date(dateString);
 		console.log($http.resDate);
 		globalMessage = globalDate + ' @ ' + globalTime

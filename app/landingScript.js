@@ -101,7 +101,7 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
 	  }
 	});
 	
-	$scope.listGroups(18);
+	$scope.listGroups(6);
   
     
 

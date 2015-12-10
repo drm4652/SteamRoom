@@ -138,7 +138,7 @@ module.exports = function(app) {
 		}
 	});
 	
-	app.get('/landing/#/find', function(req, res) {
+	app.get('/landing#/find', function(req, res) {
 		console.log(sesh.reservations);
 	});
 	
