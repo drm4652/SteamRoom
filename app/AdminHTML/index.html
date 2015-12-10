@@ -15,6 +15,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="multiroom.css">
+  <script src="Chart.js"></script>
   <script>
 function logout(){
 	window.location = "../index.html";
@@ -39,6 +40,7 @@ function goToReservations(){
   
   var permissionControl = false;
   var roomControl = false;
+  var createRoomControl = false;
 
 function resFilterStatus(){
   var userNameCheck = document.getElementById("userNameCheck").checked;
@@ -140,7 +142,8 @@ function createMockData(){
 		if(localStorage.getItem("res" + (i-1).toString() + "phoneLine")=== 'true'){
 			webcamCell.innerHTML = "<img src='webcam.png'>";
 		}
-		operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(1, "+(i-1)+")'>";
+		operationCell.innerHTML = "<button type='button' class='btn btn-danger' onclick='deleteItem(1, "+(i-1)+")'>Delete</button>";
+		
 	}
 	
 	createArrayFromTable();
@@ -351,13 +354,15 @@ function addRowFromRes(res, i){
     dateCell.innerHTML = res.date;
     durationCell.innerHTML = res.duration;
     roomNumCell.innerHTML = res.roomNum;
-	if(res.webcam === 'true'){
+	
+	
+	if(res.roomNum === '1560' || res.roomNum === '1561'){
+		webcamCell.innerHTML = "<img src='webcam.png'>";
+	}
+	if(res.roomNum === '1665' || res.roomNum === '1565'){
 		phonelineCell.innerHTML = "<img src='phone.png'>";
 	}
-	if(res.phoneLine === 'true'){
-			webcamCell.innerHTML = "<img src='webcam.png'>";
-	}
-	operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(2, "+(i)+")'>";
+	operationCell.innerHTML = "<button type='button' class='btn btn-danger' onclick='deleteItem(1, "+(i-1)+")'>Delete</button>";
 	
 }
 
@@ -451,7 +456,7 @@ function createRoomTable(){
 		roomNumCell.innerHTML = allRooms[i-1].roomNumber;
 		webcamCell.innerHTML = allRooms[i-1].webcam;
 		phonelineCell.innerHTML = allRooms[i-1].phoneLine;
-		operationCell.innerHTML = "<input type='button' value='Edit' id='room"+i+"' onclick='edit(2, "+(i-1)+")'><input type='button' value='Delete' onclick='deleteItem(2, "+(i-1)+")'>";
+		operationCell.innerHTML = "<input type='button' value='Edit' id='room"+i+"' class='btn btn-primary' onclick='edit(2, "+(i-1)+")'><button class='btn btn-danger' onclick='deleteItem(2, "+(i-1)+")'>Delete</button>";
 	}
 }
 
@@ -502,7 +507,7 @@ function createPermissionsTable(){
 		adminCell.innerHTML = permissions[i-1].admin;
 		labbieCell.innerHTML = permissions[i-1].labbie;
 		priorityCell.innerHTML = permissions[i-1].priority;
-		operationCell.innerHTML = "<input type='button' value='Edit' id='permission"+i+"' onclick='edit(3, "+(i-1)+")'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";
+		operationCell.innerHTML = "<input type='button' value='Edit' id='permission"+i+"' class='btn btn-primary' onclick='edit(3, "+(i-1)+")'><button class='btn btn-danger' onclick='deleteItem(3, "+(i-1)+")'>Delete</button>";
 	}
 }
 
@@ -552,13 +557,14 @@ function createResTable(){
 		durationCell.innerHTML = resInAdmin[i-1].duration;
 		roomNumCell.innerHTML = resInAdmin[i-1].roomNum;
 		
-		if(resInAdmin[i-1].webcam === 'true'){
-			phonelineCell.innerHTML = "<img src='phone.png'>";
-		}
-		if(resInAdmin[i-1].phoneLine === 'true'){
+		console.log(resInAdmin[i-1]);
+		if(resInAdmin[i-1].roomNum === '1560' || resInAdmin[i-1].roomNum === '1561'){
 			webcamCell.innerHTML = "<img src='webcam.png'>";
 		}
-		operationCell.innerHTML = "<input type='button' value='Delete' onclick='deleteItem(1, "+(i-1)+")'>";
+		if(resInAdmin[i-1].roomNum === '1665' || resInAdmin[i-1].roomNum === '1565'){
+			phonelineCell.innerHTML = "<img src='phone.png'>";
+		}
+		operationCell.innerHTML = "<button type='button' class='btn btn-danger' onclick='deleteItem(1, "+(i-1)+")'>Delete</button>";
 	}
 		
 }
@@ -697,28 +703,116 @@ function createPermission(){
 function createRoom(){
 
 	var table = document.getElementById("roomsTable");
-	var newRow = table.insertRow(1);
+	var newRow = table.insertRow(allRooms.length+1);
 	
 	var numberCell = newRow.insertCell(0);
 	var webcamCell = newRow.insertCell(1);
 	var phonelineCell = newRow.insertCell(2);
 	var operationCell = newRow.insertCell(3);
 	
-	numberCell.innerHTML = "<input type='text' 'value=''>";
-	webcamCell.innerHTML = "<select id=''><option value='true'>true</option><option value='false'>false</option></select>";
-	phonelineCell.innerHTML = "<select id=''><option value='true'>true</option><option value='false'>false</option></select>";
-	operationCell.innerHTML = "<input type='button' value='OK' id='room"+allRooms.length+"' onclick='edit(3, "+(allRooms.length-1)+")'><input type='button' value='Delete' onclick='deleteItem(3, "+(i-1)+")'>";	
+	numberCell.innerHTML = "<input type='text' id='perCellroom0"+allRooms.length+"' size=5 value=''>";
+	webcamCell.innerHTML = "<select id='perCellroom1"+allRooms.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	phonelineCell.innerHTML = "<select id='perCellroom2"+allRooms.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	operationCell.innerHTML = "<input type='button' value='OK' id='room"+allRooms.length+"' class='btn btn-primary' onclick='edit(2, "+(allRooms.length)+")'><button class='btn btn-danger' onclick='deleteItem(2, "+(allRooms.length)+")'>Delete</button>";
 	
+	roomControl = true;
+	var newRoom = new Room(0,false,false);
+	allRooms.splice(0,0, newRoom);
+}
+
+function populateReports(){
+
+	document.getElementById("reportsNumRes").innerHTML = resInAdmin.length;
+	document.getElementById("reportsNumRooms").innerHTML = allRooms.length;
+
+}
+
+	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+
+	var barChartData = {
+		labels : ["January","February","March","April","May","June","July"],
+		datasets : [
+			{
+				fillColor : "rgba(220,220,220,0.5)",
+				strokeColor : "rgba(220,220,220,0.8)",
+				highlightFill: "rgba(220,220,220,0.75)",
+				highlightStroke: "rgba(220,220,220,1)",
+				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+			},
+			{
+				fillColor : "rgba(151,187,205,0.5)",
+				strokeColor : "rgba(151,187,205,0.8)",
+				highlightFill : "rgba(151,187,205,0.75)",
+				highlightStroke : "rgba(151,187,205,1)",
+				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+			}
+		]
+
+	}
 	
-	//var newRoom = new Room();
-	//allRooms.splice(0,0, newRoom);
+function loadConfiguration(){
+
+	document.getElementById("confMinTeam").value = localStorage.getItem("MinTeam");
+	document.getElementById("confMaxTeam").value = localStorage.getItem("MaxTeam");
+	document.getElementById("confAdvTime").value = localStorage.getItem("AdvLength");
+	document.getElementById("confMaxLength").value = localStorage.getItem("MaxLength");
+
+}
+
+function setConfig(){
+
+	localStorage.setItem("MinTeam", document.getElementById("confMinTeam").value);
+	localStorage.setItem("MaxTeam", document.getElementById("confMaxTeam").value);
+	localStorage.setItem("AdvLength", document.getElementById("confAdvTime").value);
+	localStorage.setItem("MaxLength", document.getElementById("confMaxLength").value);
+
+	loadConfiguration();
 }
 
 function loadAdmin(){
 	createMockData();
 	createRoomTable();
 	createPermissionsTable();
+	populateReports();
+	loadConfiguration();
+	
+	localStorage.setItem("MinTeam", 2);
+	localStorage.setItem("MaxTeam", 7);
+	localStorage.setItem("AdvLength", 14);
+	localStorage.setItem("MaxLength", 2);
 }
+
+
+
+function print() {
+var textFile = null,
+  makeTextFile = function (text) {
+    var data = new Blob([text], {type: 'text/plain'});
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (textFile !== null) {
+      window.URL.revokeObjectURL(textFile);
+    }
+
+    textFile = window.URL.createObjectURL(data);
+
+    return textFile;
+  };
+
+
+  var create = document.getElementById('create'),
+    textbox = document.getElementById('textbox');
+
+  create.addEventListener('click', function () {
+    var link = document.getElementById('downloadlink');
+    link.href = makeTextFile(textbox.value);
+    link.style.display = 'block';
+  }, false);
+}
+
+
+
 </script>
 
 
@@ -745,8 +839,8 @@ jQuery(document).ready(function() {
         <li class="active"><a href="#tab1">Reservations</a></li>
         <li><a href="#tab2">Permissions</a></li>
 		<li><a href="#tab3">Rooms</a></li>
-        <li><a href="#tab4">Reports</a></li>
-		<li><a href="#tab5">Configuration</a><li>
+        <li><a href="#tab4" onclick="populateReports()">Reports</a></li>
+		<li><a href="#tab5" onclick="loadConfiguration()">Configuration</a><li>
     </ul>
  
     <div class="tab-content">
@@ -796,48 +890,77 @@ jQuery(document).ready(function() {
 					<option value="1661">1661</option>
 					<option value="1662">1662</option>
 					<option value="1663">1663</option>
-					<option value="1664">1664</option>
 					<option value="1665">1665</option>
 				</select>
 			</div><br>
-		
-			<input type="button" value="Filter" onclick="filterReservations()">
+
+			<button type="button" class='btn btn-info btn-sm' onclick="filterReservations()">Filter</button>
 			<br><br><br>
 			</div>
 
 			<table class="table table-condensed" border=1 width=50% id="totalReservations"></table>
-			
-			<input type="button" value="Refresh" onclick="refreshTable()">
+		
+			<button type="button" class="btn btn-success btn-lg centerElement" onclick="refreshTable()">Refresh</button>
 			
 			</div>
 			
 
  
         <div id="tab2" class="tab">
-			<input type="button" value="Create New Permission"><br><br>
+			<button type="button" class='btn btn-success'>Create New Permission</button><br><br>
 			<table class="table table-condensed" border=1 width=50% id="permissionsTable"></table>
 			<br><br>
         </div>
  
         <div id="tab3" class="tab">
-			<input type="button" value="Create New Room" onclick="createRoom()"><br><br>
+			<button type="button" class='btn btn-success' onclick="createRoom()">Create New Room</button><br><br>
 			<table class="table-condensed" border=1 width=50% id="roomsTable"></table>
 		</div>
  
         <div id="tab4" class="tab">
-			<input type="button" value="Print Reservations">
+			<fieldset>
+				<label class="field">Number of Reservations:</label><div id="reportsNumRes"></div><br>
+				<label class="field">Number of Rooms:</label><div id="reportsNumRooms"></div><br>
+			</fieldset>
+		
+    <button id="b" class="btn btn-success btn-lg centerElement">export to CSV</button>
+    <script type="text/javascript">
+        function exportToCsv() {
+            var myCsv = "";
+			
+			for(i = 1; i < resInAdmin.length;i++){
+			
+			myCsv += "Reservation: " + i + "\n" +
+					 "User: " + resInAdmin[i-1].user + "\n" +
+					 "Status: " + resInAdmin[i-1].status + "\n" +
+					 "Type: " + resInAdmin[i-1].type + "\n" +
+					 "Date: " + resInAdmin[i-1].date + "\n" +
+					 "Duration: " + resInAdmin[i-1].duration + "\n" +
+					 "Room Num: " + resInAdmin[i-1].roomNum +
+					 "\n\n";
+					 
+				
+			}
+            window.open('data:text/csv;charset=utf-8,' + escape(myCsv));
+        }
+
+        var button = document.getElementById('b');
+        button.addEventListener('click', exportToCsv);
+    </script>
+		
+		
+		
 		</div>
 		
 		<div id="tab5" class="tab">
 			<fieldset>
-				<p><label class="field">Minimum Team Size:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
-				<div class="error" id="error1"></div>
-				<p><label class="field">Maximum Team Size:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
-				<div class="error" id="error2"></div>
-				<p><label class="field">Advance Reservation Time:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
-				<div class="error" id="error3"></div>
-				<p><label class="field">Maximum Reservation Length:</label>
+				<p><label class="field">Minimum Team Size:</label><input type="text" id="confMinTeam" size="1" value="" ></p>
+				<p><label class="field">Maximum Team Size:</label><input type="textbox" id="confMaxTeam" size="1" value=""></p>
+				<p><label class="field">Advance Reservation Time:</label><input type="text" id="confAdvTime" size="1" value=""></p>
+				<p><label class="field">Maximum Reservation Length:</label><input type="textbox" id="confMaxLength" size="1" value=""></p>
 			</fieldset>
+			<br>
+			<button type="button" class='btn btn-success centerElement' onclick="setConfig()">Set Configuration</button><br><br>
 		</div>
     </div>
 </div>

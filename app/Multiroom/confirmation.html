@@ -18,14 +18,34 @@
 
 <body onload="loadConfirmedResToTable()">
 
+  <nav class="navbar navbar-default">
+  <div class="container-fluid">
+  <div id='test' ng-click="doTheBack()"><b class="navbar-brand"><i class="fa fa-arrow-left"></i>Back</b></div>
+  
+    <div class="nav navbar-nav navbar-left">
+
+	
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+	    <a class="navbar-brand" href="/landing"><i class="fa fa-home"></i><span class="link-title">Home</span></a>
+		<a class="navbar-brand" href="/calendar"><i class="fa fa-calendar-o"></i> <span class="link-title">Reservation</span></a>
+		<a class="navbar-brand" href="#myReservation"><i class="fa fa-list"></i><span class="link-title">My Reservations</span></a>
+		<a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> <span class="link-title">About</span></a>
+		<a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> <span class="link-title">Settings</span></a>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
 The following reservations have been added!
 <br><br><br>
 Reservations: <div id="finalProperties"><div id="ResDates">
 </div><table class="table table-condensed" border=1 width=50% id="confirmedMultiroom"></table></div><br>
 <br>
 <br>
-<input type="button" value="Reserve Again">
-<input type="button" value="Home">
+<button type="button" class="btn btn-success btn-lg centerElement" onclick=window.location="singlePage.html">Reserve Again</button>
 
 </body>
 </html>
