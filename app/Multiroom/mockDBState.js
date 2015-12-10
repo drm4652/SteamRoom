@@ -27,10 +27,10 @@ var rejectedReservations = [];
 var student1 = new User("Daniel", "Moody", "drm4652", courseTeam);
 var faculty1 = new User("Larry", "Kiser", "lmr8394", faculty);
 
-var room1 = new Room(1560, true, false);
-var room2 = new Room(1561, true, false);
-var room6 = new Room(1565, false, true);
-var room11 = new Room(1665, false, true);
+var room1 = new Room(1560, false, true);
+var room2 = new Room(1561, false, true);
+var room6 = new Room(1565, true, false);
+var room11 = new Room(1665, true, false);
 
 var room3 = new Room(1562, false, false);
 var room4 = new Room(1563, false, false);
