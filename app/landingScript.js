@@ -1,9 +1,16 @@
 	// create the module and name it scotchApp
 //var calendarDemoApp = angular.module('calenderDemoApp', ['ui.bootstrap'])
 	
- 
+ angular.module('myReservationService', [])
+	.factory('grabReservations', ['$http', function($http){
+		return {
+			grab: function(data){
+				return $http.get('../api/myReservations', data);
+			}
+		}
+	}]);
 
-var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
+var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap', 'myReservationService'])
 
 
 	// configure our routes
@@ -67,7 +74,7 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
 		$scope.message = 'Your account settings';
 	});
 
-	scotchApp.controller('findController', function($scope) {
+	scotchApp.controller('findController', function($scope, grabReservations) {
 		$scope.message = 'Here is your reservations.';
 			 $scope.oneAtATime = true;
 			var date = 'dateTest';
@@ -94,24 +101,26 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
   };
   //make the amount of accordion based on how many in database
 
-  $scope.groups = [];
-  $scope.listGroups = (function(cr) {
-	  for(var i = 0; i < cr; i ++) { 
-		$scope.groups.push({
-			reserver: "name",
-			reservedAs: "team name",
-			date: "test date",
-			checkedIn: "false",
-			checkedOut: "false",
-			roomNumber: "test room",
-			dateRoom: "unique test"			
-		});
+    $scope.listGroups = (function(cr) {
+	  for(var i = 0; i < cr.length; i ++) { 
+		$scope.groups.push(cr[i]);
 	  }
 	});
 	
-	$scope.listGroups(6);
-  
-    
+	$scope.getReservation = function(){
+			$scope.loading = true;
+			grabReservations.grab()
+				.then(function(data){
+					$scope.loading = false;
+					$scope.groups = [];
+					$scope.reservations = data.data;
+					console.log($scope.reservations);
+					$scope.listGroups($scope.reservations);
+					//return $scope.reservations;
+				});
+		};
+		
+	$scope.getReservation();   
 
   
     $scope.checkIn = function() {

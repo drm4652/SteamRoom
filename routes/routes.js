@@ -13,7 +13,7 @@ function getReservations(req, res) {
 		//console.log(req.session.username);
 		req.session.reservations = reservations;
 		console.log(req.session.reservations);
-		//res.json(req.session.reservations);
+		res.json(req.session.reservations);
 	});
 };
 
@@ -131,7 +131,6 @@ module.exports = function(app) {
 	app.post('/login', function(req, res) {
 		sesh = req.session;
 		sesh.username=req.body.username;
-		getReservations(req, res);
 		//console.log(sesh.username);
 		//console.log(sesh.reservations);
 		res.end('done');
@@ -182,6 +181,10 @@ module.exports = function(app) {
 		//TODO use getUsedRooms to select an unused room to use
 		createReservation(req, res);
 		console.log(req.body.resDate);
+	});
+	
+	app.get("/api/myReservations", function(req, res) {
+		getReservations(req,res);
 	});
 	
 	//delete a reservation
