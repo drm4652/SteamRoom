@@ -84,7 +84,7 @@ function SearchCtrl($scope, $http) {
 		var globalTimeOver = 0;
 		var dateString = "";
 		var localTime = globalTime + 5;
-		var localDate = "";
+		var localDate = globalDate;
 		if (localTime >= 24) {
 			localTime = localTime - 24
 			newDate = new Date(globalDate);
@@ -97,9 +97,11 @@ function SearchCtrl($scope, $http) {
 		}
 		if(localTime > 9){
 			dateString = localDate + 'T' + localTime + ':00:00';
+			console.log(dateString);
 		}
 		else{
 			dateString = localDate + 'T0' + localTime + ':00:00';
+			console.log(dateString);
 		}
 		if(globalTime > 12){
 			globalTime = globalTime - 12;
@@ -144,7 +146,7 @@ function SearchCtrl($scope, $http) {
 		
 		$scope.makeReservation = function(){
 			$scope.loading = true;
-			Reservations1.create({resDate: $http.resDate})
+			Reservations1.create({resDate: $http.resDate, roomOption: $http.roomType})
 				.then(function(data){
 					$scope.loading = false;
 					$scope.reservations = data;
@@ -188,7 +190,13 @@ function SearchCtrl($scope, $http) {
 	  $scope.listGroups = (function(cr) {
 		for (var i = 0; i < cr; i++) {
 		  $scope.groups.push({
-			title: "butts"
+			reserver: "name",
+			reservedAs: "team name",
+			date: "test date",
+			checkedIn: "false",
+			checkedOut: "false",
+			roomNumber: "test room",
+			dateRoom: "unique test"	
 		  });
 		}
 	  });

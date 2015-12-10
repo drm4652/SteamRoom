@@ -13,10 +13,12 @@
 	<div id="main" style="text-align:center">	
 		<p>{{ message }}</p>
 <accordion close-others="oneAtATime">
-    <accordion-group heading="{{group.title}}" ng-repeat="group in groups">
+    <accordion-group heading="{{group.date}}" ng-repeat="group in groups">
       <accordion-heading>
-          {{ group.title }} 
+          {{ group.date }} 
       </accordion-heading>
+	  {{ group.reservedAs }} <br>
+	  {{ group.roomNumber }} <br>
 	  <div class="btn-group">
 	    <label class="btn btn-success" ng-click="checkIn()" ng-model="radioModel" uib-btn-radio="'Check In'">Check In</label>
         <label class="btn btn-warning" ng-click="checkOut()"ng-model="radioModel" uib-btn-radio="'Check Out'">Check Out</label>

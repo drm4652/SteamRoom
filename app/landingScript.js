@@ -97,7 +97,15 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
   $scope.groups = [];
   $scope.listGroups = (function(cr) {
 	  for(var i = 0; i < cr; i ++) { 
-		$scope.groups.push({title: "test room"});
+		$scope.groups.push({
+			reserver: "name",
+			reservedAs: "team name",
+			date: "test date",
+			checkedIn: "false",
+			checkedOut: "false",
+			roomNumber: "test room",
+			dateRoom: "unique test"			
+		});
 	  }
 	});
 	

@@ -13,7 +13,7 @@ function getReservations(req, res) {
 		//console.log(req.session.username);
 		req.session.reservations = reservations;
 		console.log(req.session.reservations);
-		//res.json(reservations);
+		//res.json(req.session.reservations);
 	});
 };
 
@@ -62,7 +62,7 @@ function createReservation(req, res) {
 		if(err) {
 			res.send(err);
 		}
-		var allRooms = [1560, 1561, 1562, 1563, 1564, 1565, 1660, 1661, 1662, 1663, 1665];
+		var allRooms = [1562, 1563, 1564, 1660, 1661, 1662, 1663];
 		var webCamRooms = [1565, 1665];
 		var phoneRooms = [1560, 1561];
 		var usedRooms = [];
@@ -81,10 +81,21 @@ function createReservation(req, res) {
 		var phoneRooms = phoneRooms.filter(function(el) {
 			return webCamRooms.indexOf(el) < 0;
 		});
+		var chosenRoom;
+		
+		if (req.body.roomOption == "none") {
+			chosenRoom = availableRooms[0];
+		}
+		else if (req.body.roomOption == "webCam") {
+			chosenRoom = webCamRooms[0];
+		}
+		else {
+			chosenRoom = phoneRooms[0];
+		}
 		
 		Reservation.create({
 			reserver : req.session.username,
-			reservedAs : 3,
+			reservedAs : "senior Team",
 			date : req.body.resDate,
 			checkedIn: false,
 			checkedOut: false,
@@ -95,6 +106,7 @@ function createReservation(req, res) {
 				res.send(err);
 			}
 		});
+		getReservations(req, res)
 	});
 };
 
@@ -119,6 +131,7 @@ module.exports = function(app) {
 	app.post('/login', function(req, res) {
 		sesh = req.session;
 		sesh.username=req.body.username;
+		getReservations(req, res);
 		//console.log(sesh.username);
 		//console.log(sesh.reservations);
 		res.end('done');
@@ -130,8 +143,6 @@ module.exports = function(app) {
 		sesh = req.session;
 		if(sesh.username) {
 			res.sendFile(path.join(__dirname + '/../app/landingIndex.html'));
-			getReservations(req, res);
-			
 		}
 		else {
 			res.redirect('/');

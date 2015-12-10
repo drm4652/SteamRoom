@@ -26,15 +26,15 @@
     </div>
     <div style="text-align:center">
 	    <label>
-			<input type="radio" name="roomOption" ng-model="room.option" ng-click='radioSelect()'>
+			<input type="radio" name="roomOption" ng-model="roomOption" ng-click='phoneSelect()'>
 		Phone Line</label><br/>
 	
 		<label>
-			<input type="radio" name="roomOption" ng-model="room.option" >
+			<input type="radio" name="roomOption" ng-model="roomOption" ng-click='webCamSelect()'>
 		Webcam</label><br/>
 		
 		<label>
-			<input type="radio" name="roomOption" ng-model="room.option" checked>
+			<input type="radio" name="roomOption" ng-model="roomOption" ng-click='defaultSelect()' checked>
 		None</label><br/>	
     </div>
 	<a href="#confirm"><button type="submit" class='btn btn-primary btn-lg' ng-click='makeReservation()'>create</button></a>

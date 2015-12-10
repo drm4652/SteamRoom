@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var resSchema = new mongoose.Schema({
 	reserver : String,
-	reservedAs : Number,
+	reservedAs : String,
 	date : Date,
 	checkedIn : Boolean,
 	checkedOut : Boolean,

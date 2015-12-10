@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var multiResSchema = new mongoose.Schema({
 	multiRoomId : Number,
 	reserver : String,
-	reservedAs : Number,
+	reservedAs : String,
 	date : Date,
 	checkedIn : Boolean,
 	checkedOut : Boolean,
