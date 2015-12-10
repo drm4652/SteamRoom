@@ -15,7 +15,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="multiroom.css">
-  <script src="Chart.js"></script>
   <script>
 function logout(){
 	window.location = "../index.html";
@@ -606,10 +605,10 @@ function edit(type, index){
 			editRow.cells[2].innerHTML = "<select id='perCellroom2"+index+"'><option value='true'>true</option><option value='false'>false</option></select>";
 			document.getElementById("perCellroom2"+index).value = phoneline;
 			
-			document.getElementById("room"+(index+1)).value = "OK";
 			roomControl = !roomControl;
 		}
 		else{
+			roomControl = !roomControl;
 			var editRow;
 			var table = document.getElementById("roomsTable");
 			editRow = table.rows[index+1];
@@ -623,8 +622,7 @@ function edit(type, index){
 			allRooms[index].phoneLine = document.getElementById("perCellroom2"+index).value;
 			editRow.cells[2].innerHTML = allRooms[index].phoneLine;
 			
-			document.getElementById("room"+(index+1)).value = "Edit";
-			roomControl = !roomControl;
+
 		}
 	}
 	else if(type === 3){
@@ -657,10 +655,10 @@ function edit(type, index){
 			editRow.cells[7].innerHTML = "<select id='perCell7"+index+"'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>";
 			document.getElementById("perCell7"+index).value = priority;
 			
-			document.getElementById("permission"+(index+1)).value = "OK";
 			permissionControl = !permissionControl;
 		}
 		else{
+			permissionControl = !permissionControl;
 			var editRow;
 			var table = document.getElementById("permissionsTable");
 			editRow = table.rows[index+1];
@@ -688,16 +686,39 @@ function edit(type, index){
 			permissions[index].priority = document.getElementById("perCell7"+index).value;
 			editRow.cells[7].innerHTML = permissions[index].priority;
 			
-			document.getElementById("permission"+(index+1)).value = "Edit";
-			permissionControl = !permissionControl;
 		}
 	}
 }
 
 function createPermission(){
 
+	var table = document.getElementById("permissionsTable");
+	var newRow = table.insertRow(permissions.length+1);
+	
+	var typeCell = newRow.insertCell(0);
+	var reserveCell = newRow.insertCell(1);
+	var cancelOwnCell = newRow.insertCell(2);
+	var cancelOtherCell = newRow.insertCell(3);
+	var multiroomCell = newRow.insertCell(4);
+	var adminCell = newRow.insertCell(5);
+	var labbieCell = newRow.insertCell(6);
+	var priorityCell = newRow.insertCell(7);
+	var operationCell = newRow.insertCell(8);
+
+	typeCell.innerHTML = "<input type='text' value='' id='perCell0"+(permissions.length)+"' size=8>";
+	reserveCell.innerHTML = "<select id='perCell1"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	cancelOwnCell.innerHTML = "<select id='perCell2"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	cancelOtherCell.innerHTML = "<select id='perCell3"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	multiroomCell.innerHTML = "<select id='perCell4"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	adminCell.innerHTML = "<select id='perCell5"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	labbieCell.innerHTML = "<select id='perCell6"+permissions.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
+	priorityCell.innerHTML = "<select id='perCell7"+permissions.length+"'><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option><option value='4'>4</option><option value='5'>5</option></select>";
+	operationCell.innerHTML = "<input type='button' value='Edit' id='room"+(permissions.length+1)+"' class='btn btn-primary' onclick='edit(3, "+(permissions.length)+")'><button class='btn btn-danger' onclick='deleteItem(3, "+(permissions.length)+")'>Delete</button>";
 
 
+	permissionControl = true;
+	var newPerm = new PermissionClass(0,false,false);
+	permissions.splice(0,0, newPerm);
 }
 
 function createRoom(){
@@ -713,11 +734,13 @@ function createRoom(){
 	numberCell.innerHTML = "<input type='text' id='perCellroom0"+allRooms.length+"' size=5 value=''>";
 	webcamCell.innerHTML = "<select id='perCellroom1"+allRooms.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
 	phonelineCell.innerHTML = "<select id='perCellroom2"+allRooms.length+"'><option value='true'>true</option><option value='false'>false</option></select>";
-	operationCell.innerHTML = "<input type='button' value='OK' id='room"+allRooms.length+"' class='btn btn-primary' onclick='edit(2, "+(allRooms.length)+")'><button class='btn btn-danger' onclick='deleteItem(2, "+(allRooms.length)+")'>Delete</button>";
+	operationCell.innerHTML = "<input type='button' value='Edit' id='room"+allRooms.length+"' class='btn btn-primary' onclick='edit(2, "+(allRooms.length)+")'><button class='btn btn-danger' onclick='deleteItem(2, "+(allRooms.length)+")'>Delete</button>";
 	
+	console.log("Before: "+ allRooms.length);
 	roomControl = true;
 	var newRoom = new Room(0,false,false);
 	allRooms.splice(0,0, newRoom);
+	console.log("After: "+allRooms.length);
 }
 
 function populateReports(){
@@ -727,29 +750,6 @@ function populateReports(){
 
 }
 
-	var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
-
-	var barChartData = {
-		labels : ["January","February","March","April","May","June","July"],
-		datasets : [
-			{
-				fillColor : "rgba(220,220,220,0.5)",
-				strokeColor : "rgba(220,220,220,0.8)",
-				highlightFill: "rgba(220,220,220,0.75)",
-				highlightStroke: "rgba(220,220,220,1)",
-				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-			},
-			{
-				fillColor : "rgba(151,187,205,0.5)",
-				strokeColor : "rgba(151,187,205,0.8)",
-				highlightFill : "rgba(151,187,205,0.75)",
-				highlightStroke : "rgba(151,187,205,1)",
-				data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-			}
-		]
-
-	}
-	
 function loadConfiguration(){
 
 	document.getElementById("confMinTeam").value = localStorage.getItem("MinTeam");
@@ -907,7 +907,7 @@ jQuery(document).ready(function() {
 
  
         <div id="tab2" class="tab">
-			<button type="button" class='btn btn-success'>Create New Permission</button><br><br>
+			<button type="button" class='btn btn-success' onclick="createPermission()">Create New Permission</button><br><br>
 			<table class="table table-condensed" border=1 width=50% id="permissionsTable"></table>
 			<br><br>
         </div>
