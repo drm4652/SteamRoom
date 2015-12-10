@@ -23,56 +23,74 @@
 	text-align:center;
 	
 	}
+	body{
+	
+		font-size: 150%;
+	
+	}
 	</style>
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div class="navbar-header">
-		<form id="form_search" name="form_search" method="get" action="" class="form-inline navbar-brand">
-		<div class="form-group">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Keywords.." ng-model="keywords">
+  <div id='test' ng-click="doTheBack()"><b class="navbar-brand"><i class="fa fa-arrow-left"></i>Back</b></div>
+  
+    <div class="nav navbar-nav navbar-left">
 
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button"><span class="fa fa-search"></span></button>
-				</span>
-			</div>
-		</div>
-		</form>
+	
     </div>
     <div>
       <ul class="nav navbar-nav navbar-right">
-	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
-        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
-        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
-        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+	    <a class="navbar-brand" href="/landing"><i class="fa fa-home"></i><span class="link-title">Home</span></a>
+		<a class="navbar-brand" href="/calendar"><i class="fa fa-calendar-o"></i> <span class="link-title">Reservation</span></a>
+		<a class="navbar-brand" href="#myReservation"><i class="fa fa-list"></i><span class="link-title">My Reservations</span></a>
+		<a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> <span class="link-title">About</span></a>
+		<a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> <span class="link-title">Settings</span></a>
       </ul>
     </div>
   </div>
 </nav>
 
-<div id="finalFields">Number of rooms:</div><div id="finalProperties"><div id="numRooms"></div></div><br>
-<div id="finalFields">Webcam/Phoneline:</div><div id="finalProperties"><div id="roomBreakdown"></div></div><br>
-<div id="finalFields">Days:</div><div id="finalProperties"><div id="dates"></div></div><br>
-<div id="finalFields">Start Date:</div><div id="finalProperties"><div id="startDate"></div></div><br>
-<div id="finalFields">End Date:</div><div id="finalProperties"><div id="endDate"></div></div><br>
-<div id="finalFields">Start Time:</div><div id="finalProperties"><div id="startTime"></div></div><br>
-<div id="finalFields">End Time:</div><div id="finalProperties"><div id="endTime"></div></div><br>
+
+
+<div class="container">
+	<div class="row">
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">Number of Rooms</span></h3><div id="finalProperties"><div id="numRooms"></div></div></div>
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">Webcam/Phoneline</span></h3><div id="finalProperties"><div id="roomBreakdown"></div></div></div>
+	</div>
+	<br>
+	<div class="row">
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">Start Date</span></h3><div id="finalProperties"><div id="startDate"></div></div></div>
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">End Date</span></h3><div id="finalProperties"><div id="endDate"></div></div></div>
+	</div>
+	<br>
+	<div class="row">
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">Start Time</span></h3><div id="finalProperties"><div id="startTime"></div></div></div>
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">End Time</span></h3><div id="finalProperties"><div id="endTime"></div></div></div>
+	</div>
+	<br>
+	
+  <div class="row">
+	  <div class="col-md-6"><h3><span class="label label-primary" id="finalFields">Days</span></h3><div id="finalProperties"><div id="dates"></div></div></div>
+	  <div class="col-md-4"></div>
+  </div>
+</div>
+<br>
 <div id="finalFields">Pending Reservations:</div><div id="finalProperties"><div id="ResDates"></div><table class="table table-condensed" border=1 width=50% id="openResTable"></table></div><br>
 <div id="finalFields">Rejected Reservations:</div><div id="finalProperties"><div id="rejectedRes"></div><table class="table table-condensed" border=1 width=75% id="rejResTable"></table></div><br>
 <div id="finalFields">Conflicted Reservations:</div><div id="finalProperties"><div id="resConflicts"></div><table class="table table-condensed" border=1 width=75% id="confResTable"></table></div><br>
 
 
+
+
 <div id="finalFields">Conflict Options:</div>
 <div id="finalProperties">
 <form>
-	<input type="radio" name="resolution" id="removeAll" checked="check"> Remove all conflicted reservations<br>
-	<input type="radio" name="resolution" id="quickFix"> Quick Fix all conflicts <br>
-	<input type="radio" name="resolution" id="changeInd"> Change Individual conflicted reservations<br><br>
+	<input type="radio" name="resolution" id="removeAll" checked="check">Ignore all conflicts<br>
+	<input type="radio" name="resolution" id="quickFix" onclick="checkConflicted()">Quick Fix conflicts <br>
 </form>
 </div>
 
-<input type="button" value="Confirm" onclick="confirmMultiroom()">
-
+<button type="button" class="btn btn-success btn-lg centerElement" onclick="confirmMultiroom()">Continue</button>
+<br><br>
 </body>
 </html>

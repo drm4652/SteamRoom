@@ -275,6 +275,7 @@
 	}
 	
 	function confirmMultiroom(){
+		
 		if(document.getElementById("removeAll").checked){
 			for(i = 0; i < confirmedRes.length; i++){
 				localStorage.setItem("res" + i.toString() + "user", confirmedRes[i].user);
@@ -318,12 +319,15 @@
 				displayConflictTableFromRes(conflictedReservations, "confResTable");
 				loadConfirmedResToTable()
 			}
-			
-			sortReservations(reservationsForTable);
+		
+		document.getElementById("removeAll").checked = true;
+		document.getElementById("quickFix").checked = false;
+		
+			//sortReservations(reservationsForTable);
 		}
-		else if(document.getElementById("changeInd").checked){
-			
-		}
+
+
+		
 	}
 	
 	function loadConfirmedResToTable(){
@@ -379,4 +383,12 @@
 		}
 
 		console.log(localStorage.getItem("totalReservationNumber"));
+	}
+	
+	function checkConflicted(){
+		
+		if(conflictedReservations.length === 0){
+			document.getElementById("removeAll").checked = true;
+			document.getElementById("quickFix").checked = false;
+		}
 	}

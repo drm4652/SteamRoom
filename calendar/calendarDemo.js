@@ -55,12 +55,24 @@ calendarDemoApp.controller('CalendarCtrl',
 
 		dateSaver = date.format();
 		var today = moment();
-		var test = moment();
 		var todayCheck = moment(today).format('YYYY-MM-DD');
+		var todayDay = moment(today).format('DD');
+		todayDay = parseInt(todayDay);
+		
 		var selectionStart = date.format();
-		//alert(selectionStart);
+		
+		//retrieving epoch format
 		selectionStart = Date.parse(selectionStart);
 		today = Date.parse(today);
+		
+		//create a variable that is 14 days in epoch format
+		var epoch14Days = 1209600000;
+		var dateAdded = today + epoch14Days;
+		
+		
+
+
+		
 		var view = $('#myCalendar1').fullCalendar('getView');
         $scope.alertMessage = dateSaver;
 		globalDate = dateSaver;
@@ -73,72 +85,83 @@ calendarDemoApp.controller('CalendarCtrl',
 		dayClicked = date.format('DD');
 		dayClicked = parseInt(dayClicked);
 		
-
-		
-		
-        if(dateSaver == todayCheck || selectionStart > today){
-			//$http.post
-			
-			$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
-			$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
-			
-			
-			
-			for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
-				$http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
-				$http.dateCheck = moment($http.dateCheck);
-				//console.log($http.dateCheck);
-				
-				var pushEvents = function(usedRooms) {
-					//console.log(usedRooms);
-					var availableRooms= 11 - usedRooms;
-					console.log(availableRooms); //prints rooms available
-					$scope.events.push({
-						id: timeIncrement,
-						title: 'Rooms Available [' + availableRooms + ']',
-						start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
-						url: 'http://localhost:3000/reservationCheck'
-					});
-					console.log(timeIncrement);
-					console.log($http.dateCheck);
-					//if(timeIncrement == 23)
-				};
-				
-				
-				//TODO get Async calls working correctly
-				// $scope.roomsUsed = function(){
-					// $http.times = [];
-					// for(timeIncrement = 7; timeIncrement < 23; timeIncrement++) {
-						// $http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
-						// console.log($http.dateCheck);
-						//$http.dateCheck = moment($http.dateCheck);
-						// $http.times.push($http.dateCheck);
-					// }
-					// console.log($http.times);
-					// return Reservations.post({times: $http.times})
-					// .then(function(data) {
-						// $scope.reservations = data.data;
-						// $scope.loading = true;
-						// console.log(data.data); //prints reserved rooms
-						// return pushEvents($scope.reservations);
-					// }).catch(function(err) {
-						// console.log(err)
-					// });
-				// };
-				
-				pushEvents(1);
-				//$scope.roomsUsed();
-			
-			}
-			
+		//ensure that the date clicked isnt 14 days past current dates
+		var lessThan14 = true;
+		if(selectionStart < dateAdded ){
+			var lessThan14 = true;
 		}
 		else{
-			//if(view.name == 'month'){
-				alert("You have clicked a previous date");
-			//}
-			//else{
-			//	alert("You have clicked a previous time slot");
-			//}
+			var lessThan14 = false;
+		}
+
+		
+		if(lessThan14){
+			if(dateSaver == todayCheck || selectionStart > today){
+				//$http.post
+				
+				$('#myCalendar1').fullCalendar( 'changeView', 'agendaDay' );
+				$('#myCalendar1').fullCalendar( 'gotoDate', date.format());
+				
+				
+				for(timeIncrement = 7; timeIncrement < 23; timeIncrement++){
+					$http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
+					$http.dateCheck = moment($http.dateCheck);
+					//console.log($http.dateCheck);
+					
+					var pushEvents = function(usedRooms) {
+						//console.log(usedRooms);
+						var availableRooms= 11 - usedRooms;
+						console.log(availableRooms); //prints rooms available
+						$scope.events.push({
+							id: timeIncrement,
+							title: 'Rooms Available [' + availableRooms + ']',
+							start: new Date(yearClicked, monthClicked, dayClicked, timeIncrement),
+							url: 'http://localhost:3000/reservationCheck'
+						});
+						console.log(timeIncrement);
+						console.log($http.dateCheck);
+						//if(timeIncrement == 23)
+					};
+					
+					
+					//TODO get Async calls working correctly
+					// $scope.roomsUsed = function(){
+						// $http.times = [];
+						// for(timeIncrement = 7; timeIncrement < 23; timeIncrement++) {
+							// $http.dateCheck = new Date(yearClicked, monthClicked, dayClicked, timeIncrement);
+							// console.log($http.dateCheck);
+							//$http.dateCheck = moment($http.dateCheck);
+							// $http.times.push($http.dateCheck);
+						// }
+						// console.log($http.times);
+						// return Reservations.post({times: $http.times})
+						// .then(function(data) {
+							// $scope.reservations = data.data;
+							// $scope.loading = true;
+							// console.log(data.data); //prints reserved rooms
+							// return pushEvents($scope.reservations);
+						// }).catch(function(err) {
+							// console.log(err)
+						// });
+					// };
+					
+					pushEvents(1);
+					//$scope.roomsUsed();
+				
+				}
+				
+			}
+			else{
+				//if(view.name == 'month'){
+					alert("You have clicked a previous date.");
+				//}
+				//else{
+				//	alert("You have clicked a previous time slot");
+				//}
+			}
+		}
+		else{
+			alert("You can only reserve 14 days in advance.")
 		}
 };
 	

@@ -179,7 +179,7 @@ function validateForm(){
         errorMsg = name + ": Invalid date format: " + field.value + "<br>";
       }
     } else if(!allowBlank) {
-      errorMsg = name + ": Empty date not allowed!<br>";
+      errorMsg = "Empty date not allowed<br>";
     }
 
 	return errorMsg;

@@ -35,46 +35,69 @@ jQuery(document).ready(function() {
 
   <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div class="navbar-header">
+  <div id='test' ng-click="doTheBack()"><b class="navbar-brand"><i class="fa fa-arrow-left"></i>Back</b></div>
+  
+    <div class="nav navbar-nav navbar-left">
+
+	
     </div>
-		<div class="nav navbar-nav navbar-center">
-			Test
-		</div>
     <div>
       <ul class="nav navbar-nav navbar-right">
-	    <a class="navbar-brand" href="/"><i class="fa fa-home"></i>Home</a>
-        <a class="navbar-brand" href="#"><i class="fa fa-calendar-o"></i> Reservation</a>
-        <a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> About</a>
-        <a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> Settings</a>
+	    <a class="navbar-brand" href="/landing"><i class="fa fa-home"></i><span class="link-title">Home</span></a>
+		<a class="navbar-brand" href="/calendar"><i class="fa fa-calendar-o"></i> <span class="link-title">Reservation</span></a>
+		<a class="navbar-brand" href="#myReservation"><i class="fa fa-list"></i><span class="link-title">My Reservations</span></a>
+		<a class="navbar-brand" href="#about"><i class="fa fa-shield"></i> <span class="link-title">About</span></a>
+		<a class="navbar-brand" href="#settings"><i class="fa fa-gear"></i> <span class="link-title">Settings</span></a>
       </ul>
     </div>
   </div>
 </nav>
 
+
 <div class="tabs">
     <ul class="tab-links">
-        <li class="active"><a href="#tab1">Multiroom Reservation</a></li>
+        <li class="active"><a href="#tab1"><div  class="multiroomHeader">Multiroom Reservation</div></a></li>
     </ul>
  
-    <div class="tab-content">
+    <div class="tab-content multiroomContent">
         <div id="tab1" class="tab active">
 		<fieldset>
 			<legend>Reservation Information</legend>
-			<p><label class="field">Number of Rooms:</label><input type="text" id="numRooms" size="1" value="" placeholder="   #"></p>
-			<div class="error" id="error1"></div>
-			<p><label class="field">Start Date:</label><input type="textbox" id="startDate" size="10" placeholder="MM/DD/YYYY" value=""></p>
-			<div class="error" id="error2"></div>
-			<p><label class="field">End Date:</label><input type="text" id="endDate" placeholder="MM/DD/YYYY" size="10" value=""></p>
-			<div class="error" id="error3"></div>
-			<p><label class="field">Start Time:</label>
-			<select id="startTime">
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Number of Rooms</span>
+			  <input type="text" id="numRooms" class="form-control" size="1" value="" placeholder="   #">
+			</div></p>
+
+			<div class="error alert-danger" id="error1"></div>
+			<br>
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Start Date</span>
+			  <input type="textbox" id="startDate" class="form-control" size="10" placeholder="MM/DD/YYYY" value="">
+			</div></p>
+			
+			<div class="error alert-danger" id="error2"></div>
+			<br>
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">End Date</span>
+			  <input type="text" id="endDate" class="form-control" placeholder="MM/DD/YYYY" size="10" value="">
+			</div></p>
+		
+		
+			<div class="error alert-danger" id="error3"></div>
+			<br>
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Start Time</span>
+			  <select id="startTime">
 				<option>7am</option><option>8am</option><option>9am</option>
 				<option>10am</option><option>11am</option><option>12pm</option>
 				<option>1pm</option><option>2pm</option><option>3pm</option>
 				<option>4pm</option><option>5pm</option><option>6pm</option>
 				<option>7pm</option><option>8pm</option><option>9pm</option>
-			</select></p>
-			<p><label class="field">End Time:</label>
+			</select>
+			</div></p>
+			<br>
+			<p><div class="input-group">
+			<span class="input-group-addon" id="basic-addon1">End Time</span>
 			<select id="endTime">
 			    <option>8am</option><option>9am</option>
 				<option>10am</option><option>11am</option><option>12pm</option>
@@ -82,44 +105,57 @@ jQuery(document).ready(function() {
 				<option>4pm</option><option>5pm</option><option>6pm</option>
 				<option>7pm</option><option>8pm</option><option>9pm</option>
 				<option>10pm</option>
-			</select></p>
-			<div class="error" id="error4"></div>
-			<p><label class="field">Reservation Days:</label>
-			<div class="error" id="error5"></div>
-		<table id="dateTable" class="table_fields" border="1">
-			<tr class="table_fields_top">
-				<td height="100px" onclick="dateClick(0)">SUN</td>
-				<td onclick="dateClick(1)">MON</td>
-				<td onclick="dateClick(2)">TUE</td>
-				<td onclick="dateClick(3)">WED</td>
-				<td onclick="dateClick(4)">THU</td>
-				<td onclick="dateClick(5)">FRI</td>
-				<td onclick="dateClick(6)">SAT</td>
-			</tr>
-		</table></p>
-		Additional Information:<br>
-		There are two rooms with webcams and two rooms with phone lines. Enter the number of rooms you'd like to request with these features.
-		<br><br>
-			<p><label class="field">Webcam Rooms:</label>
-			<select id="numRoomsWebcam">
-			    <option>0</option>
-				<option>1</option>
-				<option>2</option>
 			</select>
-			</p>
-			<div class="error" id="error6"></div>
-			<p><label class="field">Phoneline Rooms:</label>
-			<select id="numRoomsPhoneline">
-			    <option>0</option>
-				<option>1</option>
-				<option>2</option>
-			</select>
-			</p>
-			<div class="error" id="error7"></div>
+			</div></p>
+			<br>
+			<div class="error alert-danger" id="error4"></div>
+			
+			<div class="input-group">
+			<span class="input-group-addon" id="basic-addon1">Reservation Days</span>
+			</div>
+			<table id="dateTable" class="table_fields" border="1">
+				<tr class="table_fields_top">
+					<td height="100px" onclick="dateClick(0)">SUN</td>
+					<td onclick="dateClick(1)">MON</td>
+					<td onclick="dateClick(2)">TUE</td>
+					<td onclick="dateClick(3)">WED</td>
+					<td onclick="dateClick(4)">THU</td>
+					<td onclick="dateClick(5)">FRI</td>
+					<td onclick="dateClick(6)">SAT</td>
+				</tr>
+			</table></p>
+			<div class="error alert-danger" id="error5"></div>
+			<br>
+			<div class="panel panel-info">
+			  <div class="panel-body">
+				Additional Information
+			  </div>
+			  <div class="panel-footer">There are two rooms with webcams and two rooms with phone lines. Enter the number of rooms you'd like to request with these features.</div>
+			</div>
+			<div class="error alert-danger" id="error6"></div>
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Webcam  Rooms</span>
+				<select id="numRoomsWebcam">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+				</select>
+			</div></p>
+			<br>
+			<p><div class="input-group">
+			  <span class="input-group-addon" id="basic-addon1">Phoneline Rooms</span>
+				<select id="numRoomsPhoneline">
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+				</select>
+			</div></p>
+
+			
+			<div class="error alert-danger" id="error7"></div>
 		<br>
 	</fieldset>
-			
-			<input type="Button" value="Reserve" onclick="validateForm()">
+			<button type="button" class="btn btn-success btn-lg centerElement" onclick="validateForm()">Continue</button>
 			</div>
 		</div>
 		

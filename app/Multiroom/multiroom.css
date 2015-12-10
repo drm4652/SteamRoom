@@ -1,3 +1,4 @@
+
 table {
     border-collapse: collapse;
 }
@@ -49,9 +50,16 @@ fieldset {
 legend{
 	font-size: 20px;
 }
-label.field {
+p {
 	text-align: right;
-	width:150px;
+	width:125px;
+	float: left;
+	font-weight: bold;
+}
+
+div.field {
+	text-align: right;
+	width:200px;
 	float: left;
 	font-weight: bold;
 }
@@ -77,4 +85,19 @@ fieldset p {
 #finalProperties{
 	padding-left: 50px;
 }
-			
+
+.multiroomHeader{
+	font-size: 150%;
+}
+
+.multiroomContent{
+	font-size: 125%;
+}
+		
+.centerElement{
+    margin: -20px -50px; 
+    position:relative;
+    top:50%; 
+    left:50%;
+	width: 15%;
+}	
