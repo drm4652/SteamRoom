@@ -29,15 +29,17 @@ var faculty1 = new User("Larry", "Kiser", "lmr8394", faculty);
 
 var room1 = new Room(1560, true, false);
 var room2 = new Room(1561, true, false);
+var room6 = new Room(1565, false, true);
+var room11 = new Room(1665, false, true);
+
 var room3 = new Room(1562, false, false);
 var room4 = new Room(1563, false, false);
 var room5 = new Room(1564, false, false);
-var room6 = new Room(1565, false, true);
 var room7 = new Room(1660, false, false);
 var room8 = new Room(1661, false, false);
 var room9 = new Room(1662, false, false);
 var room10 = new Room(1663, false, false);
-var room11 = new Room(1665, false, true);
+
 
 var fullRooms = new Room("FULL", "---", "---");
 
@@ -63,8 +65,8 @@ webcamRooms.push(room11);
 
 var nonExtraRooms = [];
 nonExtraRooms.push(room3);
-nonExtraRooms.push(room5);
 nonExtraRooms.push(room4);
+nonExtraRooms.push(room5);
 nonExtraRooms.push(room7);
 nonExtraRooms.push(room8);
 nonExtraRooms.push(room9);
@@ -89,14 +91,18 @@ var res11 = new Reservation(student1 ,"Active","Individual",date1, 2, room11);
 
 mockReservations.push(res1);
 mockReservations.push(res2);
+mockReservations.push(res6);
+mockReservations.push(res11);
+
+/*
 mockReservations.push(res3);
 mockReservations.push(res4);
-/*
+
 mockReservations.push(res5);
-mockReservations.push(res6);
+
 mockReservations.push(res7);
 mockReservations.push(res8);
 mockReservations.push(res9);
 mockReservations.push(res10);
-mockReservations.push(res11);
+
 */

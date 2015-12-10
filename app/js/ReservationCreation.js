@@ -29,27 +29,27 @@ function pickAPhonelineRoom(res){
 
 function resetPhonelineRooms(){
 	var phonelineRooms = [];
-	phonelineRooms.push(room3);
-	phonelineRooms.push(room4);
+	phonelineRooms.push(room1);
+	phonelineRooms.push(room2);
 	return phonelineRooms;
 }
 
 function resetWebcamRooms(){
 	var webcamRooms = [];
-	webcamRooms.push(room1);
-	webcamRooms.push(room2);
+	webcamRooms.push(room6);
+	webcamRooms.push(room11);
 	return webcamRooms;
 }
 
 function resetNonExtraRoom(){
 	var nonExtraRooms = [];
+	nonExtraRooms.push(room3);
+	nonExtraRooms.push(room4);
 	nonExtraRooms.push(room5);
-	nonExtraRooms.push(room6);
 	nonExtraRooms.push(room7);
 	nonExtraRooms.push(room8);
 	nonExtraRooms.push(room9);
 	nonExtraRooms.push(room10);
-	nonExtraRooms.push(room11);
 	return nonExtraRooms;
 }
 
