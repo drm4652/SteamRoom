@@ -5,14 +5,14 @@ var path = require('path');
 //Returns number current user's current reservations
 function getReservations(req, res) {
 	Reservation.find(
-	{ 'username': req.session.username },
+	{ 'reserver': req.session.username },
 	function(err, reservations) {
 		if(err) {
 			res.send(err);
 		}
 		//console.log(req.session.username);
-		//req.session.reservations = reservations;
-		//console.log(reservations);
+		req.session.reservations = reservations;
+		console.log(req.session.reservations);
 		//res.json(reservations);
 	});
 };
@@ -107,7 +107,7 @@ module.exports = function(app) {
 		//res.send('hello world');
 		sesh = req.session;
 		if(sesh.username) {
-			res.redirect('/landing/');
+			res.redirect('/landing');
 		}
 		else {
 			res.sendFile(path.join(__dirname + '/../app/index.html'));
@@ -130,7 +130,7 @@ module.exports = function(app) {
 		sesh = req.session;
 		if(sesh.username) {
 			res.sendFile(path.join(__dirname + '/../app/landingIndex.html'));
-			//getReservations(req, res);
+			getReservations(req, res);
 			
 		}
 		else {
@@ -138,10 +138,8 @@ module.exports = function(app) {
 		}
 	});
 	
-	//loads find page
-	app.get('/find', function(req, res){
-		res.sendFile(path.join(__dirname + '/find.html'));
-		
+	app.get('/landing/#/find', function(req, res) {
+		console.log(sesh.reservations);
 	});
 	
 	//load calendar page

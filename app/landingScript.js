@@ -94,15 +94,15 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap'])
   };
   //make the amount of accordion based on how many in database
 
-  $scope.groups = [
-
-    {
-      title: "You have reserved on " + date + " at " + time + " in room " + room,
-		},
-    {
-      title: "You have reserved on " + date + " at " + time + " in room " + room,
-    }
-  ];
+  $scope.groups = [];
+  $scope.listGroups = (function(cr) {
+	  for(var i = 0; i < cr; i ++) { 
+		$scope.groups.push({title: "test room"});
+	  }
+	});
+	
+	$scope.listGroups(18);
+  
     
 
   

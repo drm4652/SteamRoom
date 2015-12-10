@@ -10,7 +10,7 @@
 	
 	
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute', 'reservationService1']);
+	var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap', 'reservationService1']);
 	var globalMessage = '';
 	/*
 function SearchCtrl($scope, $http) {
@@ -60,9 +60,9 @@ function SearchCtrl($scope, $http) {
 				controller  : 'settingsController'
 			})
 			
-			.when('/myReservation', {
-				templateUrl : 'myReservation.html',
-				controller  : 'myReservationController'
+			.when('/find', {
+				templateUrl : 'find.html',
+				controller  : 'findController'
 			})
 			
 			.when('/confirm',{
@@ -140,8 +140,65 @@ function SearchCtrl($scope, $http) {
 		$scope.message = 'Look! I am an about page.';
 	});
 	
-	scotchApp.controller('myReservationController', function($scope) {
-		$scope.message = 'Look! I am an about page.';
+	scotchApp.controller('findController', function($scope) {
+	  $scope.message = 'Here is your reservations.';
+	  $scope.oneAtATime = true;
+	  var date = 'dateTest';
+	  var time = 'timeTest';
+	  var room = 'roomTest';
+	  var amountReservation = 4;
+	  $scope.addGroup = function(idx, group, e) {
+		if (e) {
+		  e.preventDefault();
+		  e.stopPropagation();
+		}
+
+		var newGroup = angular.copy(group);
+		$scope.groups.splice(idx + 1, 0, newGroup);
+	  };
+
+	  $scope.removeGroup = function(idx, e) {
+		if (e) {
+		  e.preventDefault();
+		  e.stopPropagation();
+		}
+
+		$scope.groups.splice(idx, 1);
+	  };
+	  //make the amount of accordion based on how many in database
+
+	  $scope.groups = [];
+	  $scope.listGroups = (function(cr) {
+		for (var i = 0; i < cr; i++) {
+		  $scope.groups.push({
+			title: "butts"
+		  });
+		}
+	  });
+
+	  $scope.listGroups(5);
+
+	  $scope.checkIn = function() {
+		//code goes here
+		alert("check in");
+	  };
+	  $scope.checkOut = function() {
+		//code goes here
+		alert("check outed");
+	  };
+	  $scope.deleteReservation = function() {
+		//code goes here
+	  };
+
+	  $scope.alertAdmin = function() {
+		//code goes here
+	  };
+	  //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
+	  /*
+		$scope.addItem = function() {
+		  var newItemNo = $scope.items.length + 1;
+		  $scope.items.push('Item ' + newItemNo);
+		};*/
 	});
 
 	scotchApp.controller('confirmController', function($scope) {
