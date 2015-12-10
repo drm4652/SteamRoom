@@ -4,6 +4,9 @@
 		return {
 			create: function(data){
 				return $http.post('/reservationCheck', data);
+			},
+			grab: function(data){
+				return $http.get('../api/myReservations', data);
 			}
 		}
 	}]);
@@ -159,73 +162,78 @@ function SearchCtrl($scope, $http) {
 		$scope.message = 'Look! I am an about page.';
 	});
 	
-	scotchApp.controller('findController', function($scope) {
+	scotchApp.controller('findController', function($scope, Reservations1) {
 	  $scope.message = 'Here is your reservations.';
-	  $scope.oneAtATime = true;
-	  var date = 'dateTest';
-	  var time = 'timeTest';
-	  var room = 'roomTest';
-	  var amountReservation = 4;
-	  $scope.addGroup = function(idx, group, e) {
-		if (e) {
-		  e.preventDefault();
-		  e.stopPropagation();
-		}
+			 $scope.oneAtATime = true;
+			var date = 'dateTest';
+			var time = 'timeTest';
+			var room = 'roomTest';
+			var amountReservation = 4;
+		$scope.addGroup = function(idx, group, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    var newGroup = angular.copy(group);
+    $scope.groups.splice(idx + 1, 0, newGroup);
+  };
+  
+  $scope.removeGroup = function(idx, e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-		var newGroup = angular.copy(group);
-		$scope.groups.splice(idx + 1, 0, newGroup);
-	  };
+    $scope.groups.splice(idx, 1);
+  };
+  //make the amount of accordion based on how many in database
 
-	  $scope.removeGroup = function(idx, e) {
-		if (e) {
-		  e.preventDefault();
-		  e.stopPropagation();
-		}
+    $scope.listGroups = (function(cr) {
+	  for(var i = 0; i < cr.length; i ++) { 
+		$scope.groups.push(cr[i]);
+	  }
+	});
+	
+	$scope.getReservation = function(){
+			$scope.loading = true;
+			Reservations1.grab()
+				.then(function(data){
+					$scope.loading = false;
+					$scope.groups = [];
+					$scope.reservations = data.data;
+					console.log($scope.reservations);
+					$scope.listGroups($scope.reservations);
+					//return $scope.reservations;
+				});
+		};
+		
+	$scope.getReservation();   
 
-		$scope.groups.splice(idx, 1);
-	  };
-	  //make the amount of accordion based on how many in database
-
-	  $scope.groups = [];
-	  $scope.listGroups = (function(cr) {
-		for (var i = 0; i < cr; i++) {
-		  $scope.groups.push({
-			reserver: "name",
-			reservedAs: "team name",
-			date: "test date",
-			checkedIn: "false",
-			checkedOut: "false",
-			roomNumber: "test room",
-			dateRoom: "unique test"	
-		  });
-		}
-	  });
-
-	  $scope.listGroups(5);
-
-	  $scope.checkIn = function() {
+  
+    $scope.checkIn = function() {
 		//code goes here
 		alert("check in");
-	  };
-	  $scope.checkOut = function() {
+	};
+	$scope.checkOut = function() {
 		//code goes here
 		alert("check outed");
-	  };
-	  $scope.deleteReservation = function() {
+	};
+	$scope.deleteReservation = function() {
 		//code goes here
-	  };
-
-	  $scope.alertAdmin = function() {
+	};
+    
+	$scope.alertAdmin = function(){
 		//code goes here
-	  };
-	  //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
-	  /*
-		$scope.addItem = function() {
-		  var newItemNo = $scope.items.length + 1;
-		  $scope.items.push('Item ' + newItemNo);
-		};*/
+	};
+   //$scope.items = ['Item 1', 'Item 2', 'Item 3'];
+	/*
+   $scope.addItem = function() {
+     var newItemNo = $scope.items.length + 1;
+     $scope.items.push('Item ' + newItemNo);
+   };*/
 	});
-
+	
 	scotchApp.controller('confirmController', function($scope) {
 		$scope.message = 'Your reservation on ' + globalMessage + ' has been accepted';
 	});
