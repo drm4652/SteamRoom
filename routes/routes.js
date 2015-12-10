@@ -188,7 +188,7 @@ module.exports = function(app) {
 	});
 	
 	//delete a reservation
-	app.delete('/api/myReservations/:reserver_id', function(req, res) {
+	app.delete('/api/myReservations/:reservation_id', function(req, res) {
 		Reservation.remove({
 			_id : req.params.reservation_id
 		}, function(err, todo) {

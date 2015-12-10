@@ -6,6 +6,9 @@
 		return {
 			grab: function(data){
 				return $http.get('../api/myReservations', data);
+			},
+			delete: function(id) {
+				return $http.delete('../api/myReservations/' + id);
 			}
 		}
 	}]);
@@ -74,7 +77,7 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap', 'myReser
 		$scope.message = 'Your account settings';
 	});
 
-	scotchApp.controller('findController', function($scope, grabReservations) {
+	scotchApp.controller('findController', function($scope, $route, grabReservations) {
 		$scope.message = 'Here is your reservations.';
 			 $scope.oneAtATime = true;
 			var date = 'dateTest';
@@ -131,8 +134,15 @@ var scotchApp = angular.module('scotchApp', ['ngRoute', 'ui.bootstrap', 'myReser
 		//code goes here
 		alert("check outed");
 	};
-	$scope.deleteReservation = function() {
-		//code goes here
+	$scope.deleteReservation = function(id) {
+		$scope.loading = true;
+		
+		grabReservations.delete(id)
+			.success(function(data) {
+				$scope.loading = false;
+				$scope.reservations = data;
+				$route.reload();
+			});
 	};
     
 	$scope.alertAdmin = function(){

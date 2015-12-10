@@ -7,6 +7,9 @@
 			},
 			grab: function(data){
 				return $http.get('../api/myReservations', data);
+			},
+			delete: function(id) {
+				return $http.delete('../api/myReservations/' + id);
 			}
 		}
 	}]);
@@ -162,7 +165,7 @@ function SearchCtrl($scope, $http) {
 		$scope.message = 'Look! I am an about page.';
 	});
 	
-	scotchApp.controller('findController', function($scope, Reservations1) {
+	scotchApp.controller('findController', function($route, $scope, Reservations1) {
 	  $scope.message = 'Here is your reservations.';
 			 $scope.oneAtATime = true;
 			var date = 'dateTest';
@@ -202,7 +205,7 @@ function SearchCtrl($scope, $http) {
 					$scope.loading = false;
 					$scope.groups = [];
 					$scope.reservations = data.data;
-					console.log($scope.reservations);
+					//console.log($scope.reservations);
 					$scope.listGroups($scope.reservations);
 					//return $scope.reservations;
 				});
@@ -219,8 +222,15 @@ function SearchCtrl($scope, $http) {
 		//code goes here
 		alert("check outed");
 	};
-	$scope.deleteReservation = function() {
-		//code goes here
+	$scope.deleteReservation = function(id) {
+		$scope.loading = true;
+		
+		Reservations1.delete(id)
+			.success(function(data) {
+				$scope.loading = false;
+				$scope.reservations = data;
+				$route.reload();
+			});
 	};
     
 	$scope.alertAdmin = function(){
