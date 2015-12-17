@@ -5,7 +5,10 @@ var path = require('path');
 //Returns number current user's current reservations
 function getReservations(req, res) {
 	Reservation.find(
-	{ 'reserver': req.session.username },
+	{ 
+		'reserver': req.session.username ,
+		'date': {$gte: new Date()}
+	},
 	function(err, reservations) {
 		if(err) {
 			res.send(err);
