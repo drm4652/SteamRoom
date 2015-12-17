@@ -15,10 +15,11 @@
 <accordion close-others="oneAtATime">
     <accordion-group heading="{{group.date}}" ng-repeat="group in groups">
       <accordion-heading>
+		your reservation at 
           {{ group.date }} 
       </accordion-heading>
-	  {{ group.reservedAs }} <br>
-	  {{ group.roomNumber }} <br>
+	  team: {{ group.reservedAs }} <br>
+	  room: {{ group.roomNumber }} <br>
 	  <div class="btn-group">
 	    <label class="btn btn-success" ng-click="checkIn()" ng-model="radioModel" uib-btn-radio="'Check In'">Check In</label>
         <label class="btn btn-warning" ng-click="checkOut()"ng-model="radioModel" uib-btn-radio="'Check Out'">Check Out</label>
