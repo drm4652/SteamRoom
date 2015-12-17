@@ -3,9 +3,12 @@ var User = require('./models/userModel.js');
 var path = require('path');
 
 //Returns number current user's current reservations
+//Once teams are implemented, will return all reservations made by
+//all teams where the use is a member.
 function getReservations(req, res) {
 	Reservation.find(
 	{ 
+		//TODO, have it search for team name once teams are implemented
 		'reserver': req.session.username ,
 		'date': {$gte: new Date()}
 	},
@@ -13,7 +16,6 @@ function getReservations(req, res) {
 		if(err) {
 			res.send(err);
 		}
-		//console.log(req.session.username);
 		req.session.reservations = reservations;
 		console.log(req.session.reservations);
 		res.json(req.session.reservations);
@@ -21,6 +23,7 @@ function getReservations(req, res) {
 };
 
 //get list of permission classes for user
+//TODO, implement this with getReservations()
 function getPermissionClasses(req, res) {
 	User.find(
 	{ 'username': req.session.username},
@@ -33,26 +36,24 @@ function getPermissionClasses(req, res) {
 };
 
 //Returns the number of rooms available at a certain time
+//TODO, get working on the calendar day view so rooms shows
+//actual rooms available
 function getNumOfReservations(req, res) {
 	//TODO add room number checking for teleconference and phoneline
-	//console.log(req.body.dateCheck);
 	var roomsAtTime = new Array(req.body.times.length);
-	for(var i= 0; i < req.body.times.length; i++) {
-		//console.log(req.body.times.length);
+	//for(var i= 0; i < req.body.times.length; i++) {
 		Reservation.find( 
-		{'date': req.body.times[i]},
+		{'date': { $in: req.body.times}},
 		function(err, reservations) {
 			if(err) {
 				console.log('some kind of error');
 				res.send(err);
 			}
 			console.log(reservations.length);
-			//console.log(JSON.stringify(reservations, null, 4));
-			//res.json(reservations.length);
 			roomsAtTime[i] = (reservations.length);
 			console.log(roomsAtTime);
 		});
-	}
+	//}
 	//res.json(roomsAtTime);
 };
 
