@@ -237,6 +237,7 @@ calendarDemoApp.controller('CalendarCtrl',
           center: 'title',
           right: 'today prev,next'
         },
+		//hides the next/prev/today button when agendaDay view
 		viewRender: function(view){
 			$('#myCalendar1').fullCalendar('removeEvents');
 			//var fullCalendarDayContainers = $theCalendar.find( 'td[class*="fc-day"]' );

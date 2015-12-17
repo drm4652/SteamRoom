@@ -57,6 +57,8 @@ function getNumOfReservations(req, res) {
 	//res.json(roomsAtTime);
 };
 
+//reservation array, removes a room from array when reserving a room
+//array is a new array
 //grabs available rooms and makes a reservation according to user specifications
 function createReservation(req, res) {
 	console.log(req.body.resDate);
@@ -160,12 +162,6 @@ module.exports = function(app) {
 	app.get('/calendar', function(req, res) {
 		res.sendFile(path.join(__dirname + '/../calendar/index.html'));
 	});
-	
-	
-/* 	app.post('/calendar', function(req, res) {
-		//use mongoose to get current user's reservations in database
-		getReservations(req, res);
-	}); */
 	
 	//get number of reservations for a certain time
 	app.post('/calendar', function(req, res) {
