@@ -10,11 +10,12 @@ before_install:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 
-before_script:
+install:
+  - npm install
   - npm install -g bower grunt-cli
   - bower install
-
-script: "grunt --verbose"
+script:
+  - "grunt --verbose"
 
 git:
   depth: 10
